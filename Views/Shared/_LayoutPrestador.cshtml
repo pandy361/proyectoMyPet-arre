@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PetCare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-color: #5cb85c;
+            --primary-dark: #4a9d4a;
+            --sidebar-bg: #f8f9fa;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        /* Logo */
+        .logo-container {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(92, 184, 92, 0.3);
+        }
+
+            .logo-icon i {
+                font-size: 45px;
+                color: white;
+            }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px 20px;
+            color: white;
+            text-align: center;
+        }
+
+            .welcome-section p {
+                margin: 0;
+                font-size: 14px;
+                opacity: 0.9;
+            }
+
+            .welcome-section h5 {
+                margin: 5px 0 0 0;
+                font-size: 20px;
+                font-weight: 600;
+            }
+
+        /* Menu Items */
+        .menu-items {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: #5a6c7d;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+
+            .menu-item:hover {
+                background-color: #f8f9fa;
+                color: var(--primary-color);
+                border-left-color: var(--primary-color);
+            }
+
+            .menu-item.active {
+                background-color: #e8f5e9;
+                color: var(--primary-color);
+                border-left-color: var(--primary-color);
+            }
+
+            .menu-item i {
+                font-size: 20px;
+                width: 30px;
+                margin-right: 15px;
+            }
+
+        /* Logout Button */
+        .logout-container {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+        }
+
+            .btn-logout:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
+                background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            }
+
+            .btn-logout i {
+                font-size: 18px;
+            }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .menu-toggle {
+            display: block !important;
+        }
+
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <h1 class="logo-text">PetCare</h1>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <p>Bienvenido,</p>
+            <h5>@ViewBag.UserName</h5>
+        </div>
+
+        <!-- Menu Items -->
+        <nav class="menu-items">
+            <a href="@Url.Action("Index", "PedidosPrestador")" class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "PedidosPrestador" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="@Url.Action("Index", "PedidosPrestador")" class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "PedidosPrestador" ? "active" : "")">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Mis Pedidos</span>
+            </a>
+
+            <a href="@Url.Action("Index", "Servicios")" class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Servicios" ? "active" : "")">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+        </nav>
+
+        <!-- Logout Button -->
+        <div class="logout-container">
+            <form asp-controller="Autenticacion" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        // Cerrar sidebar al hacer clic fuera en móvil
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(event.target) &&
+                !toggle.contains(event.target) &&
+                sidebar.classList.contains('show')) {
+                sidebar.classList.remove('show');
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

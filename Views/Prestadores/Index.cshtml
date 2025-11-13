@@ -1,0 +1,977 @@
+﻿@model List<TbPrestadore>
+@{
+    ViewData["Title"] = "Prestadores - PetCare";
+    Layout = null;
+    string userType = ViewBag.UserType ?? "Invitado";
+    string userName = ViewBag.UserName ?? "Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-content {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-mini {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .paw-icon {
+            color: white;
+            font-size: 35px;
+        }
+
+        .user-greeting h4 {
+            color: #333;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .user-type {
+            color: #4CAF50;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-link:hover {
+                background: #f0f8ff;
+                color: #667eea;
+                transform: translateX(3px);
+            }
+
+            .nav-link.active {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .nav-link.active .nav-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+            background: white;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            .logout-btn:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        .login-btn {
+            color: #4CAF50;
+            border-color: #c8e6c9;
+        }
+
+            .login-btn:hover {
+                background: #c8e6c9;
+            }
+
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-text h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-text p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 500px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 140px;
+        }
+
+        .stat-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .stat-info h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .stat-info p {
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            opacity: 0.8;
+        }
+
+        .search-section {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            margin-bottom: 30px;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 60px 18px 25px;
+            border: 2px solid #e1e5e9;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+            .search-input:focus {
+                border-color: #4CAF50;
+                background: white;
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            }
+
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .search-button:hover {
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .filter-btn:hover {
+                border-color: #4CAF50;
+                background: #f1f8e9;
+                color: #2e7d32;
+            }
+
+            .filter-btn.active {
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                border-color: #4CAF50;
+            }
+
+        .prestadores-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .prestadores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .prestador-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .prestador-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            }
+
+        .card-header {
+            position: relative;
+            height: 180px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prestador-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+            .prestador-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 35px;
+        }
+
+        .online-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 12px;
+            height: 12px;
+            background: #4CAF50;
+            border-radius: 50%;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .prestador-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .rating-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+            .stars i {
+                font-size: 14px;
+                color: #ddd;
+            }
+
+                .stars i.filled {
+                    color: #FFD700;
+                }
+
+        .rating-value {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .prestador-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .experience-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #f1f8e9;
+            color: #2e7d32;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .services-preview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .services-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .price-range .price {
+            font-weight: 600;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .skill-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .card-footer {
+            padding: 0 25px 25px 25px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            }
+
+        .btn-outline {
+            background: transparent;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+
+            .btn-outline:hover {
+                border-color: #4CAF50;
+                color: #4CAF50;
+                background: #f1f8e9;
+            }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .page-btn {
+            padding: 10px 15px;
+            background: white;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid #e1e5e9;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .page-btn:hover {
+                border-color: #4CAF50;
+                color: #4CAF50;
+                background: #f1f8e9;
+            }
+
+            .page-btn.active {
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                border-color: #4CAF50;
+            }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+       @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 30px;
+        }
+
+        .header-text h1 {
+            font-size: 36px;
+        }
+
+        .header-stats {
+            justify-content: center;
+        }
+
+        .prestadores-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .prestadores-container, .page-header, .search-section {
+            padding: 20px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <div class="logo-mini">
+                        <div class="paw-icon">🐾</div>
+                    </div>
+                    <div class="user-greeting">
+                        
+                            <h4>Hola, @userName</h4>
+                            <span class="user-type">@userType</span>
+                        
+                        
+                    </div>
+                </div>
+
+                <div class="quick-nav">
+                    <a href="/Prestadores/Index" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="/Prestadores/Index" class="nav-link active">
+                        <div class="nav-icon"><i class="fas fa-users"></i></div>
+                        <span>Prestadores</span>
+                    </a>
+                    
+                        <a href="/Mascotas/Index" class="nav-link">
+                            <div class="nav-icon"><i class="fas fa-paw"></i></div>
+                            <span>Mis Mascotas</span>
+                        </a>
+                        
+                    
+                </div>
+
+                <div class="sidebar-footer">
+                    
+                        <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
+                            <button type="submit" class="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Cerrar Sesión</span>
+                            </button>
+                        </form>
+                    
+                       
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="page-header">
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Nuestros Prestadores</h1>
+                        <p>Encuentra el cuidado perfecto para tu mascota con nuestros prestadores certificados</p>
+                    </div>
+                    <div class="header-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3>@Model.Count</h3>
+                                <p>Prestadores Activos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-star"></i></div>
+                            <div class="stat-info">
+                                <h3>4.8</h3>
+                                <p>Calificación Promedio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <div class="search-container">
+                    <form method="get" action="@Url.Action("Index")" class="search-form">
+                        <div class="search-input-wrapper">
+                            <input type="text" name="buscar" value="@ViewBag.BuscarTermino"
+                                   placeholder="Buscar por nombre, habilidades o servicios..." class="search-input">
+                            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i>Todos</button>
+                        <button class="filter-btn" data-filter="top-rated"><i class="fas fa-crown"></i>Mejor Valorados</button>
+                        <button class="filter-btn" data-filter="veterinary"><i class="fas fa-stethoscope"></i>Veterinarios</button>
+                        <button class="filter-btn" data-filter="grooming"><i class="fas fa-cut"></i>Peluquería</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prestadores-container">
+                @if (Model != null && Model.Any())
+                {
+                    <div class="prestadores-grid">
+                        @foreach (var prestador in Model)
+                        {
+                            <div class="prestador-card" data-rating="@(prestador.CalificacionPromedio ?? 0)">
+                                <div class="card-header">
+                                    <div class="prestador-image">
+                                        @if (prestador.IdUsuarioNavigation.TbUsuarioImagenes?.Any() == true)
+                                        {
+                                            <img src="@prestador.IdUsuarioNavigation.TbUsuarioImagenes.First().UrlImagen"
+                                                 alt="@prestador.IdUsuarioNavigation.PrimerNombre">
+                                        }
+                                        else
+                                        {
+                                            <div class="avatar-placeholder"><i class="fas fa-user"></i></div>
+                                        }
+                                    </div>
+                                    <div class="online-badge"></div>
+                                    @if ((prestador.CalificacionPromedio ?? 0) >= 4.5m)
+                                    {
+                                        <div class="premium-badge"><i class="fas fa-crown"></i></div>
+                                    }
+                                </div>
+
+                                <div class="card-body">
+                                    <h3 class="prestador-name">
+                                        @prestador.IdUsuarioNavigation.PrimerNombre @prestador.IdUsuarioNavigation.PrimerApellido
+                                    </h3>
+
+                                    <div class="rating-section">
+                                        <div class="stars">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                @if (i <= (prestador.CalificacionPromedio ?? 0))
+                                                {
+                                                    <i class="fas fa-star filled"></i>
+                                                }
+                                                else if (i - 0.5 <= (double)(prestador.CalificacionPromedio ?? 0))
+                                                {
+                                                    <i class="fas fa-star-half-alt filled"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-star"></i>
+                                                }
+                                            }
+                                        </div>
+                                        <span class="rating-value">@((prestador.CalificacionPromedio ?? 0).ToString("0.0"))</span>
+                                    </div>
+
+                                    @if (!string.IsNullOrEmpty(prestador.Resumen))
+                                    {
+                                        <p class="prestador-description">
+                                            @(prestador.Resumen.Length > 80 ? prestador.Resumen.Substring(0, 80) + "..." : prestador.Resumen)
+                                        </p>
+                                    }
+
+                                    @if (prestador.AñosExperiencia.HasValue)
+                                    {
+                                        <div class="experience-badge">
+                                            <i class="fas fa-medal"></i>
+                                            <span>@prestador.AñosExperiencia años de experiencia</span>
+                                        </div>
+                                    }
+
+                                    @if (prestador.TbServicios?.Any() == true)
+                                    {
+                                        <div class="services-preview">
+                                            <div class="services-count">
+                                                <i class="fas fa-briefcase"></i>
+                                                <span>@prestador.TbServicios.Count servicios</span>
+                                            </div>
+                                            <div class="price-range">
+                                                <span class="price">Desde $@prestador.TbServicios.Min(s => s.Precio).ToString("N0")</span>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(prestador.Habilidades))
+                                    {
+                                        <div class="skills-tags">
+                                            @foreach (var skill in prestador.Habilidades.Split(',').Take(3))
+                                            {
+                                                <span class="skill-tag">@skill.Trim()</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="card-footer">
+                                    <div class="action-buttons">
+                                        <a href="@Url.Action("Details", new { id = prestador.IdPrestador })" class="btn btn-primary">
+                                            <i class="fas fa-eye"></i>Ver Perfil
+                                        </a>
+                                        <button class="btn btn-outline" onclick="contactPrestador('@prestador.IdUsuarioNavigation.Telefono')">
+                                            <i class="fas fa-comment"></i>Contactar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (ViewBag.TotalPaginas > 1)
+                    {
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                @if (ViewBag.PaginaActual > 1)
+                                {
+                                    <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual - 1, buscar = ViewBag.BuscarTermino })" class="page-btn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                }
+
+                                @for (int i = Math.Max(1, ViewBag.PaginaActual - 2); i <= Math.Min(ViewBag.TotalPaginas, ViewBag.PaginaActual + 2); i++)
+                                {
+                                    <a href="@Url.Action("Index", new { pagina = i, buscar = ViewBag.BuscarTermino })"
+                                       class="page-btn @(i == ViewBag.PaginaActual ? "active" : "")">@i</a>
+                                }
+
+                                @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
+                                {
+                                    <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual + 1, buscar = ViewBag.BuscarTermino })" class="page-btn">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-search"></i></div>
+                        <h3>No se encontraron prestadores</h3>
+                        <p>Intenta con otros términos de búsqueda o revisa más tarde.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.sidebar-toggle');
+
+            if (window.innerWidth <= 768 && sidebar && toggle) {
+                if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                const cards = document.querySelectorAll('.prestador-card');
+
+                cards.forEach(card => {
+                    card.style.display = 'block';
+                    if (filter === 'top-rated') {
+                        const rating = parseFloat(card.dataset.rating);
+                        if (rating < 4.5) card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        function contactPrestador(numero) {
+            let url = "https://wa.me/+57" + numero;
+            window.open(url, "_blank");
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.prestador-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

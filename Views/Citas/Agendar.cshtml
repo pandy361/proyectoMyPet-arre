@@ -1,0 +1,1019 @@
+﻿@model AgendarPedidoViewModel
+@{
+    ViewData["Title"] = "Agendar Servicio";
+    string userName = Context.Session.GetString("UserName") ?? "Usuario";
+    string userType = Context.Session.GetString("UserType") ?? "Dueño";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR ESTILO ACTUALIZADO */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-content {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-mini {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .paw-icon {
+            color: white;
+            font-size: 35px;
+        }
+
+        .user-greeting h4 {
+            color: #333;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .user-type {
+            color: #4CAF50;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-link:hover {
+                background: #f0f8ff;
+                color: #667eea;
+                transform: translateX(3px);
+            }
+
+            .nav-link.active {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .nav-link.active .nav-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .current-provider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .provider-mini-card h5 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+        }
+
+        .rating-mini {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+            .rating-mini i {
+                font-size: 12px;
+                color: #FFD700;
+            }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+            background: white;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            .logout-btn:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+            .page-header h1 {
+                color: #333;
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+
+        .breadcrumb {
+            color: #666;
+            font-size: 14px;
+        }
+
+            .breadcrumb a {
+                color: #667eea;
+                text-decoration: none;
+            }
+
+        /* FORMULARIO DE AGENDAMIENTO */
+        .agendar-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .form-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+            .form-section-title i {
+                color: #667eea;
+            }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .form-required {
+            color: #dc3545;
+        }
+
+        /* SERVICIOS */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .servicio-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .servicio-item:hover {
+                border-color: #667eea;
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            }
+
+            .servicio-item.selected {
+                border-color: #4CAF50;
+                background: #f1f8f4;
+            }
+
+            .servicio-item input[type="checkbox"] {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+        .servicio-nombre {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            padding-right: 30px;
+        }
+
+        .servicio-precio {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .servicio-descripcion {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* MASCOTAS */
+        .mascotas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .mascota-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+            .mascota-item:hover {
+                border-color: #667eea;
+                transform: translateY(-2px);
+            }
+
+            .mascota-item.selected {
+                border-color: #4CAF50;
+                background: #f1f8f4;
+            }
+
+            .mascota-item input[type="checkbox"] {
+                margin-bottom: 10px;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+        .mascota-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .mascota-nombre {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .mascota-info {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* DIRECCIONES */
+        .direccion-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .direccion-item:hover {
+                border-color: #667eea;
+            }
+
+            .direccion-item.selected {
+                border-color: #4CAF50;
+                background: #f1f8f4;
+            }
+
+            .direccion-item input[type="radio"] {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+        .direccion-texto {
+            flex: 1;
+            color: #333;
+        }
+
+        .badge-predeterminada {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* FECHA Y HORA */
+        .datetime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+            .form-input:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+        /* RESUMEN */
+        .resumen-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .resumen-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+            .resumen-row:last-child {
+                border-bottom: none;
+                font-weight: 700;
+                font-size: 18px;
+                color: #4CAF50;
+            }
+
+        .resumen-label {
+            color: #666;
+        }
+
+        .resumen-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* BOTONES */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            flex: 1;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            }
+
+        .btn-secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+            .btn-secondary:hover {
+                border-color: #667eea;
+                color: #667eea;
+            }
+
+        .empty-message {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+            .empty-message i {
+                font-size: 48px;
+                margin-bottom: 15px;
+                color: #ddd;
+            }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .servicios-grid,
+        .mascotas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+        @@media (max-width: 768px) {
+            .sidebar-toggle
+
+        {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <div class="logo-mini">
+                        <div class="paw-icon">🐾</div>
+                    </div>
+                    <div class="user-greeting">
+                        <h4>Hola, @userName</h4>
+                        <span class="user-type">@userType</span>
+                    </div>
+                </div>
+
+                <div class="quick-nav">
+                    <a href="/Home/Index" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="/Prestadores/Index" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>Prestadores</span>
+                    </a>
+                    <a href="/Usuario/MisMascotas" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <span>Mis Mascotas</span>
+                    </a>
+                    <a href="/Usuario/MisPedidos" class="nav-link active">
+                        <div class="nav-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <span>Mis Pedidos</span>
+                    </a>
+                </div>
+
+                <div class="current-provider">
+                    <div class="provider-mini-card">
+                        <h5>@Model.NombrePrestador</h5>
+                        <div class="rating-mini">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <i class="fas fa-star @(i <= Model.CalificacionPrestador ? "filled" : "")"></i>
+                            }
+                            <span>@Model.CalificacionPrestador.ToString("0.0")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="page-header">
+                <h1>Agendar Servicio</h1>
+                <div class="breadcrumb">
+                    <a href="/Home/Index">Inicio</a> /
+                    <a href="/Prestadores/Index">Prestadores</a> /
+                    Agendar Servicio
+                </div>
+            </div>
+
+            <div class="agendar-container">
+                <form id="agendarForm">
+                    <!-- SERVICIOS -->
+                    <div class="form-card">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-briefcase"></i>
+                            Selecciona los Servicios
+                        </h3>
+
+                        @if (Model.ServiciosDisponibles.Any())
+                        {
+                            <div class="servicios-grid">
+                                @foreach (var servicio in Model.ServiciosDisponibles)
+                                {
+                                    <div class="servicio-item" onclick="toggleServicio(this, @servicio.IdServicio)">
+                                        <input type="checkbox"
+                                               class="servicio-checkbox"
+                                               data-id="@servicio.IdServicio"
+                                               data-precio="@servicio.Precio"
+                                               onclick="event.stopPropagation()">
+                                        <div class="servicio-nombre">@servicio.Nombre</div>
+                                        <div class="servicio-precio">$@servicio.Precio.ToString("N0")</div>
+                                        @if (!string.IsNullOrEmpty(servicio.Descripcion))
+                                        {
+                                            <div class="servicio-descripcion">@servicio.Descripcion</div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-message">
+                                <i class="fas fa-inbox"></i>
+                                <p>Este prestador no tiene servicios disponibles</p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- MASCOTAS -->
+                    <div class="form-card">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-paw"></i>
+                            Selecciona tus Mascotas
+                        </h3>
+
+                        @if (Model.MascotasUsuario.Any())
+                        {
+                            <div class="mascotas-grid">
+                                @foreach (var mascota in Model.MascotasUsuario)
+                                {
+                                    <div class="mascota-item" onclick="toggleMascota(this, @mascota.IdMascota)">
+                                        <input type="checkbox"
+                                               class="mascota-checkbox"
+                                               data-id="@mascota.IdMascota"
+                                               onclick="event.stopPropagation()">
+                                        <div class="mascota-icon">
+                                            @if (mascota.Tipo.ToLower().Contains("perro"))
+                                            {
+                                                <text>🐕</text>
+                                            }
+                                            else if (mascota.Tipo.ToLower().Contains("gato"))
+                                            {
+                                                <text>🐈</text>
+                                            }
+                                            else
+                                            {
+                                                <text>🐾</text>
+                                            }
+                                        </div>
+                                        <div class="mascota-nombre">@mascota.Nombre</div>
+                                        <div class="mascota-info">@mascota.Tipo</div>
+                                        @if (!string.IsNullOrEmpty(mascota.Raza))
+                                        {
+                                            <div class="mascota-info">@mascota.Raza</div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>No tienes mascotas registradas. <a href="/Usuario/MisMascotas">Agregar mascota</a></span>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- DIRECCIÓN -->
+                    <div class="form-card">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Selecciona la Dirección del Servicio
+                        </h3>
+
+                        @if (Model.DireccionesUsuario.Any())
+                        {
+                            @foreach (var direccion in Model.DireccionesUsuario)
+                            {
+                                <div class="direccion-item" onclick="selectDireccion(this, @direccion.IdDireccion)">
+                                    <input type="radio"
+                                           name="direccion"
+                                           value="@direccion.IdDireccion"
+                                           @(direccion.EsPredeterminada ? "checked" : "")
+                                           onclick="event.stopPropagation()">
+                                    <div class="direccion-texto">@direccion.DireccionCompleta</div>
+                                    @if (direccion.EsPredeterminada)
+                                    {
+                                        <span class="badge-predeterminada">Predeterminada</span>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>No tienes direcciones registradas. <a href="/Usuario/MisDirecciones">Agregar dirección</a></span>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- FECHA Y HORA -->
+                    <div class="form-card">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Fecha y Hora del Servicio
+                        </h3>
+
+                        @if (Model.Disponibilidad.Any())
+                        {
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>
+                                    Disponibilidad:
+                                    @string.Join(", ", Model.Disponibilidad.Select(d =>
+                                    $"{d.DiaSemana} ({d.HoraInicio}-{d.HoraFin})"))
+                            </span>
+                        </div>
+                                                }
+
+                        <div class="datetime-grid">
+                            <div class="form-group">
+                                <label class="form-label">Fecha del Servicio <span class="form-required">*</span></label>
+                                <input type="date"
+                                       id="fechaServicio"
+                                       class="form-input"
+                                       min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Hora de Inicio <span class="form-required">*</span></label>
+                                <input type="time" id="horaInicio" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Hora de Fin <span class="form-required">*</span></label>
+                                <input type="time" id="horaFin" class="form-input" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESUMEN -->
+                    <div class="form-card">
+                        <h3 class="form-section-title">
+                            <i class="fas fa-receipt"></i>
+                            Resumen del Pedido
+                        </h3>
+
+                        <div class="resumen-box">
+                            <div class="resumen-row">
+                                <span class="resumen-label">Prestador:</span>
+                                <span class="resumen-value">@Model.NombrePrestador</span>
+                            </div>
+                            <div class="resumen-row">
+                                <span class="resumen-label">Servicios seleccionados:</span>
+                                <span class="resumen-value" id="countServicios">0</span>
+                            </div>
+                            <div class="resumen-row">
+                                <span class="resumen-label">Mascotas:</span>
+                                <span class="resumen-value" id="countMascotas">0</span>
+                            </div>
+                            <div class="resumen-row">
+                                <span class="resumen-label">Total:</span>
+                                <span class="resumen-value" id="totalPrecio">$0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTONES -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                            <i class="fas fa-arrow-left"></i>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-check"></i>
+                            Confirmar Agendamiento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Sidebar Button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        // Toggle sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Toggle servicio
+        function toggleServicio(element, id) {
+            const checkbox = element.querySelector('.servicio-checkbox');
+            checkbox.checked = !checkbox.checked;
+            element.classList.toggle('selected', checkbox.checked);
+            actualizarResumen();
+        }
+
+        // Toggle mascota
+        function toggleMascota(element, id) {
+            const checkbox = element.querySelector('.mascota-checkbox');
+            checkbox.checked = !checkbox.checked;
+            element.classList.toggle('selected', checkbox.checked);
+            actualizarResumen();
+        }
+
+        // Seleccionar dirección
+        function selectDireccion(element, id) {
+            document.querySelectorAll('.direccion-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+        }
+
+        // Actualizar resumen
+        function actualizarResumen() {
+            const serviciosChecked = document.querySelectorAll('.servicio-checkbox:checked');
+            const mascotasChecked = document.querySelectorAll('.mascota-checkbox:checked');
+
+            let total = 0;
+            serviciosChecked.forEach(checkbox => {
+                total += parseInt(checkbox.dataset.precio);
+            });
+
+            document.getElementById('countServicios').textContent = serviciosChecked.length;
+            document.getElementById('countMascotas').textContent = mascotasChecked.length;
+            document.getElementById('totalPrecio').textContent = '$' + total.toLocaleString('es-CO');
+        }
+
+        // Enviar formulario
+                document.getElementById('agendarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked'))
+                .map(cb => parseInt(cb.dataset.id));
+
+            const mascotasSeleccionadas = Array.from(document.querySelectorAll('.mascota-checkbox:checked'))
+                .map(cb => parseInt(cb.dataset.id));
+
+            const direccionSeleccionada = document.querySelector('input[name="direccion"]:checked');
+            const fechaServicio = document.getElementById('fechaServicio').value;
+            const horaInicio = document.getElementById('horaInicio').value;
+            const horaFin = document.getElementById('horaFin').value;
+
+            if (serviciosSeleccionados.length === 0) {
+                alert('Debes seleccionar al menos un servicio');
+                return;
+            }
+
+            if (mascotasSeleccionadas.length === 0) {
+                alert('Debes seleccionar al menos una mascota');
+                return;
+            }
+
+            if (!direccionSeleccionada) {
+                alert('Debes seleccionar una dirección');
+                return;
+            }
+
+            if (!fechaServicio || !horaInicio || !horaFin) {
+                alert('Debes completar la fecha y hora del servicio');
+                return;
+            }
+
+            if (horaFin <= horaInicio) {
+                alert('La hora de fin debe ser posterior a la hora de inicio');
+                return;
+            }
+
+            const data = {
+                IdPrestador: @Model.IdPrestador,
+                ServiciosSeleccionados: serviciosSeleccionados,
+                MascotasSeleccionadas: mascotasSeleccionadas,
+                IdDireccion: parseInt(direccionSeleccionada.value),
+                FechaServicio: fechaServicio,
+                HoraInicio: horaInicio + ':00',
+                HoraFin: horaFin + ':00'
+            };
+
+            console.log('Datos a enviar:', data); // 🔍 Para debug
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+
+            try {
+                const response = await fetch('/Citas/ProcesarAgendamiento', { // ✅ CORREGIDO AQUÍ
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('¡Pedido agendado exitosamente! El prestador recibirá tu solicitud.');
+                    window.location.href = '/Usuario/MisPedidos';
+                } else {
+                    alert('Error: ' + result.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Agendamiento';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al procesar el agendamiento. Por favor intenta de nuevo.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Agendamiento';
+            }
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            const predeterminada = document.querySelector('.direccion-item input:checked');
+            if (predeterminada) {
+                predeterminada.closest('.direccion-item').classList.add('selected');
+            }
+            actualizarResumen();
+        });
+    </script>
+</body>
+</html>

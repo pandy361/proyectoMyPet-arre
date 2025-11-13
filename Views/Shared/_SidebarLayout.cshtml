@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyPet</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .user-type {
+            color: #48bb78;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: #4a5568;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+            .nav-item:hover {
+                background: #f7fafc;
+                color: #667eea;
+                text-decoration: none;
+            }
+
+            .nav-item.active {
+                background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
+                color: #667eea;
+                border-left: 4px solid #667eea;
+                padding-left: 21px;
+            }
+
+            .nav-item i {
+                width: 24px;
+                margin-right: 15px;
+                font-size: 1.1rem;
+            }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 12px;
+            background: #fc8181;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            .btn-logout:hover {
+                background: #f56565;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(252, 129, 129, 0.4);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0;
+            width: calc(100% - 280px);
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: block !important;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            background: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">
+                    <span>🐾</span>
+                </div>
+                <div class="user-name">Hola, @ViewData["UserName"]</div>
+                <div class="user-type">@ViewData["UserType"]</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="@Url.Action("Index", "Home")" class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Prestadores")" class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Prestadores" ? "active" : "")">
+                    <i class="fas fa-users"></i>
+                    <span>Prestadores</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Mascotas")" class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Mascotas" ? "active" : "")">
+                    <i class="fas fa-paw"></i>
+                    <span>Mis Mascotas</span>
+                </a>
+
+                <a href="@Url.Action("Index", "Pedidos")" class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pedidos" ? "active" : "")">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Mis Pedidos</span>
+                </a>
+
+                <a href="@Url.Action("Perfil", "Usuario")" class="nav-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Mi Perfil</span>
+                </a>
+
+                <a href="@Url.Action("Configuracion", "Usuario")" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <form asp-action="Logout" asp-controller="Autenticacion" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- TOGGLE MOBILE -->
+        <button class="mobile-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Cerrar sidebar al hacer clic fuera en mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

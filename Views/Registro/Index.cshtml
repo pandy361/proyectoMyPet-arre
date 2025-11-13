@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+ @{
+        ViewData["Title"] = "Registro Inteligente - PetCare";
+        Layout = "_Layout";
+}
+
+@section Styles {
+    <link href="~/css/registro.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+}
+
+<div class="registro-container">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <h2>PetCare</h2>
+        </div>
+
+        <div class="wizard-progress" id="sidebar-progress">
+            <!-- Pasos se generarán dinámicamente -->
+        </div>
+
+        <div class="nav-icons">
+            <div class="nav-icon active">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="wizard-container">
+            <div class="wizard-header">
+                <h1 id="wizard-title">Registro Inteligente</h1>
+                <p id="wizard-subtitle">Completa tu registro según tus necesidades</p>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar" style="width: 16.67%"></div>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("ProcesarRegistro", "Registro", FormMethod.Post, new { id = "registration-form", @class = "registro-form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <!-- PASO 1: INFORMACIÓN PERSONAL + ROLES -->
+                <div class="wizard-step active" id="step-1">
+                    <h2 class="step-title">
+                        <i class="fas fa-user step-icon"></i>
+                        Información Personal y Roles
+                    </h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("usuario", "Usuario *", new { @class = "form-label" })
+                            @Html.TextBox("usuario", "", new { @class = "form-control", required = "required" })
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("email", "Email *", new { @class = "form-label" })
+                            @Html.TextBox("email", "", new { @class = "form-control", type = "email", required = "required" })
+                            <div class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("password", "Contraseña *", new { @class = "form-label" })
+                            @Html.Password("password", "", new { @class = "form-control", required = "required", minlength = "8" })
+                            <div class="error-message"></div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("confirm-password", "Confirmar Contraseña *", new { @class = "form-label" })
+                            @Html.Password("confirm-password", "", new { @class = "form-control", required = "required" })
+                            <div class="error-message"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("primer-nombre", "Primer Nombre *", new { @class = "form-label" })
+                            @Html.TextBox("primer-nombre", "", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("segundo-nombre", "Segundo Nombre", new { @class = "form-label" })
+                            @Html.TextBox("segundo-nombre", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("primer-apellido", "Primer Apellido *", new { @class = "form-label" })
+                            @Html.TextBox("primer-apellido", "", new { @class = "form-control", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("segundo-apellido", "Segundo Apellido", new { @class = "form-label" })
+                            @Html.TextBox("segundo-apellido", "", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("telefono", "Teléfono *", new { @class = "form-label" })
+                            @Html.TextBox("telefono", "", new { @class = "form-control", type = "tel", required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("documento", "Documento de Identidad *", new { @class = "form-label" })
+                            @Html.TextBox("documento", "", new { @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("fecha-nacimiento", "Fecha de Nacimiento *", new { @class = "form-label" })
+                            @Html.TextBox("fecha-nacimiento", "", new { @class = "form-control", type = "date", required = "required" })
+                        </div>
+                    </div>
+
+                    <h3 class="role-section-title">Selecciona tu(s) rol(es): *</h3>
+                    <div class="role-selection">
+                        <div class="role-card" onclick="toggleRole(this, 'prestador')">
+                            <i class="fas fa-user-tie"></i>
+                            <h3>Prestador</h3>
+                            <p>Ofrecer servicios para mascotas</p>
+                            @Html.CheckBox("roles", false, new { value = "prestador", style = "display: none;" })
+                        </div>
+                        <div class="role-card" onclick="toggleRole(this, 'dueno')">
+                            <i class="fas fa-heart"></i>
+                            <h3>Dueño</h3>
+                            <p>Solicitar servicios para mis mascotas</p>
+                            @Html.CheckBox("roles", false, new { value = "dueno", style = "display: none;" })
+                        </div>
+                    </div>
+                    <div class="error-message" id="roles-error"></div>
+                </div>
+
+                <!-- PASO 2: DIRECCIONES -->
+                <div class="wizard-step" id="step-2">
+                    <h2 class="step-title">
+                        <i class="fas fa-map-marker-alt step-icon"></i>
+                        Direcciones
+                    </h2>
+
+                    <div id="direcciones-container">
+                        <!-- Direcciones se generan dinámicamente -->
+                    </div>
+
+                    <button type="button" class="btn btn-add" onclick="agregarDireccion()">
+                        <i class="fas fa-plus"></i> Agregar Dirección
+                    </button>
+                </div>
+
+                <!-- PASO 3: INFORMACIÓN PROFESIONAL -->
+                <div class="wizard-step" id="step-3">
+                    <h2 class="step-title">
+                        <i class="fas fa-briefcase step-icon"></i>
+                        Información Profesional
+                    </h2>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("resumen", "Resumen Profesional *", new { @class = "form-label" })
+                            @Html.TextArea("resumen", "", new { @class = "form-control", placeholder = "Describe brevemente tu experiencia...", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("habilidades", "Habilidades *", new { @class = "form-label" })
+                            @Html.TextArea("habilidades", "", new { @class = "form-control", placeholder = "Ej: Cuidado de perros, peluquería canina...", required = "required" })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("experiencia", "Experiencia Detallada", new { @class = "form-label" })
+                            @Html.TextArea("experiencia", "", new { @class = "form-control", placeholder = "Detalla tu experiencia profesional..." })
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            @Html.Label("anos-experiencia", "Años de Experiencia *", new { @class = "form-label" })
+                            @Html.DropDownList("anos-experiencia", new SelectList(new[] {
+                            new { Value = "", Text = "Seleccionar..." },
+                                                new { Value = "0", Text = "Menos de 1 año" },
+                                                new { Value = "1", Text = "1 año" },
+                                                new { Value = "2", Text = "2 años" },
+                                                new { Value = "3", Text = "3 años" },
+                                                new { Value = "4", Text = "4 años" },
+                                                new { Value = "5", Text = "5+ años" },
+                                                new { Value = "10", Text = "10+ años" }
+                                                }, "Value", "Text"), new { @class = "form-control", required = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASO 4: SERVICIOS -->
+            <div class="wizard-step" id="step-4">
+                <h2 class="step-title">
+                    <i class="fas fa-tasks step-icon"></i>
+                    Servicios que Ofreces
+                </h2>
+
+                <div id="servicios-container">
+                    <!-- Servicios se generan dinámicamente -->
+                </div>
+
+                <button type="button" class="btn btn-add" onclick="agregarServicio()">
+                    <i class="fas fa-plus"></i> Agregar Servicio
+                </button>
+            </div>
+
+            <!-- PASO 5: DISPONIBILIDAD -->
+            <div class="wizard-step" id="step-5">
+                <h2 class="step-title">
+                    <i class="fas fa-calendar-alt step-icon"></i>
+                    Disponibilidad
+                </h2>
+
+                <div id="disponibilidad-container">
+                    <!-- Disponibilidad se genera dinámicamente -->
+                </div>
+
+                <button type="button" class="btn btn-add" onclick="agregarDisponibilidad()">
+                    <i class="fas fa-plus"></i> Agregar Horario
+                </button>
+            </div>
+
+            <!-- PASO 6: MASCOTAS -->
+            <div class="wizard-step" id="step-6">
+                <h2 class="step-title">
+                    <i class="fas fa-paw step-icon"></i>
+                    Mis Mascotas
+                </h2>
+                <p class="step-subtitle">Puedes agregar tus mascotas ahora o hacerlo más tarde desde tu perfil</p>
+
+                <div id="mascotas-container">
+                    <!-- Mascotas se generan dinámicamente -->
+                </div>
+
+                <button type="button" class="btn btn-add" onclick="agregarMascota()">
+                    <i class="fas fa-plus"></i> Agregar Mascota
+                </button>
+            </div>
+
+            <!-- PASO FINAL: CONFIRMACIÓN -->
+            <div class="wizard-step" id="step-final">
+                <div class="success-container">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h2>¡Registro Completado!</h2>
+                    <p>Tu cuenta ha sido creada exitosamente</p>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Action("Login", "Account")'">
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+                        }
+
+            <!-- NAVIGATION BUTTONS -->
+            <div class="wizard-buttons" id="navigation-buttons">
+                <button type="button" class="btn btn-secondary" id="prev-btn" onclick="previousStep()" disabled>
+                    <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button type="button" class="btn btn-primary" id="next-btn" onclick="nextStep()">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/registro-wizard.js"></script>
+}
+
+
+</html>

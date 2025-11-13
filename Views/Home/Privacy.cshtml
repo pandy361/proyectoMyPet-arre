@@ -1,0 +1,1096 @@
+﻿@using System.Linq
+@model proyecto_mejoradoMy_pet.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Privacy - MyPet";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .page-container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @@keyframes logoFloat {
+            0%, 100%
+
+        {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+
+        }
+
+        .paw-icon {
+            color: white;
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .stats-section {
+            background: rgba(103, 126, 234, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(103, 126, 234, 0.2);
+        }
+
+        .stats-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+            .stat-item:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .features {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+            .feature-item:hover {
+                background: rgba(103, 126, 234, 0.1);
+                transform: translateX(5px);
+            }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .feature-content p {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        .bottom-nav {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+            .nav-item:hover {
+                background: rgba(103, 126, 234, 0.1);
+                color: #667eea;
+                transform: translateX(3px);
+            }
+
+            .nav-item i {
+                margin-right: 0.8rem;
+                font-size: 1.1rem;
+                width: 20px;
+                text-align: center;
+            }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 1rem;
+            line-height: 1.4;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #4CAF50, #667eea, #764ba2);
+            }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+            }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+            .btn-secondary:hover {
+                background: #667eea;
+                color: white;
+                transform: translateY(-2px);
+            }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .services-grid, .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card, .provider-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .service-card:hover, .provider-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+            .service-icon.walking {
+                background: linear-gradient(135deg, #FF6B6B, #FF5252);
+            }
+
+            .service-icon.grooming {
+                background: linear-gradient(135deg, #4ECDC4, #26C6DA);
+            }
+
+            .service-icon.boarding {
+                background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+            }
+
+            .service-icon.training {
+                background: linear-gradient(135deg, #96CEB4, #4CAF50);
+            }
+
+            .service-icon.veterinary {
+                background: linear-gradient(135deg, #FF9800, #F57C00);
+            }
+
+            .service-icon.daycare {
+                background: linear-gradient(135deg, #E91E63, #C2185B);
+            }
+
+        .service-title, .provider-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .service-description, .provider-specialty {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .provider-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 0.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+
+            .star.empty {
+                color: #DDD;
+            }
+
+        .provider-experience {
+            color: #4CAF50;
+            font-weight: 600;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .review-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 0.2rem;
+            align-items: center;
+        }
+
+        .review-service {
+            margin-left: auto;
+            background: rgba(103, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .mobile-menu-toggle
+
+        {
+            display: block;
+        }
+
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+        .main-content {
+            margin-left: 0;
+            padding: 1rem;
+            padding-top: 4rem;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+        }
+
+        .services-grid, .providers-grid, .reviews-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-overview {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        }
+
+        @@media (max-width: 480px) {
+            .stats-overview
+
+        {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+        }
+
+        }
+    </style>
+</head>
+
+<body>
+    <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="page-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-paw paw-icon"></i>
+                </div>
+                <div class="logo-text">MyPet</div>
+                <div class="tagline">Tu plataforma confiable para el cuidado de mascotas</div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-title">Estadísticas</div>
+                <div class="stat-item">
+                    <span class="stat-label">Usuarios</span>
+                    <span class="stat-value">@(Model?.Statistics?.TotalUsuarios ?? 0)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Prestadores</span>
+                    <span class="stat-value">@(Model?.Statistics?.TotalPrestadores ?? 0)</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Pedidos</span>
+                    <span class="stat-value">@(Model?.Statistics?.TotalPedidos ?? 0)</span>
+                </div>
+            </div>
+
+            <ul class="features">
+                <li class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Seguro y Confiable</h3>
+                        <p>Prestadores verificados y pagos seguros</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Disponible 24/7</h3>
+                        <p>Servicios cuando más los necesites</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Cuidado Premium</h3>
+                        <p>El mejor cuidado para tus mascotas</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Comunidad</h3>
+                        <p>Miles de dueños y prestadores</p>
+                    </div>
+                </li>
+            </ul>
+
+            <nav class="bottom-nav">
+                <a href="@Url.Action("Privacy", "Home")" class="nav-item">
+                    <i class="fas fa-home"></i>
+                    Inicio
+                </a>
+                <a href="@Url.Action("Login", "Autenticacion")" class="nav-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Autenticación
+                </a>
+                
+            </nav>
+
+            <div class="copyright">
+                © 2025 My Pet. Todos los derechos reservados.
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">Bienvenido a MyPet</h1>
+                <p class="hero-subtitle">
+                    La plataforma más confiable para conectar dueños de mascotas con prestadores de servicios profesionales.
+                    Encuentra el cuidado perfecto para tu compañero peludo.
+                </p>
+                <div class="cta-buttons">
+                    <a href="@Url.Action("Index", "Registro1")" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Únete Ahora
+                    </a>
+                    
+                </div>
+            </section>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-number">@(Model?.Statistics?.TotalUsuarios ?? 0)+</div>
+                    <div class="stat-label">Usuarios Registrados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">@(Model?.Statistics?.TotalPrestadores ?? 0)+</div>
+                    <div class="stat-label">Prestadores Activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">@(Model?.Statistics?.TotalPedidos ?? 0)+</div>
+                    <div class="stat-label">Pedidos Realizados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">@(Model?.Statistics?.PromedioFormateado ?? "4.8")★</div>
+                    <div class="stat-label">Calificación Promedio</div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <section class="content-section">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon walking">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <h3 class="service-title">Paseo de Mascotas</h3>
+                        <p class="service-description">
+                            Paseos seguros y divertidos para mantener a tu mascota activa y feliz.
+                            Prestadores certificados y con experiencia.
+                        </p>
+                        <div class="service-price">Desde $15,000</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon grooming">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h3 class="service-title">Peluquería</h3>
+                        <p class="service-description">
+                            Servicios completos de grooming para mantener a tu mascota limpia,
+                            saludable y con el mejor aspecto.
+                        </p>
+                        <div class="service-price">Desde $25,000</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon boarding">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3 class="service-title">Hospedaje</h3>
+                        <p class="service-description">
+                            Hospedaje seguro y cómodo para tu mascota cuando no puedas estar.
+                            Ambientes controlados con atención personalizada.
+                        </p>
+                        <div class="service-price">Desde $35,000</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon training">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="service-title">Entrenamiento</h3>
+                        <p class="service-description">
+                            Programas de entrenamiento personalizados para mejorar el comportamiento
+                            y la obediencia de tu mascota.
+                        </p>
+                        <div class="service-price">Desde $40,000</div>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon daycare">
+                            <i class="fas fa-baby"></i>
+                        </div>
+                        <h3 class="service-title">Guardería</h3>
+                        <p class="service-description">
+                            Cuidado diurno para tu mascota en un ambiente seguro y divertido.
+                            Socialización y actividades supervisadas.
+                        </p>
+                        <div class="service-price">Desde $30,000</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Providers Section -->
+            <section class="content-section">
+                <h2 class="section-title">Prestadores Destacados</h2>
+                <div class="providers-grid">
+                    @{
+                        bool hasProviders = Model?.TopProviders != null && Model.TopProviders.Count > 0;
+                    }
+
+                    @if (hasProviders)
+                    {
+                        @foreach (var prestador in Model.TopProviders.Take(6))
+                        {
+                            <div class="provider-card">
+                                <div class="provider-avatar">@prestador.Iniciales</div>
+                                <h3 class="provider-name">@prestador.NombreCompleto</h3>
+                                <div class="rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        @if (i <= prestador.Estrellas)
+                                        {
+                                            <span class="star">★</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="star empty">★</span>
+                                        }
+                                    }
+                                </div>
+                                <p class="provider-specialty">@prestador.Especialidad</p>
+                                <div class="provider-experience">@prestador.ExperienciaTexto</div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <!-- Prestadores de ejemplo -->
+                        <div class="provider-card">
+                            <div class="provider-avatar">MG</div>
+                            <h3 class="provider-name">María García</h3>
+                            <div class="rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="provider-specialty">
+                                Especialista en cuidado canino con certificación profesional.
+                                Amplia experiencia en paseos y entrenamiento básico.
+                            </p>
+                            <div class="provider-experience">5 años de experiencia</div>
+                        </div>
+
+                        <div class="provider-card">
+                            <div class="provider-avatar">CR</div>
+                            <h3 class="provider-name">Carlos Rodríguez</h3>
+                            <div class="rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star empty">★</span>
+                            </div>
+                            <p class="provider-specialty">
+                                Veterinario con especialización en medicina preventiva.
+                                Servicios a domicilio y consultas de emergencia.
+                            </p>
+                            <div class="provider-experience">8 años de experiencia</div>
+                        </div>
+
+                        <div class="provider-card">
+                            <div class="provider-avatar">LP</div>
+                            <h3 class="provider-name">Laura Pérez</h3>
+                            <div class="rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="provider-specialty">
+                                Estilista canina certificada. Especialista en grooming
+                                para todas las razas con técnicas modernas.
+                            </p>
+                            <div class="provider-experience">3 años de experiencia</div>
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section class="content-section">
+                <h2 class="section-title">Lo que Dicen Nuestros Clientes</h2>
+                <div class="reviews-grid">
+                    @{
+                        bool hasReviews = Model?.RecentReviews != null && Model.RecentReviews.Count > 0;
+                    }
+
+                    @if (hasReviews)
+                    {
+                        @foreach (var resena in Model.RecentReviews.Take(6))
+                        {
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div class="review-author">@resena.ClienteNombre</div>
+                                    <div class="review-date">@resena.TiempoTranscurrido</div>
+                                </div>
+                                <p class="review-text">@resena.Comentario</p>
+                                <div class="review-rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        @if (i <= resena.Calificacion)
+                                        {
+                                            <span class="star">★</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="star empty">★</span>
+                                        }
+                                    }
+                                    <div class="review-service">@resena.PrestadorNombre</div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <!-- Reseñas de ejemplo -->
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-author">María González</div>
+                                <div class="review-date">15/11/2024</div>
+                            </div>
+                            <p class="review-text">
+                                Excelente servicio! María cuidó a mi Golden Retriever durante el fin de semana
+                                y regresó súper feliz. La comunicación fue perfecta y recibí fotos constantes.
+                            </p>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <div class="review-service">Hospedaje</div>
+                            </div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-author">Carlos Mendoza</div>
+                                <div class="review-date">12/11/2024</div>
+                            </div>
+                            <p class="review-text">
+                                El Dr. Rodríguez fue muy profesional. Revisión completa a domicilio,
+                                vacunas al día y excelentes consejos para el cuidado de mi gato senior.
+                            </p>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <div class="review-service">Veterinario</div>
+                            </div>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header">
+                                <div class="review-author">Luis Herrera</div>
+                                <div class="review-date">10/11/2024</div>
+                            </div>
+                            <p class="review-text">
+                                Laura transformó completamente a mi Schnauzer. El corte quedó perfecto
+                                y el trato fue súper cariñoso. Definitivamente volveré.
+                            </p>
+                            <div class="review-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star empty">★</span>
+                                <div class="review-service">Grooming</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(e.target) &&
+                !toggle.contains(e.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Stats counter animation
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const text = stat.textContent;
+                const number = parseInt(text);
+                if (!isNaN(number) && number > 0) {
+                    let current = 0;
+                    const increment = Math.ceil(number / 50);
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            stat.textContent = number + '+';
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = current + '+';
+                        }
+                    }, 50);
+                }
+            });
+        }
+
+        // Initialize animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats after a delay
+            setTimeout(animateStats, 1000);
+
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.service-card, .provider-card, .stat-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Responsive handler
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

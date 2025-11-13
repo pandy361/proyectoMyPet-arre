@@ -1,0 +1,232 @@
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\appsettings.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.staticwebassets.runtime.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.staticwebassets.endpoints.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.exe
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.deps.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.runtimeconfig.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\proyecto_mejoradoMy pet.pdb
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Azure.Core.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Azure.Identity.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Humanizer.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Build.Locator.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Data.SqlClient.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Identity.Client.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.ClientModel.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.CodeDom.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Composition.AttributedModel.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Composition.Convention.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Composition.Hosting.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Composition.Runtime.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Composition.TypedParts.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Drawing.Common.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Memory.Data.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Runtime.Caching.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Security.Permissions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\System.Windows.Extensions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.csproj.AssemblyReference.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.AssemblyInfoInputs.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.AssemblyInfo.cs
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.RazorAssemblyInfo.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.RazorAssemblyInfo.cs
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\scopedcss\bundle\proyecto_mejoradoMy pet.styles.css
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\scopedcss\projectbundle\proyecto_mejoradoMy pet.bundle.scp.css
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\39v0r4grp4-x0ubs2s6pb.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\4e33496nf2-b9sayid5wm.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\tuc16zk1wl-61n19gt1b8.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\rpiaizt8jo-ntiheb4fdr.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\6rotxdyomo-xtxxf3hu2r.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\gaufhz8abe-bqjiyaj88i.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\62dg9pkth8-c2jlpeoesf.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\1wgl816642-erw9l3u2r3.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\w3z8iqzkau-aexeepp0ev.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\j7bc9qw7io-d7shbmvgxk.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\bqm066cm88-ausgxo2sd3.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\5925ks2gip-k8d9w2qqmf.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\zwabrt214d-cosvhxvwiu.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\wmn3iu855l-ub07r2b239.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\imzs4nng03-fvhpjtyr6v.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\xok5pmu7n6-b7pk76d08c.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\vh8pycitci-fsbi9cje9m.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\ltgda1i6oi-rzd6atqjts.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\hezktdni7s-ee0r1s7dh0.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\pjmuh6luo6-dxx9fxp4il.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\l1mb81w15v-jd9uben2k1.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\zw80si6mfs-khv3u5hwcm.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\a5lg0fvp4h-r4e9w2rdcm.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\3997tziluj-lcd1t2u6c8.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\unvpyy9hew-c2oey78nd0.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\2sgatg4d7r-tdbxkamptv.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\z0q31jdnwg-j5mq2jizvt.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\tzgp1y4y0g-06098lyss8.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\hgntx9pf6w-nvvlpmu67g.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\id09eauqfm-s35ty4nyc5.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\wfp6vgrf3c-pj5nd1wqec.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\vtta7miqrt-46ein0sx1k.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\bxr1kyldy4-v0zj4ognzu.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\2lbrwsyiqt-37tfw0ft22.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\yfud89ruam-hrwsygsryq.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\9fykun99dw-pk9g2wxc8p.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\lhts703bu9-ft3s53vfgj.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\o9v3v2477q-6cfz1n2cew.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\epf5lmed5n-6pdc2jztkx.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\ik9cn200kw-493y06b0oq.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\u4d3pz7q5z-iovd86k7lj.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\rimedoceco-vr1egmr9el.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\gffrv2j15g-kbrnm935zg.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\n0u86yz0lc-jj8uyg4cgr.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\b41fu5reoi-y7v9cxd14o.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\3hv2ogrg8o-notf2xhcfb.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\cslptxer4r-h1s4sie4z3.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\5ryfg3cl9h-63fj8s7r0e.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\xkjwxgfv2a-0j3bgjxly4.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\gjrjbwtbxa-47otxtyo56.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\xgs0rzpygv-4v8eqarkd7.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\atpy9pmo6r-356vix0kms.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\tjron5zx5p-83jwlth58m.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\zhtnqrru62-mrlpezrjn3.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\r9lcplrgr0-lzl9nlhx6b.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\zzkeccn5vp-ag7o75518u.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\9zzage44j0-x0q3zqp4vz.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\3jeyn2r0p2-0i3buxo5is.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\4by8jjsxdn-o1o13a6vjx.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\ji4og3w94o-ttgo8qnofa.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\pcio1cw3xr-2z0ns9nrw6.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\33gkszejqc-muycvpuwrr.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\t7nqui0ig2-87fc7y1x7t.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\w6cd0kk27z-mlv21k5csn.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\zmim6gvalw-wuw01t7zev.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\4ii4s98byp-wuw01t7zev.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto.BF7141DC.Up2Date
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\refint\proyecto_mejoradoMy pet.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.pdb
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\proyecto_mejoradoMy pet.genruntimeconfig.cache
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\ref\proyecto_mejoradoMy pet.dll
+C:\Users\ASUS\source\repos\proyecto_mejoradoMy pet\obj\Debug\net9.0\compressed\0yx6bfvazr-sq70jjnlo7.gz

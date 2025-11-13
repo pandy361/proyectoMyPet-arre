@@ -1,0 +1,839 @@
+﻿@model proyecto_mejoradoMy_pet.Models.UserLoginViewModel
+@{
+    ViewData["Title"] = "Iniciar Sesión - PetCare";
+    Layout = "_Layout";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<div class="login-page">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <h1>MyPet</h1>
+            <p>Tu plataforma confiable para el cuidado de mascotas</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>Seguro y Confiable</h4>
+                    <p>Prestadores verificados y pagos seguros</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>Disponible 24/7</h4>
+                    <p>Servicios cuando más los necesites</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>Cuidado Premium</h4>
+                    <p>El mejor cuidado para tus mascotas</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="feature-text">
+                    <h4>Comunidad</h4>
+                    <p>Miles de dueños y prestadores</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="nav-links">
+                <a href="@Url.Action("Index", "Home")" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="@Url.Action("Login", "Autenticacion")" class="nav-link">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Autenticacion</span>
+                </a>
+            </div>
+            <div class="social-links">
+                <div class="social-link">
+                    <i class="fab fa-facebook"></i>
+                </div>
+                <div class="social-link">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2024 PetCare. Todos los derechos reservados.
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="avatar-section">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2>¡Bienvenido de vuelta!</h2>
+                <p>Ingresa a tu cuenta para continuar</p>
+            </div>
+
+            <!-- MOSTRAR ERRORES DEL MODELO -->
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="error-container">
+                    @Html.ValidationSummary(false, "", new { @class = "error-message-global" })
+                </div>
+            }
+
+            <form asp-action="Login" asp-controller="Autenticacion" method="post" id="login-form">
+                @Html.AntiForgeryToken()
+                
+                <!-- ROLE SELECTOR -->
+                <div class="role-selector">
+                    <label>Ingresar como:</label>
+                    <div class="role-options">
+                        <div class="role-option @(Model?.Rol == "Dueño" || Model?.Rol == null ? "active" : "")" onclick="selectRole(this, 'Dueño')">
+                            <input type="radio" asp-for="Rol" value="Dueño" @@(Model?.Rol == "Dueño" || Model?.Rol == null ? "checked" : "")>
+                            <i class="fas fa-heart"></i>
+                            <span>Dueño</span>
+                        </div>
+                        <div class="role-option @(Model?.Rol == "Prestador" ? "active" : "")" onclick="selectRole(this, 'Prestador')">
+                            <input type="radio" asp-for="Rol" value="Prestador"@@(Model?.Rol == "Prestador" ? "checked" : "")>
+                            <i class="fas fa-user-tie"></i>
+                            <span>Prestador</span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+
+                <!-- USERNAME -->
+                <div class="form-group">
+                    <label asp-for="Usuario">Usuario</label>
+                    <div class="input-wrapper">
+                        <input asp-for="Usuario" class="form-control" placeholder="Ingresa tu usuario">
+                        <div class="input-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Usuario" class="text-danger"></span>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group">
+                    <label asp-for="Contrasena">Contraseña</label>
+                    <div class="input-wrapper">
+                        <input asp-for="Contrasena" type="password" class="form-control" placeholder="Ingresa tu contraseña">
+                        <div class="input-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="eye-icon"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Contrasena" class="text-danger"></span>
+                </div>
+
+                <!-- OPTIONS -->
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Recordarme</label>
+                    </div>
+                    <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <!-- LOGIN BUTTON -->
+                <button type="submit" class="login-button" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>o</span>
+            </div>
+
+            <!-- REGISTER SECTION -->
+            <div class="register-section">
+                <p>¿No tienes una cuenta?</p>
+                <a href="@Url.Action("Index", "Registro1")" class="register-button">
+                    <i class="fas fa-user-plus"></i>
+                    Crear cuenta nueva
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-page {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: 280px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 0 25px 25px 0;
+        padding: 30px 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+    }
+
+    .logo-section {
+        text-align: center;
+    }
+
+    .logo-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 32px;
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        animation: logoFloat 3s ease-in-out infinite;
+    }
+
+    @@keyframes logoFloat {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .logo-section h1 {
+        color: #333;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .logo-section p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .features {
+        margin: 40px 0;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+        background: rgba(255, 255, 255, 0.8);
+        transform: translateX(5px);
+    }
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #2196F3, #1976D2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 16px;
+    }
+
+    .feature-text {
+        flex: 1;
+    }
+
+    .feature-text h4 {
+        color: #333;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    .feature-text p {
+        color: #666;
+        font-size: 12px;
+        line-height: 1.3;
+    }
+
+    .sidebar-footer {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 12px;
+        text-decoration: none;
+        color: #666;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        background: #2196F3;
+        color: white;
+        transform: translateX(5px);
+        text-decoration: none;
+    }
+
+    .nav-link i {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .social-link:hover {
+        background: #2196F3;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .copyright {
+        color: #999;
+        font-size: 11px;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+        flex: 1;
+        padding: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        background: white;
+        border-radius: 25px;
+        padding: 50px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .avatar-section {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #999;
+        font-size: 32px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .avatar-section:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .login-header h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .login-header p {
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* ERROR MESSAGES */
+    .error-container {
+        margin-bottom: 25px;
+    }
+
+    .error-message-global {
+        background: #fff5f5;
+        color: #f44336;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border-left: 4px solid #f44336;
+        margin-bottom: 10px;
+        font-size: 14px;
+        list-style: none;
+    }
+
+    .error-message-global li {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ROLE SELECTOR */
+    .role-selector {
+        margin-bottom: 30px;
+    }
+
+    .role-selector label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .role-options {
+        display: flex;
+        gap: 10px;
+    }
+
+    .role-option {
+        flex: 1;
+        padding: 15px 12px;
+        background: #f8f9fa;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .role-option:hover {
+        border-color: #2196F3;
+        background: #f0f8ff;
+        transform: translateY(-2px);
+    }
+
+    .role-option.active {
+        border-color: #4CAF50;
+        background: #f1f8e9;
+        color: #2e7d32;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    }
+
+    .role-option input {
+        display: none;
+    }
+
+    .role-option i {
+        font-size: 24px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .role-option span {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* FORM STYLES */
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 16px;
+        z-index: 1;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 15px 15px 15px 50px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #fafbfc;
+        box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+        border-color: #2196F3;
+        background: white;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+
+    .form-group input:focus + .input-icon {
+        color: #2196F3;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 16px;
+        transition: color 0.3s ease;
+        z-index: 2;
+    }
+
+    .password-toggle:hover {
+        color: #2196F3;
+    }
+
+    /* FORM OPTIONS */
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .remember-me input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #4CAF50;
+    }
+
+    .remember-me label {
+        font-size: 13px;
+        color: #666;
+        cursor: pointer;
+        margin-bottom: 0;
+    }
+
+    .forgot-password {
+        color: #2196F3;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+        color: #1976D2;
+        text-decoration: underline;
+    }
+
+    /* BUTTONS */
+    .login-button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .login-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+    }
+
+    .login-button:active {
+        transform: translateY(0);
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 30px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #e1e5e9;
+    }
+
+    .divider span {
+        padding: 0 20px;
+        color: #999;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .register-section {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .register-section p {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .register-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 30px;
+        background: transparent;
+        color: #2196F3;
+        border: 2px solid #2196F3;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .register-button:hover {
+        background: #2196F3;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        text-decoration: none;
+    }
+
+    .text-danger {
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    /* RESPONSIVE */
+    @@media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+        
+        .main-content {
+            padding: 20px;
+        }
+        
+        .login-container {
+            padding: 30px 25px;
+            margin: 20px 0;
+        }
+        
+        .role-options {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-options {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .login-container {
+            padding: 25px 20px;
+        }
+        
+        .form-group input {
+            padding: 12px 12px 12px 45px;
+            font-size: 16px; /* Previene zoom en iOS */
+        }
+        
+        .login-button {
+            padding: 14px;
+            font-size: 15px;
+        }
+    }
+</style>
+
+<script>
+    // ROLE SELECTION
+    function selectRole(element, role) {
+        // Remove active class from all options
+        document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('active'));
+        
+        // Add active class to selected option
+        element.classList.add('active');
+        
+        // Check the radio button
+        element.querySelector('input').checked = true;
+        
+        // Update avatar icon based on role
+        const avatar = document.querySelector('.avatar-section i');
+        if (role === 'Prestador') {
+            avatar.className = 'fas fa-user-tie';
+        } else {
+            avatar.className = 'fas fa-heart';
+        }
+    }
+
+    // PASSWORD TOGGLE
+    function togglePassword() {
+        const passwordField = document.querySelector('input[name="Contrasena"]');
+        const eyeIcon = document.getElementById('eye-icon');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeIcon.className = 'fas fa-eye-slash';
+        } else {
+            passwordField.type = 'password';
+            eyeIcon.className = 'fas fa-eye';
+        }
+    }
+
+    // FORM VALIDATION AND ENHANCEMENT
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize role selector on page load
+        const activeRole = document.querySelector('.role-option.active');
+        if (activeRole) {
+            const roleValue = activeRole.querySelector('input').value;
+            const avatar = document.querySelector('.avatar-section i');
+            avatar.className = roleValue === 'Prestador' ? 'fas fa-user-tie' : 'fas fa-heart';
+        }
+
+        // Add enter key support for form
+        document.getElementById('login-form').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('login-btn').click();
+            }
+        });
+
+        // Add loading state to login button
+        document.getElementById('login-form').addEventListener('submit', function() {
+            const btn = document.getElementById('login-btn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
+            btn.disabled = true;
+        });
+
+        // Focus management
+        const userInput = document.querySelector('input[name="Usuario"]');
+        if (userInput && !userInput.value) {
+            userInput.focus();
+        }
+
+        // Input validation feedback
+        const inputs = document.querySelectorAll('.form-group input');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() !== '') {
+                    this.style.borderColor = '#4CAF50';
+                } else {
+                    this.style.borderColor = '#e1e5e9';
+                }
+            });
+        });
+    });
+</script>

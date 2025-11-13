@@ -1,0 +1,1391 @@
+﻿@model TbPrestadore
+@{
+    ViewData["Title"] = $"{Model.IdUsuarioNavigation.PrimerNombre} {Model.IdUsuarioNavigation.PrimerApellido} - PetCare";
+    Layout = null;
+    bool isAuthenticated = ViewBag.IsAuthenticated ?? false;
+    string userType = ViewBag.UserType ?? "Invitado";
+    string userName = ViewBag.UserName ?? "Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .prestador-layout {
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+        }
+
+        /* COMPACT SIDEBAR */
+        .compact-sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-content {
+            padding: 30px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-mini {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .paw-icon {
+            color: white;
+            font-size: 30px;
+        }
+
+        .user-greeting h4 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .user-type {
+            color: #4CAF50;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-link:hover {
+                background: #f0f8ff;
+                color: #667eea;
+                transform: translateX(3px);
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .current-provider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .provider-mini-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .provider-avatar-mini {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+        }
+
+            .provider-avatar-mini img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .provider-info-mini strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .rating-mini {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+            .rating-mini i {
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+                .rating-mini i.filled {
+                    color: #FFD700;
+                }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            background: #e8f5e9;
+            color: #2E7D32;
+            border: 2px solid #c8e6c9;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .quick-action-btn:hover {
+                background: #c8e6c9;
+                transform: translateY(-2px);
+            }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+        }
+
+            .logout-btn:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+            .main-content.with-sidebar {
+                margin-left: 280px;
+            }
+
+        /* BACK BUTTON */
+        .back-section {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .back-button {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+            .back-button:hover {
+                color: #4CAF50;
+            }
+
+        /* PRESTADOR HEADER */
+        .prestador-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .prestador-main-info {
+            display: flex;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .prestador-avatar {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+            .prestador-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border: 3px solid white;
+            border-radius: 50%;
+        }
+
+        .prestador-info {
+            flex: 1;
+        }
+
+        .name-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+            .name-section h1 {
+                font-size: 36px;
+                margin: 0;
+            }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rating-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 3px;
+        }
+
+            .stars i {
+                font-size: 18px;
+                color: rgba(255, 255, 255, 0.3);
+            }
+
+                .stars i.filled {
+                    color: #FFD700;
+                }
+
+        .rating-text {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .prestador-summary {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .quick-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+            .stat-item i {
+                font-size: 16px;
+            }
+
+        .action-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+            }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+            .btn-outline:hover {
+                border-color: white;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+        /* MAIN CONTENT INNER */
+        .main-content-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* CONTENT CARDS */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+            .card-header h3 {
+                color: #333;
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin: 0;
+            }
+
+                .card-header h3 i {
+                    color: #667eea;
+                }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* SERVICIOS */
+        .services-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .service-card {
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+            .service-card:hover {
+                border-color: #4CAF50;
+                background: #f9fdf9;
+                transform: translateY(-2px);
+            }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+            .service-header h4 {
+                color: #333;
+                font-size: 18px;
+                margin: 0;
+            }
+
+        .service-price {
+            background: #e8f5e9;
+            color: #2E7D32;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        /* EXPERIENCIA */
+        .experience-section,
+        .skills-section,
+        .services-offered-section {
+            margin-bottom: 25px;
+        }
+
+            .experience-section h4,
+            .skills-section h4,
+            .services-offered-section h4 {
+                color: #333;
+                margin-bottom: 12px;
+                font-size: 16px;
+            }
+
+            .experience-section p,
+            .services-offered-section p {
+                color: #666;
+                line-height: 1.6;
+            }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* RESEÑAS */
+        .reviews-summary {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .average-rating {
+            display: inline-block;
+        }
+
+        .rating-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #333;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stars-large {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+            .stars-large i {
+                font-size: 24px;
+                color: #ddd;
+            }
+
+                .stars-large i.filled {
+                    color: #FFD700;
+                }
+
+        .reviews-summary p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 40px;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .reviewer-details strong {
+            display: block;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+            .review-rating i {
+                font-size: 14px;
+                color: #ddd;
+            }
+
+                .review-rating i.filled {
+                    color: #FFD700;
+                }
+
+        .review-comment {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* DISPONIBILIDAD */
+        .availability-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .availability-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .day-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .time-range {
+            color: #4CAF50;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        /* CONTACTO */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #666;
+        }
+
+            .contact-item i {
+                color: #667eea;
+                width: 20px;
+            }
+
+        /* POLÍTICAS */
+        .policy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .policy-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #666;
+        }
+
+            .policy-item i {
+                color: #4CAF50;
+                font-size: 18px;
+            }
+
+        .sticky-card {
+            position: sticky;
+            top: 20px;
+        }
+
+        .empty-message {
+            color: #999;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        /* SIDEBAR TOGGLE BUTTON */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 1024px) {
+            .content-grid
+
+        {
+            grid-template-columns: 1fr;
+        }
+
+        .sticky-card {
+            position: static;
+        }
+
+        }
+
+        @@media (max-width: 768px) {
+            .compact-sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .compact-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content.with-sidebar {
+            margin-left: 0;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .prestador-main-info {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .name-section {
+            flex-direction: column;
+        }
+
+            .name-section h1 {
+                font-size: 28px;
+            }
+
+        .action-panel {
+            width: 100%;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="prestador-layout">
+        <!-- SIDEBAR (solo para usuarios autenticados como dueños) -->
+        @if (isAuthenticated && userType == "Dueño")
+        {
+            <div class="compact-sidebar" id="sidebar">
+                <div class="sidebar-content">
+                    <div class="sidebar-header">
+                        <div class="logo-mini">
+                            <div class="paw-icon">🐾</div>
+                        </div>
+                        <div class="user-greeting">
+                            <h4>Hola, @userName</h4>
+                            <span class="user-type">Dueño de Mascota</span>
+                        </div>
+                    </div>
+
+                    <div class="quick-nav">
+                        <a href="@Url.Action("Index", "Home")" class="nav-link">
+                            <div class="nav-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span>Inicio</span>
+                        </a>
+                        <a href="@Url.Action("Index", "Prestadores")" class="nav-link">
+                            <div class="nav-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span>Prestadores</span>
+                        </a>
+                        <a href="@Url.Action("Index", "Mascotas")" class="nav-link">
+                            <div class="nav-icon">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                            <span>Mis Mascotas</span>
+                        </a>
+                        
+                    </div>
+
+                    <div class="current-provider">
+                        <div class="provider-mini-card">
+                            <div class="provider-avatar-mini">
+                                @if (Model.IdUsuarioNavigation.TbUsuarioImagenes?.Any() == true)
+                                {
+                                    <img src="@Model.IdUsuarioNavigation.TbUsuarioImagenes.First().UrlImagen" alt="Avatar">
+                                }
+                                else
+                                {
+                                    <i class="fas fa-user"></i>
+                                }
+                            </div>
+                            <div class="provider-info-mini">
+                                <strong>@Model.IdUsuarioNavigation.PrimerNombre</strong>
+                                <div class="rating-mini">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <i class="fas fa-star @(i <= (Model.CalificacionPromedio ?? 0) ? "filled" : "")"></i>
+                                    }
+                                    <span>@((Model.CalificacionPromedio ?? 0).ToString("0.0"))</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" onclick="contactPrestador(@Model.IdUsuarioNavigation.Telefono)">
+                            <i class="fas fa-comment"></i>
+                            <span>Contactar</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="onclick=" window.location.href='@Url.Action("Agendar", "Citas")' ">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span>Agendar</span>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-footer">
+                        <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
+                            <button type="submit" class="logout-btn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Cerrar Sesión</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="main-content @(isAuthenticated && userType == "Dueño" ? "with-sidebar" : "")">
+            <div class="prestador-details-page">
+                <div class="back-section">
+                    <a href="@Url.Action("Index", "Prestadores")" class="back-button">
+                        <i class="fas fa-arrow-left"></i>
+                        Volver a Prestadores
+                    </a>
+                </div>
+
+                <div class="prestador-header">
+                    <div class="header-content">
+                        <div class="prestador-main-info">
+                            <div class="prestador-avatar">
+                                @if (Model.IdUsuarioNavigation.TbUsuarioImagenes?.Any() == true)
+                                {
+                                    <img src="@Model.IdUsuarioNavigation.TbUsuarioImagenes.First().UrlImagen"
+                                         alt="@Model.IdUsuarioNavigation.PrimerNombre">
+                                }
+                                else
+                                {
+                                    <div class="avatar-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                }
+                                <div class="online-indicator"></div>
+                            </div>
+
+                            <div class="prestador-info">
+                                <div class="name-section">
+                                    <h1>@Model.IdUsuarioNavigation.PrimerNombre @Model.IdUsuarioNavigation.PrimerApellido</h1>
+                                    @if ((Model.CalificacionPromedio ?? 0) >= 4.5m)
+                                    {
+                                        <div class="premium-badge">
+                                            <i class="fas fa-crown"></i>
+                                            Premium
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="rating-info">
+                                    <div class="stars">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            @if (i <= (double)(Model.CalificacionPromedio ?? 0))
+                                            {
+                                                <i class="fas fa-star filled"></i>
+                                            }
+                                            else if (i - 0.5 <= (double)(Model.CalificacionPromedio ?? 0))
+                                            {
+                                                <i class="fas fa-star-half-alt filled"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="far fa-star"></i>
+                                            }
+                                        }
+                                    </div>
+                                    <span class="rating-text">
+                                        @((Model.CalificacionPromedio ?? 0).ToString("0.0"))
+                                        (@(ViewBag.TotalReseñas ?? 0) reseñas)
+                                    </span>
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(Model.Resumen))
+                                {
+                                    <p class="prestador-summary">@Model.Resumen</p>
+                                }
+
+                                <div class="quick-stats">
+                                    @if (Model.AñosExperiencia.HasValue)
+                                    {
+                                        <div class="stat-item">
+                                            <i class="fas fa-medal"></i>
+                                            <span>@Model.AñosExperiencia años de experiencia</span>
+                                        </div>
+                                    }
+                                    <div class="stat-item">
+                                        <i class="fas fa-briefcase"></i>
+                                        <span>@(Model.TbServicios?.Count ?? 0) servicios ofrecidos</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>Responde en menos de 2 horas</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-panel">
+                            @if (isAuthenticated && userType == "Dueño")
+                            {
+                                <button class="btn btn-primary" onclick="contactPrestador(@Model.IdUsuarioNavigation.Telefono)">
+                                    <i class="fas fa-comment"></i> Contactar Ahora
+                                </button>
+                                <button class="btn btn-outline">
+                                    <i class="far fa-heart"></i>
+                                    Guardar
+                                </button>
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-share-alt"></i>
+                                    Compartir
+                                </button>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Login", "Autenticacion")" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Inicia Sesión
+                                </a>
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-share-alt"></i>
+                                    Compartir
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-content-inner">
+                    <div class="content-grid">
+                        <!-- LEFT COLUMN -->
+                        <div class="left-column">
+                            <!-- SERVICIOS -->
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-briefcase"></i>
+                                        Servicios Ofrecidos
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.TbServicios?.Any() == true)
+                                    {
+                                        <div class="services-grid">
+                                            @foreach (var servicio in Model.TbServicios)
+                                            {
+                                                <div class="service-card">
+                                                    <div class="service-header">
+                                                        <h4>@servicio.Nombre</h4>
+                                                        <div class="service-price">$@servicio.Precio.ToString("N0")</div>
+                                                    </div>
+                                                    @if (!string.IsNullOrEmpty(servicio.Descripcion))
+                                                    {
+                                                        <p class="service-description">@servicio.Descripcion</p>
+                                                    }
+                                                    @if (isAuthenticated && userType == "Dueño")
+                                                    {
+                                                        <button class="btn btn-sm btn-primary" onclick="agendarCita()">
+                                                            <i class="fas fa-plus"></i>
+                                                            Contratar
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("Login", "Autenticacion")" class="btn btn-sm btn-outline">
+                                                            <i class="fas fa-sign-in-alt"></i>
+                                                            Inicia Sesión
+                                                        </a>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="empty-message">Este prestador aún no ha agregado servicios.</p>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- EXPERIENCIA Y HABILIDADES -->
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-user-graduate"></i>
+                                        Experiencia y Habilidades
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    @if (!string.IsNullOrEmpty(Model.Experiencia))
+                                    {
+                                        <div class="experience-section">
+                                            <h4>Experiencia</h4>
+                                            <p>@Model.Experiencia</p>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(Model.Habilidades))
+                                    {
+                                        <div class="skills-section">
+                                            <h4>Habilidades</h4>
+                                            <div class="skills-list">
+                                                @foreach (var skill in Model.Habilidades.Split(','))
+                                                {
+                                                    <span class="skill-tag">@skill.Trim()</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (!string.IsNullOrEmpty(Model.ServiciosOfrecidos))
+                                    {
+                                        <div class="services-offered-section">
+                                            <h4>Especialidades</h4>
+                                            <p>@Model.ServiciosOfrecidos</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- RESEÑAS -->
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-star"></i>
+                                        Reseñas de Clientes
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.IdUsuarioNavigation.TbReseñas?.Any() == true)
+                                    {
+                                        <div class="reviews-summary">
+                                            <div class="average-rating">
+                                                <span class="rating-number">@((Model.CalificacionPromedio ?? 0).ToString("0.0"))</span>
+                                                <div class="stars-large">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        @if (i <= (double)(Model.CalificacionPromedio ?? 0))
+                                                        {
+                                                            <i class="fas fa-star filled"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="far fa-star"></i>
+                                                        }
+                                                    }
+                                                </div>
+                                                <p>Basado en @(ViewBag.TotalReseñas ?? 0) reseñas</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="reviews-list">
+                                            @foreach (var resena in Model.IdUsuarioNavigation.TbReseñas.OrderByDescending(r => r.Fecha).Take(5))
+                                            {
+                                                <div class="review-item">
+                                                    <div class="review-header">
+                                                        <div class="reviewer-info">
+                                                            <div class="reviewer-avatar">
+                                                                <i class="fas fa-user"></i>
+                                                            </div>
+                                                            <div class="reviewer-details">
+                                                                <strong>Cliente verificado</strong>
+                                                                <span class="review-date">@resena.Fecha?.ToString("dd/MM/yyyy")</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-rating">
+                                                            @for (int i = 1; i <= 5; i++)
+                                                            {
+                                                                @if (i <= (resena.Calificacion ?? 0))
+                                                                {
+                                                                    <i class="fas fa-star filled"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="far fa-star"></i>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    @if (!string.IsNullOrEmpty(resena.Comentario))
+                                                    {
+                                                        <p class="review-comment">@resena.Comentario</p>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="empty-message">Este prestador aún no tiene reseñas.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="right-column">
+                            <!-- DISPONIBILIDAD -->
+                            <div class="content-card sticky-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Disponibilidad
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.TbDisponibilidads?.Any() == true)
+                                    {
+                                        <div class="availability-list">
+                                            @foreach (var disponibilidad in Model.TbDisponibilidads.OrderBy(d => d.DiaSemana))
+                                            {
+                                                <div class="availability-item">
+                                                    <div class="day-name">@disponibilidad.DiaSemana</div>
+                                                    <div class="time-range">
+                                                        @disponibilidad.HoraInicio.ToString(@"hh\:mm") - @disponibilidad.HoraFin.ToString(@"hh\:mm")
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="empty-message">Horarios por confirmar</p>
+                                    }
+
+                                    @if (isAuthenticated && userType == "Dueño")
+                                    {
+                                        <button class="btn btn-primary btn-full" onclick="agendarCita()" '">
+                                            <i class="fas fa-calendar-plus"></i>
+                                            Agendar Cita
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Login", "Autenticacion")" class="btn btn-primary btn-full">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                            Inicia Sesión para Agendar
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- INFORMACIÓN DE CONTACTO -->
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-info-circle"></i>
+                                        Información de Contacto
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="contact-info">
+                                        @if (isAuthenticated && userType == "Dueño")
+                                        {
+                                            <div class="contact-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>@Model.IdUsuarioNavigation.Correo</span>
+                                            </div>
+                                            <div class="contact-item">
+                                                <i class="fas fa-phone"></i>
+                                                <span>@Model.IdUsuarioNavigation.Telefono</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="contact-item">
+                                                <i class="fas fa-lock"></i>
+                                                <span>Inicia sesión para ver el contacto</span>
+                                            </div>
+                                        }
+                                        <div class="contact-item">
+                                            <i class="fas fa-calendar-check"></i>
+                                            <span>Miembro desde @Model.IdUsuarioNavigation.FechaRegistro?.ToString("MMMM yyyy")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- POLÍTICAS -->
+                            <div class="content-card">
+                                <div class="card-header">
+                                    <h3>
+                                        <i class="fas fa-shield-alt"></i>
+                                        Políticas
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="policy-list">
+                                        <div class="policy-item">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Cancelación gratuita hasta 24h antes</span>
+                                        </div>
+                                        <div class="policy-item">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Garantía de satisfacción</span>
+                                        </div>
+                                        <div class="policy-item">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Prestador verificado</span>
+                                        </div>
+                                        <div class="policy-item">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Seguro incluido</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para toggle sidebar en móviles -->
+    @if (isAuthenticated && userType == "Dueño")
+    {
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+    }
+
+    <script>
+        // Toggle sidebar en móviles
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Cerrar sidebar al hacer clic fuera en móviles
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.sidebar-toggle');
+
+            if (window.innerWidth <= 768 && sidebar && toggleBtn) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Función para contactar prestador
+        
+
+        // Función para agendar cita
+        function agendarCita() {
+          window.location.href='@Url.Action("Agendar", "Citas", new {idPrestador=Model.IdPrestador})'
+          
+        }
+
+        // Función para contratar servicio
+        function contratarServicio(servicioId) {
+            alert('Agregando servicio al carrito. ID: ' + servicioId);
+            // Aquí implementarías la lógica para agregar al carrito o ir al checkout
+        }
+            function contactPrestador(numero) {
+            ;
+            let url = "https://wa.me/+57" + numero;
+            window.open(url, "_blank");
+        }
+    </script>
+</body>
+</html>
