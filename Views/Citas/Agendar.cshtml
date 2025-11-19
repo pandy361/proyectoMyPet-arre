@@ -924,7 +924,7 @@
         }
 
         // Enviar formulario
-                document.getElementById('agendarForm').addEventListener('submit', async function(e) {
+        document.getElementById('agendarForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked'))
@@ -938,6 +938,7 @@
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFin = document.getElementById('horaFin').value;
 
+            // Validaciones
             if (serviciosSeleccionados.length === 0) {
                 alert('Debes seleccionar al menos un servicio');
                 return;
@@ -973,14 +974,14 @@
                 HoraFin: horaFin + ':00'
             };
 
-            console.log('Datos a enviar:', data); // 🔍 Para debug
+            console.log('Datos a enviar:', data);
 
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
 
             try {
-                const response = await fetch('/Citas/ProcesarAgendamiento', { // ✅ CORREGIDO AQUÍ
+                const response = await fetch('/Citas/ProcesarAgendamiento', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1006,7 +1007,7 @@
             }
         });
 
-        // Inicializar
+        // Inicializar al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             const predeterminada = document.querySelector('.direccion-item input:checked');
             if (predeterminada) {

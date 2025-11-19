@@ -150,6 +150,12 @@ namespace proyecto_mejoradoMy_pet.Controllers
                 return Json(new { success = false, message = "Debes seleccionar una dirección" });
             }
 
+            // Validar que se recibió el ID de transacción de PayPal
+            if (string.IsNullOrEmpty(request.PaypalOrderId))
+            {
+                return Json(new { success = false, message = "No se recibió confirmación de PayPal" });
+            }
+
             using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -170,7 +176,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
 
                 int total = servicios.Sum(s => s.Precio);
 
-                // Parsear fecha y horas (ya vienen como strings del frontend)
+                // Parsear fecha y horas
                 DateOnly fechaServicio = DateOnly.Parse(request.FechaServicio);
                 TimeOnly horaInicio = TimeOnly.Parse(request.HoraInicio);
                 TimeOnly horaFin = TimeOnly.Parse(request.HoraFin);
@@ -186,13 +192,28 @@ namespace proyecto_mejoradoMy_pet.Controllers
                     HoraServicioFrom = horaInicio,
                     HoraServicioTo = horaFin,
                     Total = total,
-                    Estado = "Pendiente"
+                    Estado = "Pagado" // ✅ Ya está pagado por PayPal
                 };
 
                 _context.TbPedidos.Add(pedido);
                 await _context.SaveChangesAsync();
 
                 System.Diagnostics.Debug.WriteLine($"✅ Pedido creado con ID: {pedido.IdPedido}");
+
+                // Registrar el pago de PayPal
+                var pago = new TbPago
+                {
+                    IdPedido = pedido.IdPedido,
+                    Monto = total,
+                    FechaPago = DateTime.Now,
+                    Metodo = "PayPal",
+                    Estado = "Completado",
+                    IdTransaccionPaypal = request.PaypalOrderId
+                };
+                _context.TbPagos.Add(pago);
+                await _context.SaveChangesAsync();
+
+                System.Diagnostics.Debug.WriteLine($"✅ Pago registrado con transacción PayPal: {request.PaypalOrderId}");
 
                 // Agregar mascotas al pedido
                 foreach (var idMascota in request.MascotasSeleccionadas)
@@ -203,7 +224,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                         IdMascota = idMascota
                     };
                     _context.TbPedidoMascotas.Add(pedidoMascota);
-                    System.Diagnostics.Debug.WriteLine($"✅ Mascota {idMascota} agregada al pedido");
                 }
 
                 // Agregar detalle de servicios
@@ -218,18 +238,17 @@ namespace proyecto_mejoradoMy_pet.Controllers
                         Subtotal = servicio.Precio
                     };
                     _context.TbDetallePedidos.Add(detalle);
-                    System.Diagnostics.Debug.WriteLine($"✅ Servicio {servicio.Nombre} agregado al detalle");
                 }
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                System.Diagnostics.Debug.WriteLine($"🎉 Pedido {pedido.IdPedido} completado exitosamente");
+                System.Diagnostics.Debug.WriteLine($"🎉 Pedido {pedido.IdPedido} completado exitosamente con pago PayPal");
 
                 return Json(new
                 {
                     success = true,
-                    message = "Pedido agendado exitosamente",
+                    message = "Pedido agendado y pagado exitosamente",
                     idPedido = pedido.IdPedido
                 });
             }
@@ -241,5 +260,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
                 return Json(new { success = false, message = $"Error al procesar el pedido: {ex.Message}" });
             }
         }
-    }
+
+
+    }  
 }

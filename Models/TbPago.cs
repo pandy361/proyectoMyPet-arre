@@ -17,5 +17,7 @@ public partial class TbPago
 
     public string? Estado { get; set; }
 
+    public string? IdTransaccionPaypal { get; set; }
+
     public virtual TbPedido IdPedidoNavigation { get; set; } = null!;
 }

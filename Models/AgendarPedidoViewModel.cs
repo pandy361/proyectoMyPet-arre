@@ -52,5 +52,7 @@
         public string FechaServicio { get; set; } = string.Empty;
         public string HoraInicio { get; set; } = string.Empty;
         public string HoraFin { get; set; } = string.Empty;
+
+        public string? PaypalOrderId { get; set; }
     }
 }
