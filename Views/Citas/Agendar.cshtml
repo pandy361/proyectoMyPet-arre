@@ -13,6 +13,9 @@
     <title>@ViewData["Title"]</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AcY8cJeg2l9u1cS5lBRwWXXaEJOQUeyafjkwL1zyqZJKuB4dYuCigUA0QRjBqpd6lqKIouuIdCZWIBqr&currency=USD"></script>
+
     <style>
         * {
             margin: 0;
@@ -477,17 +480,6 @@
             gap: 10px;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            flex: 1;
-        }
-
-            .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            }
-
         .btn-secondary {
             background: white;
             color: #666;
@@ -498,6 +490,12 @@
                 border-color: #667eea;
                 color: #667eea;
             }
+
+        /* PayPal Button Container */
+        #paypal-button-container {
+            flex: 1;
+            min-height: 50px;
+        }
 
         .empty-message {
             text-align: center;
@@ -591,7 +589,7 @@
 </head>
 <body>
     <div class="layout">
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR (sin cambios) -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-content">
                 <div class="sidebar-header">
@@ -606,27 +604,19 @@
 
                 <div class="quick-nav">
                     <a href="/Home/Index" class="nav-link">
-                        <div class="nav-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
+                        <div class="nav-icon"><i class="fas fa-home"></i></div>
                         <span>Inicio</span>
                     </a>
                     <a href="/Prestadores/Index" class="nav-link">
-                        <div class="nav-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
+                        <div class="nav-icon"><i class="fas fa-users"></i></div>
                         <span>Prestadores</span>
                     </a>
                     <a href="/Usuario/MisMascotas" class="nav-link">
-                        <div class="nav-icon">
-                            <i class="fas fa-paw"></i>
-                        </div>
+                        <div class="nav-icon"><i class="fas fa-paw"></i></div>
                         <span>Mis Mascotas</span>
                     </a>
                     <a href="/Usuario/MisPedidos" class="nav-link active">
-                        <div class="nav-icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
+                        <div class="nav-icon"><i class="fas fa-clipboard-list"></i></div>
                         <span>Mis Pedidos</span>
                     </a>
                 </div>
@@ -668,7 +658,7 @@
 
             <div class="agendar-container">
                 <form id="agendarForm">
-                    <!-- SERVICIOS -->
+                    <!-- SERVICIOS (sin cambios) -->
                     <div class="form-card">
                         <h3 class="form-section-title">
                             <i class="fas fa-briefcase"></i>
@@ -705,7 +695,7 @@
                         }
                     </div>
 
-                    <!-- MASCOTAS -->
+                    <!-- MASCOTAS (sin cambios) -->
                     <div class="form-card">
                         <h3 class="form-section-title">
                             <i class="fas fa-paw"></i>
@@ -755,7 +745,7 @@
                         }
                     </div>
 
-                    <!-- DIRECCIÓN -->
+                    <!-- DIRECCIÓN (sin cambios) -->
                     <div class="form-card">
                         <h3 class="form-section-title">
                             <i class="fas fa-map-marker-alt"></i>
@@ -789,7 +779,7 @@
                         }
                     </div>
 
-                    <!-- FECHA Y HORA -->
+                    <!-- FECHA Y HORA (sin cambios) -->
                     <div class="form-card">
                         <h3 class="form-section-title">
                             <i class="fas fa-calendar-alt"></i>
@@ -828,7 +818,7 @@
                         </div>
                     </div>
 
-                    <!-- RESUMEN -->
+                    <!-- RESUMEN (sin cambios) -->
                     <div class="form-card">
                         <h3 class="form-section-title">
                             <i class="fas fa-receipt"></i>
@@ -849,22 +839,23 @@
                                 <span class="resumen-value" id="countMascotas">0</span>
                             </div>
                             <div class="resumen-row">
-                                <span class="resumen-label">Total:</span>
+                                <span class="resumen-label">Total COP:</span>
                                 <span class="resumen-value" id="totalPrecio">$0</span>
+                            </div>
+                            <div class="resumen-row">
+                                <span class="resumen-label">Total USD:</span>
+                                <span class="resumen-value" id="totalUSD">$0.00</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- BOTONES -->
+                    <!-- BOTONES CON PAYPAL -->
                     <div class="form-actions">
                         <button type="button" class="btn btn-secondary" onclick="window.history.back()">
                             <i class="fas fa-arrow-left"></i>
                             Cancelar
                         </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-check"></i>
-                            Confirmar Agendamiento
-                        </button>
+                        <div id="paypal-button-container"></div>
                     </div>
                 </form>
             </div>
@@ -877,12 +868,14 @@
     </button>
 
     <script>
-        // Toggle sidebar
+        const TASA_CONVERSION = 4000;
+        let totalCOP = 0;
+        let totalUSD = 0;
+
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }
 
-        // Toggle servicio
         function toggleServicio(element, id) {
             const checkbox = element.querySelector('.servicio-checkbox');
             checkbox.checked = !checkbox.checked;
@@ -890,7 +883,6 @@
             actualizarResumen();
         }
 
-        // Toggle mascota
         function toggleMascota(element, id) {
             const checkbox = element.querySelector('.mascota-checkbox');
             checkbox.checked = !checkbox.checked;
@@ -898,7 +890,6 @@
             actualizarResumen();
         }
 
-        // Seleccionar dirección
         function selectDireccion(element, id) {
             document.querySelectorAll('.direccion-item').forEach(item => {
                 item.classList.remove('selected');
@@ -908,111 +899,125 @@
             radio.checked = true;
         }
 
-        // Actualizar resumen
         function actualizarResumen() {
             const serviciosChecked = document.querySelectorAll('.servicio-checkbox:checked');
             const mascotasChecked = document.querySelectorAll('.mascota-checkbox:checked');
 
-            let total = 0;
+            totalCOP = 0;
             serviciosChecked.forEach(checkbox => {
-                total += parseInt(checkbox.dataset.precio);
+                totalCOP += parseInt(checkbox.dataset.precio);
             });
+
+            totalUSD = (totalCOP / TASA_CONVERSION).toFixed(2);
 
             document.getElementById('countServicios').textContent = serviciosChecked.length;
             document.getElementById('countMascotas').textContent = mascotasChecked.length;
-            document.getElementById('totalPrecio').textContent = '$' + total.toLocaleString('es-CO');
+            document.getElementById('totalPrecio').textContent = '$' + totalCOP.toLocaleString('es-CO');
+            document.getElementById('totalUSD').textContent = '$' + totalUSD;
+
+            renderPayPalButton();
         }
 
-        // Enviar formulario
-        document.getElementById('agendarForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked'))
-                .map(cb => parseInt(cb.dataset.id));
-
-            const mascotasSeleccionadas = Array.from(document.querySelectorAll('.mascota-checkbox:checked'))
-                .map(cb => parseInt(cb.dataset.id));
-
+        function validarFormulario() {
+            const serviciosSeleccionados = document.querySelectorAll('.servicio-checkbox:checked');
+            const mascotasSeleccionadas = document.querySelectorAll('.mascota-checkbox:checked');
             const direccionSeleccionada = document.querySelector('input[name="direccion"]:checked');
             const fechaServicio = document.getElementById('fechaServicio').value;
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFin = document.getElementById('horaFin').value;
 
-            // Validaciones
             if (serviciosSeleccionados.length === 0) {
                 alert('Debes seleccionar al menos un servicio');
-                return;
+                return false;
             }
-
             if (mascotasSeleccionadas.length === 0) {
                 alert('Debes seleccionar al menos una mascota');
-                return;
+                return false;
             }
-
             if (!direccionSeleccionada) {
                 alert('Debes seleccionar una dirección');
-                return;
+                return false;
             }
-
             if (!fechaServicio || !horaInicio || !horaFin) {
                 alert('Debes completar la fecha y hora del servicio');
-                return;
+                return false;
             }
-
             if (horaFin <= horaInicio) {
                 alert('La hora de fin debe ser posterior a la hora de inicio');
-                return;
+                return false;
             }
+            return true;
+        }
 
-            const data = {
+        function recopilarDatos() {
+            const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
+            const mascotasSeleccionadas = Array.from(document.querySelectorAll('.mascota-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
+            const direccionSeleccionada = document.querySelector('input[name="direccion"]:checked');
+            const fechaServicio = document.getElementById('fechaServicio').value;
+            const horaInicio = document.getElementById('horaInicio').value;
+            const horaFin = document.getElementById('horaFin').value;
+
+            return {
                 IdPrestador: @Model.IdPrestador,
                 ServiciosSeleccionados: serviciosSeleccionados,
                 MascotasSeleccionadas: mascotasSeleccionadas,
                 IdDireccion: parseInt(direccionSeleccionada.value),
                 FechaServicio: fechaServicio,
                 HoraInicio: horaInicio + ':00',
-                HoraFin: horaFin + ':00'
+                HoraFin: horaFin + ':00',
+                PaypalOrderId: null
             };
+        }
 
-            console.log('Datos a enviar:', data);
+        function renderPayPalButton() {
+            const container = document.getElementById('paypal-button-container');
+            container.innerHTML = '';
 
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
-
-            try {
-                const response = await fetch('/Citas/ProcesarAgendamiento', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    alert('¡Pedido agendado exitosamente! El prestador recibirá tu solicitud.');
-                    window.location.href = '/Usuario/MisPedidos';
-                } else {
-                    alert('Error: ' + result.message);
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Agendamiento';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al procesar el agendamiento. Por favor intenta de nuevo.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Confirmar Agendamiento';
+            if (totalUSD <= 0) {
+                container.innerHTML = '<p style="text-align:center;color:#999;padding:15px;">Selecciona servicios para continuar</p>';
+                return;
             }
-        });
 
-        // Inicializar al cargar la página
+            paypal.Buttons({
+                style: { layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal', height: 50 },
+                createOrder: function(data, actions) {
+                    if (!validarFormulario()) return actions.reject();
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: 'Servicios para mascotas',
+                            amount: { currency_code: 'USD', value: totalUSD }
+                        }]
+                    });
+                },
+                onApprove: async function(data, actions) {
+                    const order = await actions.order.capture();
+                    const formData = recopilarDatos();
+                    formData.PaypalOrderId = order.id;
+                    try {
+                        const response = await fetch('/Citas/ProcesarAgendamiento', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(formData)
+                        });
+                        const result = await response.json();
+                        if (result.success) {
+                            alert('Pago completado! ID: ' + order.id);
+                            window.location.href = '/Usuario/MisPedidos';
+                        } else {
+                            alert('Error: ' + result.message);
+                        }
+                    } catch (error) {
+                        alert('Error. Contacta soporte con ID: ' + order.id);
+                    }
+                },
+                onCancel: function() { alert('Pago cancelado'); },
+                onError: function(err) { alert('Error con PayPal'); }
+            }).render('#paypal-button-container');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const predeterminada = document.querySelector('.direccion-item input:checked');
-            if (predeterminada) {
-                predeterminada.closest('.direccion-item').classList.add('selected');
-            }
+            if (predeterminada) predeterminada.closest('.direccion-item').classList.add('selected');
             actualizarResumen();
         });
     </script>

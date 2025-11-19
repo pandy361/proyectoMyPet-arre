@@ -146,6 +146,7 @@ C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejo
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.RazorAssemblyInfo.cache
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.RazorAssemblyInfo.cs
+C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.sourcelink.json
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -156,6 +157,7 @@ C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\l7
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\xp4r8x9zji-b9sayid5wm.gz
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\jkxhjakadb-61n19gt1b8.gz
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\o06xkntf6w-sq70jjnlo7.gz
+C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\b78213k428-do5gvac2f6.gz
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\st5v5vqn78-xtxxf3hu2r.gz
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\87zerzj9iz-bqjiyaj88i.gz
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\4kqa4xkqji-c2jlpeoesf.gz
@@ -229,5 +231,3 @@ C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\refint\proyec
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.pdb
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.genruntimeconfig.cache
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\ref\proyecto_mejoradoMytet.dll
-C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\compressed\b78213k428-do5gvac2f6.gz
-C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\obj\Debug\net9.0\proyecto_mejoradoMytet.sourcelink.json
