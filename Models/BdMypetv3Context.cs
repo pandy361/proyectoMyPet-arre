@@ -45,6 +45,9 @@ public partial class BdMypetv3Context : DbContext
 
     public virtual DbSet<TbUsuarioRole> TbUsuarioRoles { get; set; }
 
+    // 1. Agregar el DbSet (en la sección de DbSets)
+    public virtual DbSet<TbPasswordReset> TbPasswordResets { get; set; }
+
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=LAPTOP-S7IHNNFT\\SQLEXPRESS; database=BdMypetv3; integrated security=true;TrustServerCertificate=True;");
@@ -428,6 +431,34 @@ public partial class BdMypetv3Context : DbContext
                 .HasConstraintName("FK__TbUsuario__id_us__52593CB8");
         });
 
+        modelBuilder.Entity<TbPasswordReset>(entity =>
+        {
+            entity.HasKey(e => e.IdReset).HasName("PK_TbPasswordReset");
+
+            entity.ToTable("TbPasswordReset");
+
+            entity.Property(e => e.IdReset).HasColumnName("id_reset");
+            entity.Property(e => e.IdUsuario).HasColumnName("id_usuario");
+            entity.Property(e => e.Token)
+                .HasMaxLength(256)
+                .HasColumnName("token");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("fecha_creacion");
+            entity.Property(e => e.FechaExpiracion)
+                .HasColumnType("datetime")
+                .HasColumnName("fecha_expiracion");
+            entity.Property(e => e.Usado)
+                .HasDefaultValue(false)
+                .HasColumnName("usado");
+
+            entity.HasOne(d => d.IdUsuarioNavigation)
+                .WithMany()
+                .HasForeignKey(d => d.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_PasswordReset_Usuario");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

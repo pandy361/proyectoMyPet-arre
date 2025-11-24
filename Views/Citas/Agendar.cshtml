@@ -1002,7 +1002,7 @@
                         const result = await response.json();
                         if (result.success) {
                             alert('Pago completado! ID: ' + order.id);
-                            window.location.href = '/Usuario/MisPedidos';
+                            window.location.href = '/Pedidodueño/MisPedidos';
                         } else {
                             alert('Error: ' + result.message);
                         }

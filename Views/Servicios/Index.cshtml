@@ -2,30 +2,453 @@
 
 @{
     ViewData["Title"] = "Gestión de Servicios";
-    Layout = "~/Views/Shared/_LayoutPrestador.cshtml";
+    Layout = null;
+    var nombrePrestador = ViewBag.NombrePrestador ?? "Prestador";
 }
 
-<div class="container-fluid py-4">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2 class="mb-0">
-                    <i class="fas fa-paw text-primary"></i> Mis Servicios
-                </h2>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalServicio" onclick="abrirModalCrear()">
-                    <i class="fas fa-plus"></i> Nuevo Servicio
-                </button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* COMPACT SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
+        .sidebar-content {
+            padding: 30px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+            .logo-icon i {
+                color: white;
+                font-size: 28px;
+            }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .user-welcome {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+            .user-welcome p {
+                font-size: 13px;
+                opacity: 0.9;
+                margin-bottom: 5px;
+            }
+
+            .user-welcome h3 {
+                font-size: 17px;
+                font-weight: 600;
+            }
+
+        .nav-menu {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-item:hover {
+                background: #f0f8ff;
+                color: #667eea;
+                transform: translateX(3px);
+            }
+
+            .nav-item.active {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .nav-item.active .nav-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .logout-section {
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .btn-logout:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header-section {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header-section h2 {
+                font-size: 32px;
+                font-weight: 700;
+                color: #2d3748;
+                margin: 0;
+            }
+
+        .btn-nuevo {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .btn-nuevo:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+            .table thead th {
+                background: #f8f9fa;
+                color: #2d3748;
+                font-weight: 600;
+                border: none;
+                padding: 15px;
+            }
+
+            .table tbody td {
+                padding: 15px;
+                vertical-align: middle;
+                border-color: #f0f0f0;
+            }
+
+            .table tbody tr:hover {
+                background: #f8f9fa;
+            }
+
+        .badge {
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-action {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-action:hover {
+                transform: translateY(-2px);
+            }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+            .empty-state i {
+                font-size: 70px;
+                color: #cbd5e0;
+                margin-bottom: 20px;
+            }
+
+            .empty-state h4 {
+                color: #2d3748;
+                margin-bottom: 10px;
+            }
+
+            .empty-state p {
+                color: #718096;
+            }
+
+        /* MODALS */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 20px 30px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        /* SIDEBAR TOGGLE */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 768px) {
+            .sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-section {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn-nuevo {
+            width: 100%;
+            justify-content: center;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="logo-text">PetCare</div>
+            </div>
+
+            <div class="user-welcome">
+                <p>Bienvenido,</p>
+                <h3>@nombrePrestador</h3>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="@Url.Action("Index", "Servicios")" class="nav-item active">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span>Mis Servicios</span>
+                </a>
+                <a href="@Url.Action("Index", "PedidosPrestador")" class="nav-item">
+                    <div class="nav-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <span>Mis Pedidos</span>
+                </a>
+            </nav>
+
+            <div class="logout-section">
+                <a href="@Url.Action("CerrarSesion", "PedidosPrestador")" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <div id="alertContainer"></div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header-section">
+            <h2>
+                <i class="fas fa-paw text-primary"></i> Mis Servicios
+            </h2>
+            <button type="button" class="btn-nuevo" data-bs-toggle="modal" data-bs-target="#modalServicio" onclick="abrirModalCrear()">
+                <i class="fas fa-plus"></i> Nuevo Servicio
+            </button>
+        </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
+        <div id="alertContainer"></div>
+
+        <div class="content-card">
             <div class="table-responsive">
                 <table class="table table-hover align-middle" id="tablaServicios">
-                    <thead class="table-light">
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -61,12 +484,12 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                            <button type="button" class="btn btn-sm btn-outline-primary btn-action"
                                                     onclick="abrirModalEditar(@servicio.IdServicio, '@servicio.Nombre', '@servicio.Descripcion', @servicio.Precio)"
                                                     title="Editar">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                            <button type="button" class="btn btn-sm btn-outline-danger btn-action"
                                                     onclick="confirmarEliminar(@servicio.IdServicio, '@servicio.Nombre')"
                                                     title="Eliminar">
                                                 <i class="fas fa-trash"></i>
@@ -79,10 +502,12 @@
                         else
                         {
                             <tr id="filaVacia">
-                                <td colspan="5" class="text-center py-5">
-                                    <i class="fas fa-inbox fa-4x text-muted mb-3 d-block"></i>
-                                    <h4 class="text-muted">No hay servicios registrados</h4>
-                                    <p class="text-muted">Comienza creando tu primer servicio</p>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-inbox"></i>
+                                        <h4>No hay servicios registrados</h4>
+                                        <p>Comienza creando tu primer servicio</p>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -91,93 +516,115 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- Modal Crear/Editar Servicio -->
-<div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="modalServicioLabel">
-                    <i class="fas fa-plus-circle"></i> <span id="tituloModal">Nuevo Servicio</span>
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="formServicio">
-                <div class="modal-body">
-                    <input type="hidden" id="idServicio" name="IdServicio" value="0" />
+    <!-- Botón toggle sidebar móvil -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
 
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label fw-bold">
-                            Nombre del Servicio <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" class="form-control" id="nombre" name="Nombre"
-                               placeholder="Ej: Paseo en parque" required maxlength="100" />
-                    </div>
+    <!-- Modal Crear/Editar Servicio -->
+    <div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalServicioLabel">
+                        <i class="fas fa-plus-circle"></i> <span id="tituloModal">Nuevo Servicio</span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formServicio">
+                    <div class="modal-body">
+                        <input type="hidden" id="idServicio" name="IdServicio" value="0" />
 
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label fw-bold">Descripción</label>
-                        <textarea class="form-control" id="descripcion" name="Descripcion"
-                                  rows="3" placeholder="Describe el servicio que ofreces..."></textarea>
-                        <small class="form-text text-muted">Opcional</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="precio" class="form-label fw-bold">
-                            Precio <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="precio" name="Precio"
-                                   placeholder="0" min="0" step="1000" required />
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">
+                                Nombre del Servicio <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="nombre" name="Nombre"
+                                   placeholder="Ej: Paseo en parque" required maxlength="100" />
                         </div>
-                        <small class="form-text text-muted">Pesos colombianos</small>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="Descripcion"
+                                      rows="3" placeholder="Describe el servicio que ofreces..."></textarea>
+                            <small class="form-text text-muted">Opcional</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="precio" class="form-label">
+                                Precio <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" id="precio" name="Precio"
+                                       placeholder="0" min="0" step="1000" required />
+                            </div>
+                            <small class="form-text text-muted">Pesos colombianos</small>
+                        </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success" id="btnGuardar">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmar Eliminación -->
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalEliminarLabel">
+                        <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">¿Estás seguro de que deseas eliminar el servicio <strong id="nombreEliminar"></strong>?</p>
+                    <p class="text-muted mt-2 mb-0"><small>Esta acción no se puede deshacer.</small></p>
+                    <input type="hidden" id="idEliminar" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i> Cancelar
                     </button>
-                    <button type="submit" class="btn btn-success" id="btnGuardar">
-                        <i class="fas fa-save"></i> Guardar
+                    <button type="button" class="btn btn-danger" onclick="eliminarServicio()">
+                        <i class="fas fa-trash"></i> Eliminar
                     </button>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Confirmar Eliminación -->
-<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="modalEliminarLabel">
-                    <i class="fas fa-exclamation-triangle"></i> Confirmar Eliminación
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="mb-0">¿Estás seguro de que deseas eliminar el servicio <strong id="nombreEliminar"></strong>?</p>
-                <p class="text-muted mt-2 mb-0"><small>Esta acción no se puede deshacer.</small></p>
-                <input type="hidden" id="idEliminar" />
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times"></i> Cancelar
-                </button>
-                <button type="button" class="btn btn-danger" onclick="eliminarServicio()">
-                    <i class="fas fa-trash"></i> Eliminar
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-@section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let modoEdicion = false;
+
+        // Toggle sidebar en móviles
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Cerrar sidebar al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.sidebar-toggle');
+
+            if (window.innerWidth <= 768 &&
+                !sidebar.contains(e.target) &&
+                !toggle.contains(e.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
 
         // Abrir modal para CREAR
         function abrirModalCrear() {
@@ -237,7 +684,6 @@
 
                     mostrarAlerta(id === 0 ? 'Servicio creado exitosamente' : 'Servicio actualizado exitosamente', 'success');
 
-                    // Recargar la página después de 1 segundo
                     setTimeout(() => {
                         window.location.reload();
                     }, 1000);
@@ -266,21 +712,21 @@
                     const modal = bootstrap.Modal.getInstance(document.getElementById('modalEliminar'));
                     modal.hide();
 
-                    // Eliminar fila de la tabla
                     const fila = document.getElementById('fila-' + id);
                     if (fila) {
                         fila.remove();
                     }
 
-                    // Verificar si quedan filas
                     const tbody = document.querySelector('#tablaServicios tbody');
                     if (tbody.querySelectorAll('tr[id^="fila-"]').length === 0) {
                         tbody.innerHTML = `
                             <tr id="filaVacia">
-                                <td colspan="5" class="text-center py-5">
-                                    <i class="fas fa-inbox fa-4x text-muted mb-3 d-block"></i>
-                                    <h4 class="text-muted">No hay servicios registrados</h4>
-                                    <p class="text-muted">Comienza creando tu primer servicio</p>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="fas fa-inbox"></i>
+                                        <h4>No hay servicios registrados</h4>
+                                        <p>Comienza creando tu primer servicio</p>
+                                    </div>
                                 </td>
                             </tr>
                         `;
@@ -321,4 +767,5 @@
             this.value = this.value.replace(/[^0-9]/g, '');
         });
     </script>
-}
+</body>
+</html>

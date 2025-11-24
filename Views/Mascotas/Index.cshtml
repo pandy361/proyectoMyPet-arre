@@ -1,777 +1,904 @@
 ﻿@{
     ViewData["Title"] = "Mis Mascotas";
-    Layout = "_Layout";
+    Layout = null;
 }
 
-<div class="mascotas-page">
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="user-profile">
-            <div class="avatar">
-                <i class="fas fa-paw"></i>
-            </div>
-            <h3>Hola, <span id="nombreUsuario">Usuario</span></h3>
-            <p class="user-role">Dueño de Mascota</p>
-        </div>
-
-        <nav class="sidebar-menu">
-            
-            <a href="/Prestadores/Index" class="menu-item">
-                <i class="fas fa-users"></i>
-                <span>Prestadores</span>
-            </a>
-            <a href="/Mascotas/Index" class="menu-item active">
-                <i class="fas fa-paw"></i>
-                <span>Mis Mascotas</span>
-            </a>
-            <a href="/Pedidos" class="menu-item">
-                <i class="fas fa-shopping-bag"></i>
-                <span>Mis Pedidos</span>
-            </a>
-        </nav>
-
-        <form asp-controller="Autenticacion" asp-action="Logout" method="post" class="logout-form">
-            <button type="submit" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Cerrar Sesión</span>
-            </button>
-        </form>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <div class="content-header">
-            <div>
-                <h1><i class="fas fa-paw"></i> Mis Mascotas</h1>
-                <p>Gestiona la información de tus mascotas</p>
-            </div>
-            <button class="btn-add-mascota" onclick="abrirModalNuevaMascota()">
-                <i class="fas fa-plus"></i> Agregar Mascota
-            </button>
-        </div>
-
-        <!-- LISTA DE MASCOTAS -->
-        <div class="mascotas-grid" id="mascotas-container">
-            <!-- Las mascotas se cargarán dinámicamente -->
-        </div>
-
-        <!-- MENSAJE VACÍO -->
-        <div class="empty-state" id="empty-state" style="display: none;">
-            <i class="fas fa-paw"></i>
-            <h3>No tienes mascotas registradas</h3>
-            <p>Agrega tu primera mascota para comenzar</p>
-            <button class="btn-primary" onclick="abrirModalNuevaMascota()">
-                <i class="fas fa-plus"></i> Agregar Mascota
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL CREAR/EDITAR MASCOTA -->
-<div id="mascotaModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="modalTitle">Nueva Mascota</h2>
-            <button class="modal-close" onclick="cerrarModal()">&times;</button>
-        </div>
-        <form id="mascotaForm">
-            <input type="hidden" id="mascotaId">
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="nombre">Nombre *</label>
-                    <input type="text" id="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="tipo">Tipo *</label>
-                    <select id="tipo" required>
-                        <option value="">Seleccionar...</option>
-                        <option value="Perro">Perro</option>
-                        <option value="Gato">Gato</option>
-                        <option value="Ave">Ave</option>
-                        <option value="Pez">Pez</option>
-                        <option value="Hamster">Hamster</option>
-                        <option value="Conejo">Conejo</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="raza">Raza</label>
-                    <input type="text" id="raza">
-                </div>
-                <div class="form-group">
-                    <label for="edad">Edad (años)</label>
-                    <input type="number" id="edad" min="0" max="30">
-                </div>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #f5f7fa;
-    }
-
-    .mascotas-page {
-        display: flex;
-        min-height: 100vh;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-        width: 280px;
-        background: white;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        height: 100vh;
-        left: 0;
-        top: 0;
-    }
-
-    .user-profile {
-        padding: 30px 20px;
-        text-align: center;
-        border-bottom: 1px solid #e8ecef;
-    }
-
-    .avatar {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 15px;
-        color: white;
-        font-size: 32px;
-    }
-
-    .user-profile h3 {
-        color: #2d3748;
-        font-size: 20px;
-        margin-bottom: 5px;
-    }
-
-    .user-role {
-        color: #48bb78;
-        font-size: 14px;
-    }
-
-    .sidebar-menu {
-        flex: 1;
-        padding: 20px 0;
-    }
-
-    .menu-item {
-        display: flex;
-        align-items: center;
-        padding: 15px 25px;
-        color: #718096;
-        text-decoration: none;
-        transition: all 0.3s;
-        border-left: 3px solid transparent;
-    }
-
-        .menu-item:hover {
-            background: #f7fafc;
-            color: #667eea;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .menu-item.active {
-            background: #edf2f7;
-            color: #667eea;
-            border-left-color: #667eea;
+        body, html {
+            height: 100%;
+            overflow-x: hidden;
         }
 
-        .menu-item i {
-            width: 24px;
-            font-size: 18px;
-            margin-right: 15px;
+        .mascotas-page {
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
         }
 
-    .logout-form {
-        padding: 20px;
-        border-top: 1px solid #e8ecef;
-    }
-
-    .logout-btn {
-        width: 100%;
-        padding: 12px;
-        background: #fc8181;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 15px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        transition: all 0.3s;
-    }
-
-        .logout-btn:hover {
-            background: #f56565;
-            transform: translateY(-2px);
+        /* COMPACT SIDEBAR */
+        .compact-sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
 
-    /* MAIN CONTENT */
-    .main-content {
-        margin-left: 280px;
-        flex: 1;
-        padding: 40px;
-    }
+        .sidebar-content {
+            padding: 30px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .content-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
 
-        .content-header h1 {
-            color: #2d3748;
-            font-size: 32px;
+        .logo-mini {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
 
-            .content-header h1 i {
+        .paw-icon {
+            color: white;
+            font-size: 30px;
+        }
+
+        .user-greeting h4 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .user-type {
+            color: #4CAF50;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-link:hover {
+                background: #f0f8ff;
                 color: #667eea;
+                transform: translateX(3px);
             }
 
-        .content-header p {
-            color: #718096;
-            margin-top: 5px;
+            .nav-link.active {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
         }
 
-    .btn-add-mascota {
-        padding: 12px 24px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 15px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s;
-    }
-
-        .btn-add-mascota:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-    /* GRID DE MASCOTAS */
-    .mascotas-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-    }
-
-    .mascota-card {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        transition: all 0.3s;
-        position: relative;
-    }
-
-        .mascota-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-    .mascota-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 20px;
-    }
-
-    .mascota-icon {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 28px;
-    }
-
-    .mascota-actions {
-        display: flex;
-        gap: 8px;
-    }
-
-    .btn-icon {
-        width: 36px;
-        height: 36px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s;
-    }
-
-    .btn-edit {
-        background: #bee3f8;
-        color: #2b6cb0;
-    }
-
-        .btn-edit:hover {
-            background: #90cdf4;
-        }
-
-    .btn-delete {
-        background: #fed7d7;
-        color: #c53030;
-    }
-
-        .btn-delete:hover {
-            background: #fc8181;
+        .nav-link.active .nav-icon {
+            background: rgba(255, 255, 255, 0.2);
             color: white;
         }
 
-    .mascota-info h3 {
-        color: #2d3748;
-        font-size: 22px;
-        margin-bottom: 5px;
-    }
-
-    .mascota-tipo {
-        display: inline-block;
-        padding: 4px 12px;
-        background: #e6fffa;
-        color: #319795;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 15px;
-    }
-
-    .mascota-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .detail-label {
-        color: #a0aec0;
-        font-size: 12px;
-        margin-bottom: 4px;
-    }
-
-    .detail-value {
-        color: #2d3748;
-        font-size: 15px;
-        font-weight: 500;
-    }
-
-    /* EMPTY STATE */
-    .empty-state {
-        text-align: center;
-        padding: 80px 20px;
-        background: white;
-        border-radius: 15px;
-    }
-
-        .empty-state i {
-            font-size: 80px;
-            color: #cbd5e0;
-            margin-bottom: 20px;
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
         }
 
-        .empty-state h3 {
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .logout-btn:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-info h1 {
             color: #2d3748;
-            font-size: 24px;
+            font-size: 36px;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .empty-state p {
+        .header-info p {
             color: #718096;
-            margin-bottom: 25px;
+            font-size: 16px;
         }
 
-    /* MODAL */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 1000;
-        align-items: center;
-        justify-content: center;
-    }
-
-        .modal.active {
-            display: flex;
-        }
-
-    .modal-content {
-        background: white;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 600px;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 25px;
-        border-bottom: 1px solid #e8ecef;
-    }
-
-        .modal-header h2 {
-            color: #2d3748;
-            font-size: 24px;
-        }
-
-    .modal-close {
-        width: 40px;
-        height: 40px;
-        border: none;
-        background: #f7fafc;
-        border-radius: 10px;
-        font-size: 24px;
-        color: #718096;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-        .modal-close:hover {
-            background: #edf2f7;
-            color: #2d3748;
-        }
-
-    #mascotaForm {
-        padding: 25px;
-    }
-
-    .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        margin-bottom: 20px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-        .form-group label {
-            color: #2d3748;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .form-group input,
-        .form-group select {
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
+        .btn-add-mascota {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
             font-size: 15px;
-            transition: all 0.3s;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
         }
 
-            .form-group input:focus,
-            .form-group select:focus {
-                outline: none;
-                border-color: #667eea;
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            .btn-add-mascota:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
             }
 
-    .modal-actions {
-        display: flex;
-        gap: 12px;
-        justify-content: flex-end;
-        margin-top: 25px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 10px;
-        font-size: 15px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-    }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        /* GRID DE MASCOTAS */
+        .mascotas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
-    .btn-secondary {
-        background: #edf2f7;
-        color: #718096;
-    }
-
-        .btn-secondary:hover {
-            background: #e2e8f0;
+        .mascota-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-    /* RESPONSIVE */
-    @@media (max-width: 768px) {
-        .sidebar
-
-    {
-        width: 80px;
-    }
-
-    .sidebar .menu-item span,
-    .user-profile h3,
-    .user-profile p,
-    .logout-btn span {
-        display: none;
-    }
-
-    .main-content {
-        margin-left: 80px;
-    }
-
-    .mascotas-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    }
-</style>
-
-<script>
-    let mascotas = [];
-    let usuarioId = null;
-
-    // CARGAR MASCOTAS AL INICIAR
-    document.addEventListener('DOMContentLoaded', async function() {
-        await cargarMascotas();
-    });
-
-    // CARGAR MASCOTAS
-    async function cargarMascotas() {
-        try {
-            const response = await fetch('/Mascotas/ObtenerMascotas');
-            const result = await response.json();
-
-            if (result.success) {
-                mascotas = result.data;
-                usuarioId = result.usuarioId;
-                renderizarMascotas();
+            .mascota-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
             }
-        } catch (error) {
-            console.error('Error al cargar mascotas:', error);
-        }
-    }
 
-    // RENDERIZAR MASCOTAS
-    function renderizarMascotas() {
-        const container = document.getElementById('mascotas-container');
-        const emptyState = document.getElementById('empty-state');
-
-        if (mascotas.length === 0) {
-            container.style.display = 'none';
-            emptyState.style.display = 'block';
-            return;
+        .mascota-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
         }
 
-        container.style.display = 'grid';
-        emptyState.style.display = 'none';
+        .mascota-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
 
-        container.innerHTML = mascotas.map(mascota => `
-            <div class="mascota-card">
-                <div class="mascota-header">
-                    <div class="mascota-icon">
-                        <i class="fas fa-${getIconoPorTipo(mascota.tipo)}"></i>
+        .mascota-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn-edit {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+            .btn-edit:hover {
+                background: #93c5fd;
+                transform: scale(1.1);
+            }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+            .btn-delete:hover {
+                background: #fca5a5;
+                color: white;
+                transform: scale(1.1);
+            }
+
+        .mascota-info {
+            padding-top: 10px;
+        }
+
+            .mascota-info h3 {
+                color: #2d3748;
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 10px;
+            }
+
+        .mascota-tipo {
+            display: inline-block;
+            padding: 6px 16px;
+            background: #d1fae5;
+            color: #065f46;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .mascota-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            color: #a0aec0;
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #2d3748;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        }
+
+            .empty-state i {
+                font-size: 80px;
+                color: #cbd5e0;
+                margin-bottom: 25px;
+            }
+
+            .empty-state h3 {
+                color: #2d3748;
+                font-size: 24px;
+                margin-bottom: 12px;
+            }
+
+            .empty-state p {
+                color: #718096;
+                margin-bottom: 30px;
+                font-size: 16px;
+            }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .modal.active {
+                display: flex;
+            }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+            .modal-header h2 {
+                color: #2d3748;
+                font-size: 26px;
+                font-weight: 700;
+            }
+
+        .modal-close {
+            width: 45px;
+            height: 45px;
+            border: none;
+            background: #f7fafc;
+            border-radius: 12px;
+            font-size: 24px;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .modal-close:hover {
+                background: #edf2f7;
+                color: #2d3748;
+                transform: rotate(90deg);
+            }
+
+        #mascotaForm {
+            padding: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .form-group label {
+                color: #2d3748;
+                font-weight: 600;
+                margin-bottom: 10px;
+                font-size: 15px;
+            }
+
+            .form-group input,
+            .form-group select {
+                padding: 14px 16px;
+                border: 2px solid #e2e8f0;
+                border-radius: 12px;
+                font-size: 15px;
+                transition: all 0.3s ease;
+            }
+
+                .form-group input:focus,
+                .form-group select:focus {
+                    outline: none;
+                    border-color: #667eea;
+                    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+                }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            }
+
+        .btn-secondary {
+            background: #edf2f7;
+            color: #718096;
+        }
+
+            .btn-secondary:hover {
+                background: #e2e8f0;
+                color: #2d3748;
+            }
+
+        /* SIDEBAR TOGGLE BUTTON */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+        /* RESPONSIVE */
+        @@media (max-width: 768px) {
+            .compact-sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .compact-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .btn-add-mascota {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .mascotas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="mascotas-page">
+        <!-- SIDEBAR -->
+        <div class="compact-sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <div class="logo-mini">
+                        <div class="paw-icon">🐾</div>
                     </div>
-                    <div class="mascota-actions">
-                        <button class="btn-icon btn-edit" onclick="editarMascota(${mascota.idMascota})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-icon btn-delete" onclick="confirmarEliminar(${mascota.idMascota}, '${mascota.nombre}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <div class="user-greeting">
+                        <h4>Hola, <span id="nombreUsuario">Usuario</span></h4>
+                        <span class="user-type">Dueño de Mascota</span>
                     </div>
                 </div>
-                <div class="mascota-info">
-                    <h3>${mascota.nombre}</h3>
-                    <span class="mascota-tipo">${mascota.tipo}</span>
-                    <div class="mascota-details">
-                        <div class="detail-item">
-                            <span class="detail-label">Raza</span>
-                            <span class="detail-value">${mascota.raza || 'No especificada'}</span>
+
+                <div class="quick-nav">
+                    <a href="/Prestadores/Index" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
                         </div>
-                        <div class="detail-item">
-                            <span class="detail-label">Edad</span>
-                            <span class="detail-value">${mascota.edad ? mascota.edad + ' años' : 'No especificada'}</span>
+                        <span>Inicio</span>
+                    </a>
+                    <a href="/Pedidodueño/MisPedidos" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="  fas fa-shopping-bag"></i>
                         </div>
-                    </div>
+                        <span>Mis Pedidos</span>
+                    </a>
+                    <a href="/Mascotas/Index" class="nav-link active">
+                        <div class="nav-icon">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <span>Mis Mascotas</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-footer">
+                    <form asp-controller="Autenticacion" asp-action="Logout" method="post" style="margin: 0;">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </button>
+                    </form>
                 </div>
             </div>
-        `).join('');
-    }
+        </div>
 
-    // OBTENER ICONO POR TIPO
-    function getIconoPorTipo(tipo) {
-        const iconos = {
-            'Perro': 'dog',
-            'Gato': 'cat',
-            'Ave': 'dove',
-            'Pez': 'fish',
-            'Hamster': 'mouse',
-            'Conejo': 'rabbit',
-            'Otro': 'paw'
-        };
-        return iconos[tipo] || 'paw';
-    }
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="content-header">
+                <div class="header-info">
+                    <h1>Mis Mascotas</h1>
+                    <p>Gestiona la información de tus mascotas</p>
+                </div>
+                <button class="btn-add-mascota" onclick="abrirModalNuevaMascota()">
+                    <i class="fas fa-plus"></i>
+                    Agregar Mascota
+                </button>
+            </div>
 
-    // ABRIR MODAL NUEVA MASCOTA
-    function abrirModalNuevaMascota() {
-        document.getElementById('modalTitle').textContent = 'Nueva Mascota';
-        document.getElementById('mascotaForm').reset();
-        document.getElementById('mascotaId').value = '';
-        document.getElementById('mascotaModal').classList.add('active');
-    }
+            <!-- LISTA DE MASCOTAS -->
+            <div class="mascotas-grid" id="mascotas-container">
+                <!-- Las mascotas se cargarán dinámicamente -->
+            </div>
 
-    // EDITAR MASCOTA
-    function editarMascota(id) {
-        const mascota = mascotas.find(m => m.idMascota === id);
-        if (!mascota) return;
+            <!-- MENSAJE VACÍO -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <i class="fas fa-paw"></i>
+                <h3>No tienes mascotas registradas</h3>
+                <p>Agrega tu primera mascota para comenzar</p>
+                <button class="btn-primary" onclick="abrirModalNuevaMascota()">
+                    <i class="fas fa-plus"></i>
+                    Agregar Mascota
+                </button>
+            </div>
+        </div>
+    </div>
 
-        document.getElementById('modalTitle').textContent = 'Editar Mascota';
-        document.getElementById('mascotaId').value = mascota.idMascota;
-        document.getElementById('nombre').value = mascota.nombre;
-        document.getElementById('tipo').value = mascota.tipo;
-        document.getElementById('raza').value = mascota.raza || '';
-        document.getElementById('edad').value = mascota.edad || '';
-        document.getElementById('mascotaModal').classList.add('active');
-    }
+    <!-- Botón para toggle sidebar en móviles -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
 
-    // CERRAR MODAL
-    function cerrarModal() {
-        document.getElementById('mascotaModal').classList.remove('active');
-    }
+    <!-- MODAL CREAR/EDITAR MASCOTA -->
+    <div id="mascotaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nueva Mascota</h2>
+                <button class="modal-close" onclick="cerrarModal()">&times;</button>
+            </div>
+            <form id="mascotaForm">
+                <input type="hidden" id="mascotaId">
 
-    // GUARDAR MASCOTA
-    document.getElementById('mascotaForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo *</label>
+                        <select id="tipo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Perro">Perro</option>
+                            <option value="Gato">Gato</option>
+                            <option value="Ave">Ave</option>
+                            <option value="Pez">Pez</option>
+                            <option value="Hamster">Hamster</option>
+                            <option value="Conejo">Conejo</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
 
-        const id = document.getElementById('mascotaId').value;
-        const data = {
-            IdMascota: id ? parseInt(id) : 0,
-            Nombre: document.getElementById('nombre').value,
-            Tipo: document.getElementById('tipo').value,
-            Raza: document.getElementById('raza').value || null,
-            Edad: document.getElementById('edad').value ? parseInt(document.getElementById('edad').value) : null
-        };
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="raza">Raza</label>
+                        <input type="text" id="raza">
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad (años)</label>
+                        <input type="number" id="edad" min="0" max="30">
+                    </div>
+                </div>
 
-        try {
-            const url = id ? '/Mascotas/Actualizar' : '/Mascotas/Crear';
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            const result = await response.json();
+    <script>
+        let mascotas = [];
+        let usuarioId = null;
 
-            if (result.success) {
+        // Toggle sidebar en móviles
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Cerrar sidebar al hacer clic fuera en móviles
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.sidebar-toggle');
+
+            if (window.innerWidth <= 768 && sidebar && toggleBtn) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // CARGAR MASCOTAS AL INICIAR
+        document.addEventListener('DOMContentLoaded', async function() {
+            await cargarMascotas();
+        });
+
+        // CARGAR MASCOTAS
+        async function cargarMascotas() {
+            try {
+                const response = await fetch('/Mascotas/ObtenerMascotas');
+                const result = await response.json();
+
+                if (result.success) {
+                    mascotas = result.data;
+                    usuarioId = result.usuarioId;
+
+                    // Actualizar nombre de usuario en sidebar
+                    if (result.nombreUsuario) {
+                        document.getElementById('nombreUsuario').textContent = result.nombreUsuario;
+                    }
+
+                    renderizarMascotas();
+                }
+            } catch (error) {
+                console.error('Error al cargar mascotas:', error);
+            }
+        }
+
+        // RENDERIZAR MASCOTAS
+        function renderizarMascotas() {
+            const container = document.getElementById('mascotas-container');
+            const emptyState = document.getElementById('empty-state');
+
+            if (mascotas.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = mascotas.map(mascota => `
+                <div class="mascota-card">
+                    <div class="mascota-header">
+                        <div class="mascota-icon">
+                            <i class="fas fa-${getIconoPorTipo(mascota.tipo)}"></i>
+                        </div>
+                        <div class="mascota-actions">
+                            <button class="btn-icon btn-edit" onclick="editarMascota(${mascota.idMascota})" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon btn-delete" onclick="confirmarEliminar(${mascota.idMascota}, '${mascota.nombre}')" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mascota-info">
+                        <h3>${mascota.nombre}</h3>
+                        <span class="mascota-tipo">${mascota.tipo}</span>
+                        <div class="mascota-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Raza</span>
+                                <span class="detail-value">${mascota.raza || 'No especificada'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Edad</span>
+                                <span class="detail-value">${mascota.edad ? mascota.edad + ' años' : 'No especificada'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // OBTENER ICONO POR TIPO
+        function getIconoPorTipo(tipo) {
+            const iconos = {
+                'Perro': 'dog',
+                'Gato': 'cat',
+                'Ave': 'dove',
+                'Pez': 'fish',
+                'Hamster': 'mouse',
+                'Conejo': 'rabbit',
+                'Otro': 'paw'
+            };
+            return iconos[tipo] || 'paw';
+        }
+
+        // ABRIR MODAL NUEVA MASCOTA
+        function abrirModalNuevaMascota() {
+            document.getElementById('modalTitle').textContent = 'Nueva Mascota';
+            document.getElementById('mascotaForm').reset();
+            document.getElementById('mascotaId').value = '';
+            document.getElementById('mascotaModal').classList.add('active');
+        }
+
+        // EDITAR MASCOTA
+        function editarMascota(id) {
+            const mascota = mascotas.find(m => m.idMascota === id);
+            if (!mascota) return;
+
+            document.getElementById('modalTitle').textContent = 'Editar Mascota';
+            document.getElementById('mascotaId').value = mascota.idMascota;
+            document.getElementById('nombre').value = mascota.nombre;
+            document.getElementById('tipo').value = mascota.tipo;
+            document.getElementById('raza').value = mascota.raza || '';
+            document.getElementById('edad').value = mascota.edad || '';
+            document.getElementById('mascotaModal').classList.add('active');
+        }
+
+        // CERRAR MODAL
+        function cerrarModal() {
+            document.getElementById('mascotaModal').classList.remove('active');
+        }
+
+        // GUARDAR MASCOTA
+        document.getElementById('mascotaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const id = document.getElementById('mascotaId').value;
+            const data = {
+                IdMascota: id ? parseInt(id) : 0,
+                Nombre: document.getElementById('nombre').value,
+                Tipo: document.getElementById('tipo').value,
+                Raza: document.getElementById('raza').value || null,
+                Edad: document.getElementById('edad').value ? parseInt(document.getElementById('edad').value) : null
+            };
+
+            try {
+                const url = id ? '/Mascotas/Actualizar' : '/Mascotas/Crear';
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    cerrarModal();
+                    await cargarMascotas();
+                    alert(result.message);
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar la mascota');
+            }
+        });
+
+        // CONFIRMAR ELIMINAR
+        function confirmarEliminar(id, nombre) {
+            if (confirm(`¿Estás seguro de eliminar a ${nombre}?`)) {
+                eliminarMascota(id);
+            }
+        }
+
+        // ELIMINAR MASCOTA
+        async function eliminarMascota(id) {
+            try {
+                const response = await fetch(`/Mascotas/Eliminar/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    await cargarMascotas();
+                    alert(result.message);
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al eliminar la mascota');
+            }
+        }
+
+        // CERRAR MODAL AL HACER CLIC FUERA
+        document.getElementById('mascotaModal').addEventListener('click', function(e) {
+            if (e.target === this) {
                 cerrarModal();
-                await cargarMascotas();
-                alert(result.message);
-            } else {
-                alert(result.message);
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al guardar la mascota');
-        }
-    });
-
-    // CONFIRMAR ELIMINAR
-    function confirmarEliminar(id, nombre) {
-        if (confirm(`¿Estás seguro de eliminar a ${nombre}?`)) {
-            eliminarMascota(id);
-        }
-    }
-
-    // ELIMINAR MASCOTA
-    async function eliminarMascota(id) {
-        try {
-            const response = await fetch(`/Mascotas/Eliminar/${id}`, {
-                method: 'DELETE'
-            });
-
-            const result = await response.json();
-
-            if (result.success) {
-                await cargarMascotas();
-                alert(result.message);
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al eliminar la mascota');
-        }
-    }
-
-    // CERRAR MODAL AL HACER CLIC FUERA
-    document.getElementById('mascotaModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            cerrarModal();
-        }
-    });
-</script>
+        });
+    </script>
+</body>
+</html>

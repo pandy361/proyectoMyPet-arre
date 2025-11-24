@@ -66,9 +66,8 @@ wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\css\registro.css
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\css\site.css
-C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\favicon.ico
-C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\js\indexa.js
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\js\registro.js
+C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\js\site.js
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -126,6 +125,7 @@ C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.slim.js
+C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\favicon.ico
+C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\js\indexa.js
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.slim.min.js
-C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\ASUS\source\repos\proyecto_mejoradoMytet\wwwroot\lib\jquery\LICENSE.txt

@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // ⬇️ AGREGAR ESTA LÍNEA - Configurar sesiones
 builder.Services.AddSession();

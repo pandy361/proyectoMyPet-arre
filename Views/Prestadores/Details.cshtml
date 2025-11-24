@@ -866,13 +866,13 @@
                     </div>
 
                     <div class="quick-nav">
-                        <a href="@Url.Action("Index", "Home")" class="nav-link">
+                        <a href="@Url.Action("Index", "Prestadores")" class="nav-link">
                             <div class="nav-icon">
                                 <i class="fas fa-home"></i>
                             </div>
                             <span>Inicio</span>
                         </a>
-                        <a href="@Url.Action("Index", "Prestadores")" class="nav-link">
+                        <a href="@Url.Action("MisPedidos", "Pedidodueño")" class="nav-link">
                             <div class="nav-icon">
                                 <i class="fas fa-users"></i>
                             </div>
@@ -917,7 +917,7 @@
                             <i class="fas fa-comment"></i>
                             <span>Contactar</span>
                         </button>
-                        <button class="quick-action-btn" onclick="onclick=" window.location.href='@Url.Action("Agendar", "Citas")' ">
+                        <button class="quick-action-btn" onclick="agendarCita()">
                             <i class="fas fa-calendar-plus"></i>
                             <span>Agendar</span>
                         </button>

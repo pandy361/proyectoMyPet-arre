@@ -697,13 +697,13 @@
                 </div>
 
                 <div class="quick-nav">
-                    <a href="/Prestadores/Index" class="nav-link">
+                    <a href="/Prestadores/Index" class="nav-link active">
                         <div class="nav-icon"><i class="fas fa-home"></i></div>
                         <span>Inicio</span>
                     </a>
-                    <a href="/Prestadores/Index" class="nav-link active">
-                        <div class="nav-icon"><i class="fas fa-users"></i></div>
-                        <span>Prestadores</span>
+                    <a href="/Pedidodueño/MisPedidos" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <span>Mis Pedidos</span>
                     </a>
                     
                         <a href="/Mascotas/Index" class="nav-link">
@@ -755,23 +755,23 @@
                 </div>
             </div>
 
-            <div class="search-section">
-                <div class="search-container">
-                    <form method="get" action="@Url.Action("Index")" class="search-form">
-                        <div class="search-input-wrapper">
-                            <input type="text" name="buscar" value="@ViewBag.BuscarTermino"
-                                   placeholder="Buscar por nombre, habilidades o servicios..." class="search-input">
-                            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                <div class="search-section">
+                    <div class="search-container">
+                        <form method="get" action="@Url.Action("Index")" class="search-form">
+                            <div class="search-input-wrapper">
+                                <input type="text" name="buscar" value="@ViewBag.BuscarTermino"
+                                       placeholder="Buscar por nombre, habilidades o servicios..." class="search-input">
+                                <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i>Todos</button>
+                            <button class="filter-btn" data-filter="top-rated"><i class="fas fa-crown"></i>Mejor Valorados</button>
+                            <button class="filter-btn" data-filter="veterinary"><i class="fas fa-stethoscope"></i>Veterinarios</button>
+                            <button class="filter-btn" data-filter="grooming"><i class="fas fa-cut"></i>Peluquería</button>
                         </div>
-                    </form>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i>Todos</button>
-                        <button class="filter-btn" data-filter="top-rated"><i class="fas fa-crown"></i>Mejor Valorados</button>
-                        <button class="filter-btn" data-filter="veterinary"><i class="fas fa-stethoscope"></i>Veterinarios</button>
-                        <button class="filter-btn" data-filter="grooming"><i class="fas fa-cut"></i>Peluquería</button>
                     </div>
                 </div>
-            </div>
 
             <div class="prestadores-container">
                 @if (Model != null && Model.Any())
