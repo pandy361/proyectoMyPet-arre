@@ -3,6 +3,9 @@
     public class AgendarPedidoViewModel
     {
         public int IdPrestador { get; set; }
+
+        public int IdUsuarioPrestador { get; set; } // ✅ AGREGAR ESTE CAMPO
+
         public string NombrePrestador { get; set; } = string.Empty;
         public decimal CalificacionPrestador { get; set; }
         public List<ServicioSeleccionViewModel> ServiciosDisponibles { get; set; } = new();

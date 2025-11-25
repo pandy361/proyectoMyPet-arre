@@ -261,6 +261,145 @@ namespace proyecto_mejoradoMy_pet.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ValidarDisponibilidad([FromBody] ValidarDisponibilidadRequest request)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine($"🔍 Validando disponibilidad para prestador {request.IdPrestador}");
+                System.Diagnostics.Debug.WriteLine($"   Fecha: {request.FechaServicio}, Hora: {request.HoraInicio} - {request.HoraFin}");
 
-    }  
+                // 1. Validar que se recibieron los datos
+                if (request.IdPrestador <= 0)
+                {
+                    return Json(new { disponible = false, mensaje = "ID de prestador inválido" });
+                }
+
+                // 2. Obtener el prestador para conseguir su IdUsuario
+                var prestador = await _context.TbPrestadores
+                    .FirstOrDefaultAsync(p => p.IdPrestador == request.IdPrestador);
+
+                if (prestador == null)
+                {
+                    return Json(new { disponible = false, mensaje = "Prestador no encontrado" });
+                }
+
+                int idUsuarioPrestador = prestador.IdUsuario;
+                System.Diagnostics.Debug.WriteLine($"   ID Usuario Prestador: {idUsuarioPrestador}");
+
+                // 3. Parsear fecha y horas
+                DateOnly fechaServicio;
+                TimeOnly horaInicio;
+                TimeOnly horaFin;
+
+                try
+                {
+                    fechaServicio = DateOnly.Parse(request.FechaServicio);
+                    horaInicio = TimeOnly.Parse(request.HoraInicio);
+                    horaFin = TimeOnly.Parse(request.HoraFin);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"❌ Error parseando fechas: {ex.Message}");
+                    return Json(new { disponible = false, mensaje = "Formato de fecha u hora inválido" });
+                }
+
+                // 4. Obtener día de la semana
+                DateTime fecha = fechaServicio.ToDateTime(TimeOnly.MinValue);
+                string[] diasSemana = { "Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
+                string diaSemana = diasSemana[(int)fecha.DayOfWeek];
+
+                System.Diagnostics.Debug.WriteLine($"   Día de la semana: {diaSemana}");
+
+                // 5. Verificar disponibilidad del prestador ese día
+                var disponibilidad = await _context.TbDisponibilidads
+                    .FirstOrDefaultAsync(d => d.IdPrestador == request.IdPrestador && d.DiaSemana == diaSemana);
+
+                if (disponibilidad == null)
+                {
+                    // Obtener días disponibles para mostrar al usuario
+                    var diasDisponibles = await _context.TbDisponibilidads
+                        .Where(d => d.IdPrestador == request.IdPrestador)
+                        .Select(d => d.DiaSemana)
+                        .ToListAsync();
+
+                    System.Diagnostics.Debug.WriteLine($"❌ Prestador no disponible los {diaSemana}");
+
+                    return Json(new
+                    {
+                        disponible = false,
+                        mensaje = $"El prestador no está disponible los días {diaSemana}. Días disponibles: {string.Join(", ", diasDisponibles)}"
+                    });
+                }
+
+                // 6. Verificar que el horario esté dentro del rango de disponibilidad
+                if (horaInicio < disponibilidad.HoraInicio || horaFin > disponibilidad.HoraFin)
+                {
+                    System.Diagnostics.Debug.WriteLine($"❌ Horario fuera de rango. Disponible: {disponibilidad.HoraInicio} - {disponibilidad.HoraFin}");
+
+                    return Json(new
+                    {
+                        disponible = false,
+                        mensaje = $"Horario fuera de disponibilidad. El prestador está disponible los {diaSemana} de {disponibilidad.HoraInicio:hh\\:mm} a {disponibilidad.HoraFin:hh\\:mm}."
+                    });
+                }
+
+                // 7. ✅ CORRECCIÓN: Verificar conflictos usando id_usuario_prestador
+                var pedidosConfirmados = await _context.TbPedidos
+                    .Where(p => p.IdUsuarioPrestador == idUsuarioPrestador  // ✅ Usar el IdUsuario del prestador
+                             && p.FechaServicio == fechaServicio
+                             && (p.Estado == "Aceptado" || p.Estado == "Completado"))
+                    .ToListAsync();
+
+                System.Diagnostics.Debug.WriteLine($"   Pedidos confirmados encontrados: {pedidosConfirmados.Count}");
+
+                foreach (var pedido in pedidosConfirmados)
+                {
+                    // Verificar si hay traslape de horarios
+                    bool hayTraslape = !(horaFin <= pedido.HoraServicioFrom || horaInicio >= pedido.HoraServicioTo);
+
+                    if (hayTraslape)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"❌ Traslape detectado con pedido {pedido.IdPedido}: {pedido.HoraServicioFrom} - {pedido.HoraServicioTo}");
+
+                        return Json(new
+                        {
+                            disponible = false,
+                            mensaje = $"El prestador ya tiene un servicio confirmado en ese horario ({pedido.HoraServicioFrom:hh\\:mm} - {pedido.HoraServicioTo:hh\\:mm}). Por favor, elige otro horario."
+                        });
+                    }
+                }
+
+                // 8. Todo está disponible
+                System.Diagnostics.Debug.WriteLine($"✅ Horario disponible");
+
+                return Json(new
+                {
+                    disponible = true,
+                    mensaje = "Horario disponible"
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ Error general: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"   StackTrace: {ex.StackTrace}");
+
+                return Json(new
+                {
+                    disponible = false,
+                    mensaje = "Error al validar la disponibilidad: " + ex.Message
+                });
+            }
+        }
+
+        // CLASE REQUEST PARA VALIDACIÓN (ahora solo necesita IdPrestador)
+        public class ValidarDisponibilidadRequest
+        {
+            public int IdPrestador { get; set; }
+            public int IdUsuarioPrestador { get; set; } // Ya no se usa, lo obtenemos del prestador
+            public string FechaServicio { get; set; } = string.Empty;
+            public string HoraInicio { get; set; } = string.Empty;
+            public string HoraFin { get; set; } = string.Empty;
+        }
+    }
 }

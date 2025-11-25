@@ -389,6 +389,36 @@
             color: #667eea;
         }
 
+        /* Botón de Factura */
+        .factura-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            margin-top: 20px;
+            width: 100%;
+        }
+
+            .factura-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+                background: linear-gradient(135deg, #059669, #047857);
+                color: white;
+            }
+
+            .factura-btn i {
+                font-size: 18px;
+            }
+
         .empty-state {
             text-align: center;
             padding: 80px 20px;
@@ -503,7 +533,7 @@
                         </div>
                         <span>Inicio</span>
                     </a>
-                    <a href="@Url.Action("MisPedidos", "Pedidos")" class="nav-link active">
+                    <a href="@Url.Action("MisPedidos", "Pedidosdueño")" class="nav-link active">
                         <div class="nav-icon">
                             <i class="fas fa-shopping-bag"></i>
                         </div>
@@ -548,7 +578,7 @@
                                         <div class="pedido-fecha">@pedido.FechaServicio.ToString("dd MMM yyyy")</div>
                                         <div class="pedido-hora">
                                             <i class="fas fa-clock"></i>
-                                            @pedido.HoraServicioFrom.ToString(@"hh\:mm") - @pedido.HoraServicioTo.ToString(@"hh\:mm")
+                                            @pedido.HoraServicioFrom.ToString(@"HH\:mm") - @pedido.HoraServicioTo.ToString(@"HH\:mm")
                                         </div>
                                     </div>
                                     <span class="pedido-estado @(pedido.Estado == "Pendiente" ? "estado-pendiente" : "estado-progreso")">
@@ -618,6 +648,14 @@
                                     <span class="total-label">Total</span>
                                     <span class="total-valor">$@pedido.Total.ToString("N0")</span>
                                 </div>
+
+                                <!-- Botón para generar factura -->
+                                <a href="@Url.Action("GenerarFacturaPDF", "Pedidosdueño", new { id = pedido.IdPedido })"
+                                   class="factura-btn"
+                                   target="_blank">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Generar Factura PDF</span>
+                                </a>
                             </div>
                         }
                     }

@@ -867,10 +867,15 @@
         <i class="fas fa-bars"></i>
     </button>
 
+
+
+
+
     <script>
         const TASA_CONVERSION = 4000;
         let totalCOP = 0;
         let totalUSD = 0;
+        const ID_PRESTADOR = @Model.IdPrestador;
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
@@ -918,7 +923,7 @@
             renderPayPalButton();
         }
 
-                function validarFormulario() {
+        function validarFormulario() {
             const serviciosSeleccionados = document.querySelectorAll('.servicio-checkbox:checked');
             const mascotasSeleccionadas = document.querySelectorAll('.mascota-checkbox:checked');
             const direccionSeleccionada = document.querySelector('input[name="direccion"]:checked');
@@ -927,88 +932,130 @@
             const horaFin = document.getElementById('horaFin').value;
 
             if (serviciosSeleccionados.length === 0) {
-                alert('Debes seleccionar al menos un servicio');
+                alert('❌ Debes seleccionar al menos un servicio');
                 return false;
             }
             if (mascotasSeleccionadas.length === 0) {
-                alert('Debes seleccionar al menos una mascota');
+                alert('❌ Debes seleccionar al menos una mascota');
                 return false;
             }
             if (!direccionSeleccionada) {
-                alert('Debes seleccionar una dirección');
+                alert('❌ Debes seleccionar una dirección');
                 return false;
             }
             if (!fechaServicio || !horaInicio || !horaFin) {
-                alert('Debes completar la fecha y hora del servicio');
+                alert('❌ Debes completar la fecha y hora del servicio');
                 return false;
             }
             if (horaFin <= horaInicio) {
-                alert('La hora de fin debe ser posterior a la hora de inicio');
-                return false;
-            }
-
-            // ✅ NUEVA VALIDACIÓN DE DISPONIBILIDAD
-            if (!validarHorarioDisponibilidad()) {
+                alert('❌ La hora de fin debe ser posterior a la hora de inicio');
                 return false;
             }
 
             return true;
         }
-                function validarHorarioDisponibilidad() {
+
+        // ✅ VALIDAR DISPONIBILIDAD - SIMPLIFICADO Y CORREGIDO
+        async function validarDisponibilidad() {
             const fechaServicio = document.getElementById('fechaServicio').value;
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFin = document.getElementById('horaFin').value;
 
             if (!fechaServicio || !horaInicio || !horaFin) {
-                return true; // Dejar que validarFormulario() maneje esto
+                console.log('⚠️ Faltan datos para validar');
+                return { disponible: true, mensaje: '' }; // No bloquear si faltan datos
             }
 
-            // Obtener día de la semana de la fecha seleccionada
-            const fecha = new Date(fechaServicio + 'T00:00:00');
-            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            const diaSemana = diasSemana[fecha.getDay()];
+            if (horaFin <= horaInicio) {
+                return { disponible: false, mensaje: 'La hora de fin debe ser posterior a la hora de inicio' };
+            }
 
-            // Disponibilidad del prestador (desde el modelo)
-            const disponibilidad = @Html.Raw(Json.Serialize(Model.Disponibilidad));
+            try {
+                console.log('🔍 Validando disponibilidad...');
 
-            // Buscar si el prestador está disponible ese día
-            const disponibleEseDia = disponibilidad.find(d => d.DiaSemana === diaSemana);
+                const response = await fetch('/Citas/ValidarDisponibilidad', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    },
+                    body: JSON.stringify({
+                        IdPrestador: ID_PRESTADOR,
+                        FechaServicio: fechaServicio,
+                        HoraInicio: horaInicio + ':00',
+                        HoraFin: horaFin + ':00'
+                    })
+                });
 
-            if (!disponibleEseDia) {
-                alert(`El prestador no está disponible los días ${diaSemana}.\n\nDías disponibles: ${disponibilidad.map(d => d.DiaSemana).join(', ')}`);
+                if (!response.ok) {
+                    console.error('❌ Error HTTP:', response.status);
+                    return { disponible: false, mensaje: 'Error al validar disponibilidad' };
+                }
+
+                const result = await response.json();
+                console.log('✅ Resultado:', result);
+
+                return result;
+            } catch (error) {
+                console.error('❌ Error de red:', error);
+                return { disponible: false, mensaje: 'Error de conexión. Verifica tu red.' };
+            }
+        }
+
+        // ✅ VALIDAR ANTES DE PAYPAL - AHORA SOLO VALIDA, NO BLOQUEA
+        async function validarAntesDePayPal() {
+            console.log('🔍 Validando antes de PayPal...');
+
+            // 1. Validaciones básicas
+            if (!validarFormulario()) {
                 return false;
             }
 
-            // Convertir horas a minutos para comparar
-            function horaAMinutos(hora) {
-                const [h, m] = hora.split(':').map(Number);
-                return h * 60 + m;
-            }
+            // 2. Validar disponibilidad
+            const resultadoDisponibilidad = await validarDisponibilidad();
 
-            const inicioMinutos = horaAMinutos(horaInicio);
-            const finMinutos = horaAMinutos(horaFin);
-            const dispInicioMinutos = horaAMinutos(disponibleEseDia.HoraInicio);
-            const dispFinMinutos = horaAMinutos(disponibleEseDia.HoraFin);
-
-            // Validar que esté dentro del rango de disponibilidad
-            if (inicioMinutos < dispInicioMinutos || finMinutos > dispFinMinutos) {
-                alert(`Horario fuera de disponibilidad.\n\nEl prestador está disponible los ${diaSemana} de ${disponibleEseDia.HoraInicio} a ${disponibleEseDia.HoraFin}.\n\nTu selección: ${horaInicio} - ${horaFin}`);
+            if (!resultadoDisponibilidad.disponible) {
+                alert('❌ ' + resultadoDisponibilidad.mensaje);
                 return false;
             }
 
+            console.log('✅ Validación exitosa');
             return true;
         }
 
+        function mostrarAlerta(mensaje, tipo) {
+            const alertaAnterior = document.querySelector('.alerta-disponibilidad');
+            if (alertaAnterior) alertaAnterior.remove();
+
+            const alerta = document.createElement('div');
+            alerta.className = 'alerta-disponibilidad alert ' + (tipo === 'error' ? 'alert-warning' : 'alert-info');
+            alerta.innerHTML = `
+                <i class="fas fa-${tipo === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${mensaje}</span>
+            `;
+
+            const fechaCard = document.querySelector('#fechaServicio').closest('.form-card');
+            const titulo = fechaCard.querySelector('.form-section-title');
+            titulo.after(alerta);
+        }
+
+        function ocultarAlerta() {
+            const alerta = document.querySelector('.alerta-disponibilidad');
+            if (alerta) alerta.remove();
+        }
+
         function recopilarDatos() {
-            const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
-            const mascotasSeleccionadas = Array.from(document.querySelectorAll('.mascota-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
+            const serviciosSeleccionados = Array.from(document.querySelectorAll('.servicio-checkbox:checked'))
+                .map(cb => parseInt(cb.dataset.id));
+            const mascotasSeleccionadas = Array.from(document.querySelectorAll('.mascota-checkbox:checked'))
+                .map(cb => parseInt(cb.dataset.id));
             const direccionSeleccionada = document.querySelector('input[name="direccion"]:checked');
             const fechaServicio = document.getElementById('fechaServicio').value;
             const horaInicio = document.getElementById('horaInicio').value;
             const horaFin = document.getElementById('horaFin').value;
 
             return {
-                IdPrestador: @Model.IdPrestador,
+                IdPrestador: ID_PRESTADOR,
                 ServiciosSeleccionados: serviciosSeleccionados,
                 MascotasSeleccionadas: mascotasSeleccionadas,
                 IdDireccion: parseInt(direccionSeleccionada.value),
@@ -1019,7 +1066,7 @@
             };
         }
 
-                function renderPayPalButton() {
+        function renderPayPalButton() {
             const container = document.getElementById('paypal-button-container');
             container.innerHTML = '';
 
@@ -1037,12 +1084,22 @@
                     height: 50
                 },
 
-                onClick: function() {
-                    // Validar antes de abrir PayPal
-                    return validarFormulario();
+                // ✅ VALIDAR ANTES DE ABRIR PAYPAL
+                onClick: async function(data, actions) {
+                    console.log('🖱️ Click en botón PayPal');
+                    const esValido = await validarAntesDePayPal();
+
+                    if (!esValido) {
+                        console.log('❌ Validación fallida, bloqueando PayPal');
+                        return actions.reject();
+                    }
+
+                    console.log('✅ Validación exitosa, abriendo PayPal');
+                    return actions.resolve();
                 },
 
                 createOrder: function(data, actions) {
+                    console.log('💳 Creando orden PayPal por $' + totalUSD);
                     return actions.order.create({
                         purchase_units: [{
                             description: 'Servicios para mascotas - @Model.NombrePrestador',
@@ -1055,13 +1112,13 @@
                 },
 
                 onApprove: async function(data, actions) {
-                    const order = await actions.order.capture();
-                    console.log('Pago capturado:', order);
-
-                    const formData = recopilarDatos();
-                    formData.PaypalOrderId = order.id;
-
                     try {
+                        const order = await actions.order.capture();
+                        console.log('✅ Pago capturado:', order.id);
+
+                        const formData = recopilarDatos();
+                        formData.PaypalOrderId = order.id;
+
                         const response = await fetch('/Citas/ProcesarAgendamiento', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -1071,32 +1128,53 @@
                         const result = await response.json();
 
                         if (result.success) {
-                            alert('¡Pago completado exitosamente!\n\nID de transacción: ' + order.id);
+                            alert('🎉 ¡Pago completado!\n\nID: ' + order.id);
                             window.location.href = '/Usuario/MisPedidos';
                         } else {
-                            alert('Error al procesar el pedido: ' + result.message);
+                            alert('❌ Error: ' + result.message);
                         }
                     } catch (error) {
-                        console.error('Error:', error);
-                        alert('Error al procesar el agendamiento. Contacta soporte con ID: ' + order.id);
+                        console.error('❌ Error:', error);
+                        alert('❌ Error al procesar. Contacta soporte.');
                     }
                 },
 
                 onCancel: function() {
+                    console.log('❌ Pago cancelado');
                     alert('Pago cancelado');
                 },
 
                 onError: function(err) {
-                    console.error('Error PayPal:', err);
-                    alert('Error con PayPal. Intenta nuevamente.');
+                    console.error('❌ Error PayPal:', err);
+                    alert('❌ Error con PayPal. Intenta nuevamente.');
                 }
             }).render('#paypal-button-container');
         }
 
+        // ✅ VALIDACIÓN EN TIEMPO REAL (OPCIONAL - Muestra alertas mientras el usuario escribe)
+        async function validarTiempoReal() {
+            const resultado = await validarDisponibilidad();
+
+            if (resultado.disponible) {
+                ocultarAlerta();
+            } else if (resultado.mensaje) {
+                mostrarAlerta(resultado.mensaje, 'error');
+            }
+        }
+
+        // ✅ INICIALIZAR
         document.addEventListener('DOMContentLoaded', function() {
             const predeterminada = document.querySelector('.direccion-item input:checked');
-            if (predeterminada) predeterminada.closest('.direccion-item').classList.add('selected');
+            if (predeterminada) {
+                predeterminada.closest('.direccion-item').classList.add('selected');
+            }
+
             actualizarResumen();
+
+            // Event listeners para validación en tiempo real (opcional)
+            document.getElementById('fechaServicio').addEventListener('change', validarTiempoReal);
+            document.getElementById('horaInicio').addEventListener('change', validarTiempoReal);
+            document.getElementById('horaFin').addEventListener('change', validarTiempoReal);
         });
     </script>
 </body>
