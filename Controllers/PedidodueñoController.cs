@@ -14,7 +14,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
         public PedidodueñoController(BdMypetv3Context context)
         {
             _context = context;
-            // Configuración de licencia para QuestPDF (Community)
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
@@ -42,8 +41,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
                     .ThenInclude(d => d.IdServicioNavigation)
                 .Include(p => p.TbPedidoMascota)
                     .ThenInclude(pm => pm.IdMascotaNavigation)
-                .Where(p => p.IdUsuarioDueño == userId &&
-                           (p.Estado == "Pendiente" || p.Estado == "En Progreso"))
+                .Where(p => p.IdUsuarioDueño == userId)
                 .OrderByDescending(p => p.FechaPedido)
                 .ToListAsync();
 
@@ -52,6 +50,268 @@ namespace proyecto_mejoradoMy_pet.Controllers
             ViewBag.UserType = HttpContext.Session.GetString("UserType");
 
             return View(pedidos);
+        }
+
+        // ✅ CORREGIDO: GET: Pedidosdueño/DetallePedido/{id}
+        [HttpGet]
+        public async Task<IActionResult> DetallePedido(int id)
+        {
+            var isAuthenticated = HttpContext.Session.GetString("IsAuthenticated");
+            if (string.IsNullOrEmpty(isAuthenticated))
+            {
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            var userIdString = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            try
+            {
+                // Obtener el pedido con todas sus relaciones
+                var pedido = await _context.TbPedidos
+                    .Include(p => p.IdUsuarioDueñoNavigation)
+                    .Include(p => p.IdUsuarioPrestadorNavigation)
+                    .Include(p => p.IdDireccionNavigation)
+                    .Include(p => p.TbDetallePedidos)
+                        .ThenInclude(d => d.IdServicioNavigation)
+                    .Include(p => p.TbPedidoMascota)
+                        .ThenInclude(pm => pm.IdMascotaNavigation)
+                    .FirstOrDefaultAsync(p => p.IdPedido == id && p.IdUsuarioDueño == userId);
+
+                if (pedido == null)
+                {
+                    TempData["Error"] = "Pedido no encontrado";
+                    return RedirectToAction("MisPedidos");
+                }
+
+                // ✅ OBTENER EL PRESTADOR DIRECTAMENTE DE LA BD
+                var prestador = await _context.TbPrestadores
+                    .FirstOrDefaultAsync(p => p.IdUsuario == pedido.IdUsuarioPrestador);
+
+                // Verificar si ya existe una reseña para este pedido
+                var reseñaExistente = await _context.TbReseñas
+                    .FirstOrDefaultAsync(r => r.IdPedido == id);
+
+                // Crear el ViewModel
+                var viewModel = new DetallePedidoViewModel
+                {
+                    IdPedido = pedido.IdPedido,
+                    Estado = pedido.Estado,
+                    FechaPedido = pedido.FechaPedido,
+                    FechaServicio = pedido.FechaServicio,
+                    HoraInicio = pedido.HoraServicioFrom,
+                    HoraFin = pedido.HoraServicioTo,
+                    Total = pedido.Total,
+
+                    // Prestador
+                    IdPrestador = prestador?.IdPrestador ?? 0,
+                    NombrePrestador = $"{pedido.IdUsuarioPrestadorNavigation.PrimerNombre} {pedido.IdUsuarioPrestadorNavigation.PrimerApellido}",
+                    TelefonoPrestador = pedido.IdUsuarioPrestadorNavigation.Telefono ?? "No disponible",
+                    EmailPrestador = pedido.IdUsuarioPrestadorNavigation.Correo,
+                    CalificacionPrestador = prestador?.CalificacionPromedio ?? 0,
+                    
+                    DescripcionPrestador = prestador?.Resumen,
+
+                    // Dueño
+                    NombreDueño = $"{pedido.IdUsuarioDueñoNavigation.PrimerNombre} {pedido.IdUsuarioDueñoNavigation.PrimerApellido}",
+                    TelefonoDueño = pedido.IdUsuarioDueñoNavigation.Telefono ?? "No disponible",
+                    EmailDueño = pedido.IdUsuarioDueñoNavigation.Correo,
+
+                    // Dirección
+                    DireccionCompleta = $"{pedido.IdDireccionNavigation.Direccion}, {pedido.IdDireccionNavigation.Ciudad}, {pedido.IdDireccionNavigation.Departamento}",
+
+                    // Servicios
+                    Servicios = pedido.TbDetallePedidos.Select(d => new ServicioDetalle
+                    {
+                        Nombre = d.IdServicioNavigation.Nombre,
+                        Precio = d.IdServicioNavigation.Precio,
+                        Cantidad = d.Cantidad ?? 1,
+                        Subtotal = d.Subtotal
+                    }).ToList(),
+
+                    // Mascotas
+                    Mascotas = pedido.TbPedidoMascota.Select(pm => new MascotaDetalle
+                    {
+                        Nombre = pm.IdMascotaNavigation.Nombre,
+                        Tipo = pm.IdMascotaNavigation.Tipo,
+                        Raza = pm.IdMascotaNavigation.Raza
+                    }).ToList(),
+
+                    // Reseña (si existe)
+                    Reseña = reseñaExistente != null ? new ReseñaDetalle
+                    {
+                        IdReseña = reseñaExistente.IdReseña,
+                        Calificacion = reseñaExistente.Calificacion ?? 0,
+                        Comentario = reseñaExistente.Comentario,
+                        Fecha = reseñaExistente.Fecha ?? DateTime.Now
+                    } : null,
+
+                    // Control de reseñas
+                    PuedeDejarReseña = pedido.Estado == "Completado",
+                    YaDejoReseña = reseñaExistente != null
+                };
+
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                ViewBag.IsAuthenticated = true;
+                ViewBag.UserType = HttpContext.Session.GetString("UserType");
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Error al cargar los detalles: {ex.Message}";
+                return RedirectToAction("MisPedidos");
+            }
+        }
+
+        // ✅ CORREGIDO: POST: Pedidosdueño/CrearReseña
+        [HttpPost]
+        public async Task<IActionResult> CrearReseña([FromBody] CrearReseñaRequest request)
+        {
+            var isAuthenticated = HttpContext.Session.GetString("IsAuthenticated");
+            if (string.IsNullOrEmpty(isAuthenticated))
+            {
+                return Json(new { success = false, message = "Debes iniciar sesión" });
+            }
+
+            var userIdString = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return Json(new { success = false, message = "Usuario no identificado" });
+            }
+
+            // Validaciones
+            if (request.Calificacion < 1 || request.Calificacion > 5)
+            {
+                return Json(new { success = false, message = "La calificación debe estar entre 1 y 5" });
+            }
+
+            try
+            {
+                // Verificar que el pedido existe y pertenece al usuario
+                var pedido = await _context.TbPedidos
+                    .Include(p => p.IdUsuarioPrestadorNavigation)
+                    .FirstOrDefaultAsync(p => p.IdPedido == request.IdPedido && p.IdUsuarioDueño == userId);
+
+                if (pedido == null)
+                {
+                    return Json(new { success = false, message = "Pedido no encontrado" });
+                }
+
+                // VERIFICAR QUE EL PEDIDO ESTÉ COMPLETADO
+                if (pedido.Estado != "Completado")
+                {
+                    return Json(new { success = false, message = "Solo puedes dejar reseñas en pedidos completados" });
+                }
+
+                // Verificar si ya existe una reseña
+                var reseñaExistente = await _context.TbReseñas
+                    .FirstOrDefaultAsync(r => r.IdPedido == request.IdPedido);
+
+                if (reseñaExistente != null)
+                {
+                    return Json(new { success = false, message = "Ya has dejado una reseña para este pedido" });
+                }
+
+                // Crear la reseña
+                var nuevaReseña = new TbReseña
+                {
+                    IdPedido = request.IdPedido,
+                    IdUsuario = userId,
+                    Calificacion = request.Calificacion,
+                    Comentario = request.Comentario,
+                    Fecha = DateTime.Now
+                };
+
+                _context.TbReseñas.Add(nuevaReseña);
+                await _context.SaveChangesAsync();
+
+                // ✅ OBTENER Y ACTUALIZAR CALIFICACIÓN DEL PRESTADOR
+                var prestador = await _context.TbPrestadores
+                    .FirstOrDefaultAsync(p => p.IdUsuario == pedido.IdUsuarioPrestador);
+
+                if (prestador != null)
+                {
+                    await ActualizarCalificacionPrestador(prestador.IdPrestador);
+                }
+
+                return Json(new { success = true, message = "¡Reseña enviada exitosamente!" });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"❌ Error al crear reseña: {ex.Message}");
+                return Json(new { success = false, message = "Error al enviar la reseña: " + ex.Message });
+            }
+        }
+
+        // ✅ MÉTODO PRIVADO: Actualizar calificación del prestador
+        private async Task ActualizarCalificacionPrestador(int idPrestador)
+        {
+            var prestador = await _context.TbPrestadores
+                .FirstOrDefaultAsync(p => p.IdPrestador == idPrestador);
+
+            if (prestador != null)
+            {
+                // Obtener todas las reseñas del prestador
+                var reseñas = await _context.TbReseñas
+                    .Include(r => r.IdPedidoNavigation)
+                    .Where(r => r.IdPedidoNavigation.IdUsuarioPrestador == prestador.IdUsuario)
+                    .ToListAsync();
+
+                if (reseñas.Any())
+                {
+                    var calificacionPromedio = reseñas
+                        .Where(r => r.Calificacion.HasValue)
+                        .Average(r => (decimal)r.Calificacion.Value);
+
+                    prestador.CalificacionPromedio = calificacionPromedio;
+                    await _context.SaveChangesAsync();
+
+                    System.Diagnostics.Debug.WriteLine($"✅ Calificación actualizada: {calificacionPromedio:F2}");
+                }
+            }
+        }
+
+        // GET: Pedidosdueño/VerFactura/{id}
+        public async Task<IActionResult> VerFactura(int id)
+        {
+            var isAuthenticated = HttpContext.Session.GetString("IsAuthenticated");
+            if (string.IsNullOrEmpty(isAuthenticated))
+            {
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            var userIdString = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                return RedirectToAction("Login", "Autenticacion");
+            }
+
+            var pedido = await _context.TbPedidos
+                .AsNoTracking()
+                .Include(p => p.IdUsuarioPrestadorNavigation)
+                .Include(p => p.IdUsuarioDueñoNavigation)
+                .Include(p => p.IdDireccionNavigation)
+                .Include(p => p.TbDetallePedidos)
+                    .ThenInclude(d => d.IdServicioNavigation)
+                .Include(p => p.TbPedidoMascota)
+                    .ThenInclude(pm => pm.IdMascotaNavigation)
+                .Include(p => p.TbPagos)
+                .FirstOrDefaultAsync(p => p.IdPedido == id && p.IdUsuarioDueño == userId);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.IsAuthenticated = true;
+            ViewBag.UserType = HttpContext.Session.GetString("UserType");
+
+            return View(pedido);
         }
 
         // GET: Pedidosdueño/GenerarFacturaPDF/{id}
@@ -69,7 +329,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                 return RedirectToAction("Login", "Autenticacion");
             }
 
-            // Obtener el pedido completo
             var pedido = await _context.TbPedidos
                 .AsNoTracking()
                 .Include(p => p.IdUsuarioPrestadorNavigation)
@@ -86,10 +345,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
                 return NotFound();
             }
 
-            // Generar el PDF
             var pdfBytes = GenerarPDFFactura(pedido);
-
-            // Retornar el PDF
             return File(pdfBytes, "application/pdf", $"Factura_Pedido_{pedido.IdPedido}.pdf");
         }
 
@@ -138,7 +394,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                         .PaddingVertical(30)
                         .Column(column =>
                         {
-                            // Información del Cliente y Prestador
                             column.Item().Row(row =>
                             {
                                 row.RelativeItem().Column(col =>
@@ -166,7 +421,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 });
                             });
 
-                            // Detalles del Servicio
                             column.Item().PaddingTop(30).Column(col =>
                             {
                                 col.Item().Text("DETALLES DEL SERVICIO")
@@ -199,7 +453,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 });
                             });
 
-                            // Mascotas
                             if (pedido.TbPedidoMascota.Any())
                             {
                                 column.Item().PaddingTop(20).Column(col =>
@@ -213,7 +466,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 });
                             }
 
-                            // Tabla de Servicios
                             column.Item().PaddingTop(30).Table(table =>
                             {
                                 table.ColumnsDefinition(columns =>
@@ -223,7 +475,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                     columns.RelativeColumn(2);
                                 });
 
-                                // Encabezado
                                 table.Header(header =>
                                 {
                                     header.Cell().Background("#667eea").Padding(10).Text("SERVICIO").Bold().FontColor(Colors.White);
@@ -231,7 +482,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                     header.Cell().Background("#667eea").Padding(10).Text("SUBTOTAL").Bold().FontColor(Colors.White);
                                 });
 
-                                // Contenido
                                 foreach (var detalle in pedido.TbDetallePedidos)
                                 {
                                     table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(10).Text(detalle.IdServicioNavigation.Nombre);
@@ -240,7 +490,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 }
                             });
 
-                            // Total
                             column.Item().PaddingTop(20).AlignRight().Column(col =>
                             {
                                 col.Item().Row(row =>
@@ -253,7 +502,6 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 });
                             });
 
-                            // Notas
                             column.Item().PaddingTop(40).Column(col =>
                             {
                                 col.Item().Text("NOTAS")
@@ -267,13 +515,13 @@ namespace proyecto_mejoradoMy_pet.Controllers
                         });
 
                     page.Footer()
-     .AlignCenter() // Esto te devuelve un IContainer
-     .DefaultTextStyle(x => x.FontSize(9).FontColor(Colors.Grey.Darken1)) // <-- Usa .TextStyle() para aplicar estilos a Contenedores
-     .Text(text => // Ahora se define el contenido del texto
-     {
-         text.Span("Generado el: ");
-         text.Span($"{DateTime.Now:dd/MM/yyyy HH:mm}").Bold();
-     });
+                        .AlignCenter()
+                        .DefaultTextStyle(x => x.FontSize(9).FontColor(Colors.Grey.Darken1))
+                        .Text(text =>
+                        {
+                            text.Span("Generado el: ");
+                            text.Span($"{DateTime.Now:dd/MM/yyyy HH:mm}").Bold();
+                        });
                 });
             });
 

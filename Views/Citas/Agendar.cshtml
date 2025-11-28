@@ -1066,7 +1066,7 @@
             };
         }
 
-        function renderPayPalButton() {
+                function renderPayPalButton() {
             const container = document.getElementById('paypal-button-container');
             container.innerHTML = '';
 
@@ -1088,12 +1088,10 @@
                 onClick: async function(data, actions) {
                     console.log('🖱️ Click en botón PayPal');
                     const esValido = await validarAntesDePayPal();
-
                     if (!esValido) {
                         console.log('❌ Validación fallida, bloqueando PayPal');
                         return actions.reject();
                     }
-
                     console.log('✅ Validación exitosa, abriendo PayPal');
                     return actions.resolve();
                 },
@@ -1113,12 +1111,15 @@
 
                 onApprove: async function(data, actions) {
                     try {
+                        // Capturar el pago de PayPal
                         const order = await actions.order.capture();
                         console.log('✅ Pago capturado:', order.id);
 
+                        // Recopilar datos del formulario
                         const formData = recopilarDatos();
                         formData.PaypalOrderId = order.id;
 
+                        // Enviar datos al servidor
                         const response = await fetch('/Citas/ProcesarAgendamiento', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -1128,25 +1129,28 @@
                         const result = await response.json();
 
                         if (result.success) {
-                            alert('🎉 ¡Pago completado!\n\nID: ' + order.id);
-                            window.location.href = '/Usuario/MisPedidos';
+                            console.log('🎉 Pedido procesado exitosamente');
+                            console.log('📄 Redirigiendo a factura...');
+
+                            // ✅ CAMBIO IMPORTANTE: Redirigir a la página de factura
+                            window.location.href = result.redirectUrl;
                         } else {
-                            alert('❌ Error: ' + result.message);
+                            alert('❌ Error al procesar el pedido: ' + result.message);
                         }
                     } catch (error) {
-                        console.error('❌ Error:', error);
-                        alert('❌ Error al procesar. Contacta soporte.');
+                        console.error('❌ Error al procesar:', error);
+                        alert('❌ Error al procesar el pedido. Por favor contacta a soporte con el ID: ' + (order?.id || 'N/A'));
                     }
                 },
 
                 onCancel: function() {
-                    console.log('❌ Pago cancelado');
-                    alert('Pago cancelado');
+                    console.log('❌ Pago cancelado por el usuario');
+                    alert('Pago cancelado. Puedes intentarlo nuevamente cuando desees.');
                 },
 
                 onError: function(err) {
-                    console.error('❌ Error PayPal:', err);
-                    alert('❌ Error con PayPal. Intenta nuevamente.');
+                    console.error('❌ Error de PayPal:', err);
+                    alert('❌ Ocurrió un error con PayPal. Por favor intenta nuevamente.');
                 }
             }).render('#paypal-button-container');
         }

@@ -1,0 +1,559 @@
+﻿@model proyecto_mejoradoMy_pet.Models.TbPedido
+
+@{
+    ViewData["Title"] = "Factura";
+    Layout = null;
+    var pago = Model.TbPagos.FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura #@Model.IdPedido - MY PET</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .factura-container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+        }
+
+        @@keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .factura-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .factura-header::before {
+                content: '✓';
+                position: absolute;
+                top: -20px;
+                right: -20px;
+                font-size: 200px;
+                opacity: 0.1;
+            }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @@keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .success-icon i {
+            color: #10b981;
+            font-size: 40px;
+        }
+
+        .factura-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .factura-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .factura-content {
+            padding: 40px;
+        }
+
+        .factura-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .info-label {
+            color: #718096;
+            font-size: 13px;
+            display: block;
+        }
+
+        .info-value {
+            color: #2d3748;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .detalles-servicio {
+            margin-bottom: 30px;
+        }
+
+            .detalles-servicio h3 {
+                color: #2d3748;
+                font-size: 18px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .detalles-servicio h3 i {
+                    color: #667eea;
+                }
+
+        .detalle-grid {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detalle-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+            .detalle-row:last-child {
+                border-bottom: none;
+            }
+
+            .detalle-row i {
+                color: #667eea;
+                margin-right: 10px;
+            }
+
+        .servicios-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+            .servicios-table thead {
+                background: #667eea;
+                color: white;
+            }
+
+            .servicios-table th {
+                padding: 15px;
+                text-align: left;
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .servicios-table td {
+                padding: 15px;
+                border-bottom: 1px solid #e2e8f0;
+                font-size: 15px;
+            }
+
+            .servicios-table tbody tr:hover {
+                background: #f8f9fa;
+            }
+
+        .total-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .total-label {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .total-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .pago-info {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+            .pago-info h4 {
+                color: #065f46;
+                font-size: 16px;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .pago-info p {
+                color: #047857;
+                font-size: 14px;
+                margin: 5px 0;
+            }
+
+            .pago-info strong {
+                color: #065f46;
+            }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+            }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+            .btn-secondary:hover {
+                background: #f8f9fa;
+                transform: translateY(-2px);
+            }
+
+        .footer-note {
+            text-align: center;
+            color: #718096;
+            font-size: 13px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @@media print {
+            body {
+                background: white;
+            }
+
+            .factura-container {
+                box-shadow: none;
+            }
+
+            .button-container {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .factura-content {
+                padding: 20px;
+            }
+
+            .factura-info {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .servicios-table {
+                font-size: 13px;
+            }
+
+                .servicios-table th,
+                .servicios-table td {
+                    padding: 10px;
+                }
+        }
+    </style>
+</head>
+<body>
+    <div class="factura-container">
+        <!-- Header -->
+        <div class="factura-header">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h1>¡Pago Exitoso!</h1>
+            <p>Tu pedido ha sido confirmado y pagado</p>
+        </div>
+
+        <!-- Content -->
+        <div class="factura-content">
+            <!-- Información del Pedido y Pago -->
+            <div class="factura-info">
+                <div class="info-section">
+                    <h3><i class="fas fa-receipt"></i> Información de Factura</h3>
+                    <div class="info-item">
+                        <span class="info-label">Número de Factura</span>
+                        <span class="info-value">#@Model.IdPedido</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Fecha de Emisión</span>
+                        <span class="info-value">@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estado del Pedido</span>
+                        <span class="badge badge-info">@Model.Estado</span>
+                    </div>
+                    @if (pago != null)
+                    {
+                        <div class="info-item">
+                            <span class="info-label">Estado del Pago</span>
+                            <span class="badge badge-success">@pago.Estado</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-user"></i> Información del Cliente</h3>
+                    <div class="info-item">
+                        <span class="info-label">Nombre</span>
+                        <span class="info-value">@Model.IdUsuarioDueñoNavigation.PrimerNombre @Model.IdUsuarioDueñoNavigation.PrimerApellido</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Teléfono</span>
+                        <span class="info-value">@Model.IdUsuarioDueñoNavigation.Telefono</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">@Model.IdUsuarioDueñoNavigation.Correo</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalles del Servicio -->
+            <div class="detalles-servicio">
+                <h3><i class="fas fa-calendar-alt"></i> Detalles del Servicio</h3>
+
+                <div class="detalle-grid">
+                    <div class="detalle-row">
+                        <span><i class="fas fa-calendar"></i> Fecha del Servicio:</span>
+                        <strong>@Model.FechaServicio.ToString("dd/MM/yyyy")</strong>
+                    </div>
+                    <div class="detalle-row">
+                        <span><i class="fas fa-clock"></i> Horario:</span>
+                        <strong>@Model.HoraServicioFrom.ToString(@"HH\:mm") - @Model.HoraServicioTo.ToString(@"HH\:mm")</strong>
+                    </div>
+                    <div class="detalle-row">
+                        <span><i class="fas fa-map-marker-alt"></i> Dirección:</span>
+                        <strong>@Model.IdDireccionNavigation.Direccion</strong>
+                    </div>
+                    <div class="detalle-row">
+                        <span><i class="fas fa-user-tie"></i> Prestador:</span>
+                        <strong>@Model.IdUsuarioPrestadorNavigation.PrimerNombre @Model.IdUsuarioPrestadorNavigation.PrimerApellido</strong>
+                    </div>
+                    <div class="detalle-row">
+                        <span><i class="fas fa-phone"></i> Teléfono Prestador:</span>
+                        <strong>@Model.IdUsuarioPrestadorNavigation.Telefono</strong>
+                    </div>
+                    @if (Model.TbPedidoMascota.Any())
+                    {
+                        <div class="detalle-row">
+                            <span><i class="fas fa-paw"></i> Mascotas:</span>
+                            <strong>@string.Join(", ", Model.TbPedidoMascota.Select(pm => pm.IdMascotaNavigation.Nombre))</strong>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Tabla de Servicios -->
+            @if (Model.TbDetallePedidos.Any())
+            {
+                <div class="detalles-servicio">
+                    <h3><i class="fas fa-list"></i> Servicios Contratados</h3>
+
+                    <table class="servicios-table">
+                        <thead>
+                            <tr>
+                                <th>Servicio</th>
+                                <th style="text-align: center;">Cantidad</th>
+                                <th style="text-align: right;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detalle in Model.TbDetallePedidos)
+                            {
+                                <tr>
+                                    <td>@detalle.IdServicioNavigation.Nombre</td>
+                                    <td style="text-align: center;">@(detalle.Cantidad ?? 1)</td>
+                                    <td style="text-align: right;">$@detalle.Subtotal.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <!-- Total -->
+            <div class="total-section">
+                <div class="total-row">
+                    <span class="total-label">Total Pagado:</span>
+                    <span class="total-value">$@Model.Total.ToString("N0")</span>
+                </div>
+            </div>
+
+            <!-- Información del Pago -->
+            @if (pago != null)
+            {
+                <div class="pago-info">
+                    <h4><i class="fas fa-check-circle"></i> Información del Pago</h4>
+                    <p><strong>Método de Pago:</strong> @pago.Metodo</p>
+                    <p><strong>Fecha de Pago:</strong> @pago.FechaPago?.ToString("dd/MM/yyyy HH:mm")</p>
+                    @if (!string.IsNullOrEmpty(pago.IdTransaccionPaypal))
+                    {
+                        <p><strong>ID de Transacción:</strong> @pago.IdTransaccionPaypal</p>
+                    }
+                    <p style="margin-top: 10px; font-style: italic;">
+                        <i class="fas fa-info-circle"></i> El pago ha sido procesado exitosamente.
+                        Recibirás una confirmación por correo electrónico.
+                    </p>
+                </div>
+            }
+
+            <!-- Botones -->
+            <div class="button-container">
+                <button onclick="window.print()" class="btn btn-secondary">
+                    <i class="fas fa-print"></i>
+                    Imprimir Factura
+                </button>
+                <a href="@Url.Action("MisPedidos", "Pedidodueño")" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i>
+                    Ver Mis Pedidos
+                </a>
+            </div>
+
+            <!-- Footer Note -->
+            <div class="footer-note">
+                <p><i class="fas fa-paw"></i> Gracias por confiar en MY PET - Servicios para Mascotas</p>
+                <p>Para cualquier consulta, no dudes en contactarnos.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animación de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.factura-container');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.style.transition = 'opacity 0.5s ease';
+                container.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

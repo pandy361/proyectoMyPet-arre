@@ -262,9 +262,24 @@
             color: #92400e;
         }
 
-        .estado-progreso {
+        .estado-pagado {
             background: #dbeafe;
             color: #1e40af;
+        }
+
+        .estado-aceptado {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .estado-completado {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .estado-cancelado {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
         /* Sección del Prestador */
@@ -389,34 +404,77 @@
             color: #667eea;
         }
 
-        /* Botón de Factura */
-        .factura-btn {
+        /* ✅ NUEVOS BOTONES - 3 EN FILA */
+        .botones-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn-action {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px 30px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            text-decoration: none;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            margin-top: 20px;
-            width: 100%;
+            cursor: pointer;
+            text-decoration: none;
         }
 
-            .factura-btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        /* Botón PDF - Verde (más pequeño) */
+        .btn-pdf {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            flex: 0.8;
+        }
+
+            .btn-pdf:hover {
                 background: linear-gradient(135deg, #059669, #047857);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
                 color: white;
             }
 
-            .factura-btn i {
-                font-size: 18px;
+            .btn-pdf i {
+                font-size: 16px;
+            }
+
+        /* Botón Cancelar - Rojo */
+        .btn-cancelar {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            flex: 1;
+        }
+
+            .btn-cancelar:hover {
+                background: linear-gradient(135deg, #e53935, #c62828);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+            }
+
+            .btn-cancelar:disabled {
+                background: #ccc;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+        /* Botón Detalles - Morado/Azul */
+        .btn-detalles {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            flex: 1;
+        }
+
+            .btn-detalles:hover {
+                background: linear-gradient(135deg, #5568d3, #653a8e);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+                color: white;
             }
 
         .empty-state {
@@ -508,6 +566,14 @@
             width: 100%;
         }
 
+        .botones-container {
+            flex-direction: column;
+        }
+
+        .btn-pdf {
+            flex: 1;
+        }
+
         }
     </style>
 </head>
@@ -533,7 +599,7 @@
                         </div>
                         <span>Inicio</span>
                     </a>
-                    <a href="@Url.Action("MisPedidos", "Pedidosdueño")" class="nav-link active">
+                    <a href="@Url.Action("MisPedidos", "Pedidodueño")" class="nav-link active">
                         <div class="nav-icon">
                             <i class="fas fa-shopping-bag"></i>
                         </div>
@@ -563,7 +629,7 @@
             <div class="page-container">
                 <div class="page-header">
                     <h1 class="page-title">Mis Pedidos</h1>
-                    <p class="page-subtitle">Aquí puedes ver todos tus pedidos en progreso y contactar a tus prestadores</p>
+                    <p class="page-subtitle">Aquí puedes ver todos tus pedidos y contactar a tus prestadores</p>
                 </div>
 
                 <div class="pedidos-grid">
@@ -581,10 +647,16 @@
                                             @pedido.HoraServicioFrom.ToString(@"HH\:mm") - @pedido.HoraServicioTo.ToString(@"HH\:mm")
                                         </div>
                                     </div>
-                                    <span class="pedido-estado @(pedido.Estado == "Pendiente" ? "estado-pendiente" : "estado-progreso")">
-                                        @pedido.Estado
-                                    </span>
-                                </div>
+                                    <span class="pedido-estado @(
+                                          pedido.Estado == "Pendiente" ? "estado-pendiente" :
+                                          pedido.Estado == "Pagado" ? "estado-pagado" :
+                                          pedido.Estado == "Aceptado" ? "estado-aceptado" :
+                                          pedido.Estado == "Completado" ? "estado-completado" :
+                                          pedido.Estado == "Cancelado" ? "estado-cancelado" :
+                                          "estado-pagado")">
+                                @pedido.Estado
+                            </span>
+                        </div>
 
                                 <!-- Sección del Prestador -->
                                 <div class="prestador-section">
@@ -616,7 +688,7 @@
                                         <span class="detalle-valor">@pedido.IdDireccionNavigation.Direccion</span>
                                     </div>
 
-                                    @if (pedido.TbPedidoMascota.Any())
+                            @if (pedido.TbPedidoMascota.Any())
                                     {
                                         <div class="detalle-item">
                                             <span class="detalle-label">
@@ -649,13 +721,28 @@
                                     <span class="total-valor">$@pedido.Total.ToString("N0")</span>
                                 </div>
 
-                                <!-- Botón para generar factura -->
-                                <a href="@Url.Action("GenerarFacturaPDF", "Pedidosdueño", new { id = pedido.IdPedido })"
-                                   class="factura-btn"
-                                   target="_blank">
-                                    <i class="fas fa-file-pdf"></i>
-                                    <span>Generar Factura PDF</span>
-                                </a>
+                                <!-- ✅ NUEVOS 3 BOTONES EN FILA -->
+                                <div class="botones-container">
+                                    <a href="@Url.Action("GenerarFacturaPDF", "Pedidodueño", new { id = pedido.IdPedido })"
+                                       class="btn-action btn-pdf"
+                                       target="_blank">
+                                        <i class="fas fa-file-pdf"></i>
+                                        <span>PDF</span>
+                                    </a>
+
+                                    <button class="btn-action btn-cancelar"
+                                            onclick="cancelarPedido(@pedido.IdPedido)"
+                                            @(pedido.Estado == "Cancelado" || pedido.Estado == "Completado" ? "disabled" : "")>
+                                        <i class="fas fa-times-circle"></i>
+                                        <span>Cancelar</span>
+                                    </button>
+
+                                    <a href="@Url.Action("DetallePedido", "Pedidodueño", new { id = pedido.IdPedido })"
+                                       class="btn-action btn-detalles">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Detalles</span>
+                                    </a>
+                                </div>
                             </div>
                         }
                     }
@@ -663,7 +750,7 @@
                     {
                         <div class="empty-state">
                             <i class="fas fa-inbox"></i>
-                            <h3>No tienes pedidos en progreso</h3>
+                            <h3>No tienes pedidos</h3>
                             <p>Cuando realices un pedido, aparecerá aquí</p>
                         </div>
                     }
@@ -700,6 +787,14 @@
         function contactPrestador(numero) {
             let url = "https://wa.me/+57" + numero;
             window.open(url, "_blank");
+        }
+
+        // Función para cancelar pedido (por ahora solo muestra alerta)
+        function cancelarPedido(idPedido) {
+            if (confirm('¿Estás seguro de que deseas cancelar este pedido?')) {
+                // TODO: Implementar la lógica de cancelación
+                alert('Funcionalidad de cancelación en desarrollo. ID del pedido: ' + idPedido);
+            }
         }
     </script>
 </body>

@@ -192,7 +192,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
                     HoraServicioFrom = horaInicio,
                     HoraServicioTo = horaFin,
                     Total = total,
-                    Estado = "Pagado" // ✅ Ya está pagado por PayPal
+                    Estado = "Pendiente" // ✅ Ya está pagado por PayPal
                 };
 
                 _context.TbPedidos.Add(pedido);
@@ -249,7 +249,8 @@ namespace proyecto_mejoradoMy_pet.Controllers
                 {
                     success = true,
                     message = "Pedido agendado y pagado exitosamente",
-                    idPedido = pedido.IdPedido
+                    idPedido = pedido.IdPedido,
+                    redirectUrl = Url.Action("VerFactura", "Pedidodueño", new { id = pedido.IdPedido })
                 });
             }
             catch (Exception ex)

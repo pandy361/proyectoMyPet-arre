@@ -1,0 +1,767 @@
+﻿@model proyecto_mejoradoMy_pet.Models.DetallePedidoViewModel
+@{
+    ViewData["Title"] = "Detalles del Pedido";
+    Layout = null;
+    string userName = ViewBag.UserName ?? "Usuario";
+    string userType = ViewBag.UserType ?? "Dueño";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header h1 {
+                color: #333;
+                font-size: 28px;
+            }
+
+        .btn-back {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+            .btn-back:hover {
+                background: #5568d3;
+                transform: translateY(-2px);
+            }
+
+        .estado-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .estado-pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .estado-aceptado {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .estado-completado {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .estado-cancelado {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+            .card-title i {
+                color: #667eea;
+            }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .info-row:last-child {
+                border-bottom: none;
+            }
+
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .prestador-card {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .prestador-foto {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+
+        .prestador-info {
+            flex: 1;
+        }
+
+        .prestador-nombre {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 3px;
+            margin: 8px 0;
+        }
+
+            .rating-stars i {
+                color: #FFD700;
+                font-size: 16px;
+            }
+
+        .lista-items {
+            list-style: none;
+        }
+
+            .lista-items li {
+                padding: 12px;
+                background: #f8f9fa;
+                margin-bottom: 8px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+        .item-nombre {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .item-precio {
+            color: #4CAF50;
+            font-weight: 700;
+        }
+
+        .mascota-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+            .total-section h3 {
+                font-size: 16px;
+                margin-bottom: 10px;
+                opacity: 0.9;
+            }
+
+            .total-section .total-valor {
+                font-size: 36px;
+                font-weight: 700;
+            }
+
+        /* MODAL DE RESEÑA */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+            .modal.active {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.3s;
+        }
+
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        @@keyframes slideUp {
+            from
+
+        {
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+            .modal-header h2 {
+                color: #333;
+                margin-bottom: 5px;
+            }
+
+            .modal-header p {
+                color: #666;
+                font-size: 14px;
+            }
+
+        /* SISTEMA DE ESTRELLAS INTERACTIVO */
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+            .star-rating i {
+                font-size: 40px;
+                color: #ddd;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+                .star-rating i:hover,
+                .star-rating i.active {
+                    color: #FFD700;
+                    transform: scale(1.2);
+                }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+            .form-textarea:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background: #5568d3;
+            }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+            .btn-secondary:hover {
+                background: #d0d0d0;
+            }
+
+        .btn-review {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+            .btn-review:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+
+            .btn-review:disabled {
+                background: #ccc;
+                cursor: not-allowed;
+            }
+
+        .review-existente {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4CAF50;
+        }
+
+            .review-existente h4 {
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+        .review-texto {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .review-fecha {
+            color: #999;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        @@media (max-width: 768px) {
+            .grid-layout
+
+        {
+            grid-template-columns: 1fr;
+        }
+
+        .prestador-card {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <h1>Detalles del Pedido #@Model.IdPedido</h1>
+                <span class="estado-badge estado-@Model.Estado.ToLower()">@Model.Estado</span>
+            </div>
+            <a href="/Usuario/MisPedidos" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Volver
+            </a>
+        </div>
+
+        <!-- INFORMACIÓN DEL PEDIDO -->
+        <div class="grid-layout">
+            <div class="card">
+                <h3 class="card-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Información del Servicio
+                </h3>
+                <div class="info-row">
+                    <span class="info-label">Fecha del Pedido:</span>
+                    <span class="info-value">@Model.FechaPedido.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Fecha del Servicio:</span>
+                    <span class="info-value">@Model.FechaServicio.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Horario:</span>
+                    <span class="info-value">@Model.HoraInicio.ToString(@"hh\:mm") - @Model.HoraFin.ToString(@"hh\:mm")</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Dirección:</span>
+                    <span class="info-value">@Model.DireccionCompleta</span>
+                </div>
+            </div>
+
+            <!-- INFORMACIÓN DEL DUEÑO -->
+            <div class="card">
+                <h3 class="card-title">
+                    <i class="fas fa-user"></i>
+                    Información del Cliente
+                </h3>
+                <div class="info-row">
+                    <span class="info-label">Nombre:</span>
+                    <span class="info-value">@Model.NombreDueño</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Teléfono:</span>
+                    <span class="info-value">@Model.TelefonoDueño</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">@Model.EmailDueño</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFORMACIÓN DEL PRESTADOR -->
+        <div class="card">
+            <h3 class="card-title">
+                <i class="fas fa-user-tie"></i>
+                Información del Prestador
+            </h3>
+            <div class="prestador-card">
+                <div class="prestador-foto">
+                    @if (!string.IsNullOrEmpty(Model.FotoPrestador))
+                    {
+                        <img src="@Model.FotoPrestador" alt="Foto" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+                    }
+                    else
+                    {
+                        <i class="fas fa-user"></i>
+                    }
+                </div>
+                <div class="prestador-info">
+                    <div class="prestador-nombre">@Model.NombrePrestador</div>
+                    <div class="rating-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fas fa-star @(i <= Model.CalificacionPrestador ? "" : "text-muted")"></i>
+                        }
+                        <span style="margin-left:8px;color:#666;">(@Model.CalificacionPrestador.ToString("0.0"))</span>
+                    </div>
+                    <div style="color:#666;margin-top:5px;">
+                        <i class="fas fa-phone" style="margin-right:5px;"></i>@Model.TelefonoPrestador
+                    </div>
+                    <div style="color:#666;margin-top:5px;">
+                        <i class="fas fa-envelope" style="margin-right:5px;"></i>@Model.EmailPrestador
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.DescripcionPrestador))
+                    {
+                        <p style="margin-top:10px;color:#666;font-size:14px;">@Model.DescripcionPrestador</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICIOS Y MASCOTAS -->
+        <div class="grid-layout">
+            <div class="card">
+                <h3 class="card-title">
+                    <i class="fas fa-briefcase"></i>
+                    Servicios Contratados
+                </h3>
+                <ul class="lista-items">
+                    @foreach (var servicio in Model.Servicios)
+                    {
+                        <li>
+                            <span class="item-nombre">@servicio.Nombre (@servicio.Cantidad x)</span>
+                            <span class="item-precio">$@servicio.Subtotal.ToString("N0")</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">
+                    <i class="fas fa-paw"></i>
+                    Mascotas
+                </h3>
+                <ul class="lista-items">
+                    @foreach (var mascota in Model.Mascotas)
+                    {
+                        <li>
+                            <div>
+                                <span class="mascota-icon">
+                                    @if (mascota.Tipo.ToLower().Contains("perro"))
+                                    {
+                                        <text>🐕</text>
+                                    }
+                                    else if (mascota.Tipo.ToLower().Contains("gato"))
+                                    {
+
+                                        <text>🐈</text>
+                                    }
+                                    else
+                                    {
+
+                                        <text>🐾</text>
+                                    }
+                                </span>
+                                <span class="item-nombre">@mascota.Nombre</span>
+                                <div style="color:#666;font-size:13px;margin-left:34px;">@mascota.Tipo @(!string.IsNullOrEmpty(mascota.Raza) ? $"- {mascota.Raza}" : "")</div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="card">
+            <div class="total-section">
+                <h3>TOTAL DEL SERVICIO</h3>
+                <div class="total-valor">$@Model.Total.ToString("N0") COP</div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE RESEÑA -->
+        <div class="card">
+            <h3 class="card-title">
+                <i class="fas fa-star"></i>
+                Reseña del Servicio
+            </h3>
+
+            @if (Model.YaDejoReseña && Model.Reseña != null)
+            {
+                <div class="review-existente">
+                    <h4>Tu Reseña</h4>
+                    <div class="rating-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fas fa-star @(i <= Model.Reseña.Calificacion ? "" : "text-muted")"></i>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.Reseña.Comentario))
+                    {
+                        <p class="review-texto">@Model.Reseña.Comentario</p>
+                    }
+                    <p class="review-fecha">Enviada el @Model.Reseña.Fecha.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            }
+            else if (Model.PuedeDejarReseña)
+            {
+                <p style="color:#666;margin-bottom:15px;">¡El servicio ha sido completado! Comparte tu experiencia:</p>
+                <button class="btn-review" onclick="abrirModalReseña()">
+                    <i class="fas fa-star"></i>
+                    Dejar Reseña
+                </button>
+            }
+            else
+            {
+                <p style="color:#999;text-align:center;padding:20px;">
+                    <i class="fas fa-info-circle"></i>
+                    Las reseñas solo están disponibles cuando el servicio se ha completado
+                </p>
+            }
+        </div>
+    </div>
+
+    <!-- MODAL DE RESEÑA -->
+    <div id="modalReseña" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Califica el Servicio</h2>
+                <p>Tu opinión nos ayuda a mejorar</p>
+            </div>
+
+            <div class="star-rating" id="starRating">
+                <i class="fas fa-star" data-rating="1"></i>
+                <i class="fas fa-star" data-rating="2"></i>
+                <i class="fas fa-star" data-rating="3"></i>
+                <i class="fas fa-star" data-rating="4"></i>
+                <i class="fas fa-star" data-rating="5"></i>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Comentario (opcional)</label>
+                <textarea id="comentarioReseña" class="form-textarea" placeholder="Cuéntanos sobre tu experiencia..."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="cerrarModalReseña()">Cancelar</button>
+                <button class="btn btn-primary" onclick="enviarReseña()">Enviar Reseña</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let calificacionSeleccionada = 0;
+        const idPedido = @Model.IdPedido;
+        const idPrestador = @Model.IdPrestador;
+
+        // SISTEMA DE ESTRELLAS INTERACTIVO
+        document.querySelectorAll('.star-rating i').forEach(star => {
+            star.addEventListener('click', function() {
+                calificacionSeleccionada = parseInt(this.dataset.rating);
+                actualizarEstrellas();
+            });
+
+            star.addEventListener('mouseenter', function() {
+                const rating = parseInt(this.dataset.rating);
+                document.querySelectorAll('.star-rating i').forEach((s, index) => {
+                    s.style.color = index < rating ? '#FFD700' : '#ddd';
+                });
+            });
+        });
+
+        document.getElementById('starRating').addEventListener('mouseleave', actualizarEstrellas);
+
+        function actualizarEstrellas() {
+            document.querySelectorAll('.star-rating i').forEach((star, index) => {
+                if (index < calificacionSeleccionada) {
+                    star.classList.add('active');
+                    star.style.color = '#FFD700';
+                } else {
+                    star.classList.remove('active');
+                    star.style.color = '#ddd';
+                }
+            });
+        }
+
+        function abrirModalReseña() {
+            document.getElementById('modalReseña').classList.add('active');
+        }
+
+        function cerrarModalReseña() {
+            document.getElementById('modalReseña').classList.remove('active');
+            calificacionSeleccionada = 0;
+            actualizarEstrellas();
+            document.getElementById('comentarioReseña').value = '';
+        }
+
+        async function enviarReseña() {
+            if (calificacionSeleccionada === 0) {
+                alert('❌ Por favor selecciona una calificación');
+                return;
+            }
+
+            const comentario = document.getElementById('comentarioReseña').value;
+
+            try {
+                const response = await fetch('/Usuario/CrearReseña', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        IdPedido: idPedido,
+                        IdPrestador: idPrestador,
+                        Calificacion: calificacionSeleccionada,
+                        Comentario: comentario || null
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ ' + result.message);
+                    location.reload();
+                } else {
+                    alert('❌ ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error al enviar la reseña');
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('modalReseña').addEventListener('click', function(e) {
+            if (e.target === this) {
+                cerrarModalReseña();
+            }
+        });
+    </script>
+</body>
+</html>

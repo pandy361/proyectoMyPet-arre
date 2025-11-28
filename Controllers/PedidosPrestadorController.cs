@@ -76,7 +76,7 @@ namespace proyecto_mejoradoMy_pet.Controllers
             bool transicionValida = false;
             switch (pedido.Estado?.ToLower())
             {
-                case "pendiente":
+                case "Pagado (Pendiente)":
                     transicionValida = nuevoEstado == "Aceptado" || nuevoEstado == "Rechazado";
                     break;
                 case "aceptado":
