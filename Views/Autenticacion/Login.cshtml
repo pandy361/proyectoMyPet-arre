@@ -11,7 +11,7 @@
     <div class="sidebar">
         <div class="logo-section">
             <div class="logo-icon">
-                <i class="fas fa-paw"> </i>
+                <i class="fas fa-paw"></i>
             </div>
             <h1>MyPet</h1>
             <p>Tu plataforma confiable para el cuidado de mascotas</p>
@@ -108,18 +108,31 @@
 
             <form asp-action="Login" asp-controller="Autenticacion" method="post" id="login-form">
                 @Html.AntiForgeryToken()
-                
+
                 <!-- ROLE SELECTOR -->
                 <div class="role-selector">
                     <label>Ingresar como:</label>
                     <div class="role-options">
-                        <div class="role-option @(Model?.Rol == "Dueño" || Model?.Rol == null ? "active" : "")" onclick="selectRole(this, 'Dueño')">
-                            <input type="radio" asp-for="Rol" value="Dueño" @@(Model?.Rol == "Dueño" || Model?.Rol == null ? "checked" : "")>
+                        <!-- Dueño -->
+                        <div class="role-option @(Model?.Rol == "Dueño" || Model?.Rol == null ? "active" : "")"
+                             onclick="selectRole(this, 'Dueño')">
+                            <input type="radio"
+                                   id="rolDueno"
+                                   name="Rol"
+                                   value="Dueño"
+                                   @(Model?.Rol == "Dueño" || Model?.Rol == null ? "checked" : "")>
                             <i class="fas fa-heart"></i>
                             <span>Dueño</span>
                         </div>
-                        <div class="role-option @(Model?.Rol == "Prestador" ? "active" : "")" onclick="selectRole(this, 'Prestador')">
-                            <input type="radio" asp-for="Rol" value="Prestador"@@(Model?.Rol == "Prestador" ? "checked" : "")>
+
+                        <!-- Prestador -->
+                        <div class="role-option @(Model?.Rol == "Prestador" ? "active" : "")"
+                             onclick="selectRole(this, 'Prestador')">
+                            <input type="radio"
+                                   id="rolPrestador"
+                                   name="Rol"
+                                   value="Prestador"
+                                   @(Model?.Rol == "Prestador" ? "checked" : "")>
                             <i class="fas fa-user-tie"></i>
                             <span>Prestador</span>
                         </div>
@@ -231,8 +244,13 @@
     }
 
     @@keyframes logoFloat {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        0%, 100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
     }
 
     .logo-section h1 {
@@ -262,10 +280,10 @@
         transition: all 0.3s ease;
     }
 
-    .feature-item:hover {
-        background: rgba(255, 255, 255, 0.8);
-        transform: translateX(5px);
-    }
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(5px);
+        }
 
     .feature-icon {
         width: 40px;
@@ -284,18 +302,18 @@
         flex: 1;
     }
 
-    .feature-text h4 {
-        color: #333;
-        font-size: 14px;
-        font-weight: 600;
-        margin-bottom: 2px;
-    }
+        .feature-text h4 {
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
 
-    .feature-text p {
-        color: #666;
-        font-size: 12px;
-        line-height: 1.3;
-    }
+        .feature-text p {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.3;
+        }
 
     .sidebar-footer {
         text-align: center;
@@ -324,18 +342,18 @@
         transition: all 0.3s ease;
     }
 
-    .nav-link:hover {
-        background: #2196F3;
-        color: white;
-        transform: translateX(5px);
-        text-decoration: none;
-    }
+        .nav-link:hover {
+            background: #2196F3;
+            color: white;
+            transform: translateX(5px);
+            text-decoration: none;
+        }
 
-    .nav-link i {
-        font-size: 16px;
-        width: 20px;
-        text-align: center;
-    }
+        .nav-link i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
 
     .social-links {
         display: flex;
@@ -357,11 +375,11 @@
         cursor: pointer;
     }
 
-    .social-link:hover {
-        background: #2196F3;
-        color: white;
-        transform: translateY(-2px);
-    }
+        .social-link:hover {
+            background: #2196F3;
+            color: white;
+            transform: translateY(-2px);
+        }
 
     .copyright {
         color: #999;
@@ -388,15 +406,15 @@
         overflow: hidden;
     }
 
-    .login-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0);
-    }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0);
+        }
 
     .login-header {
         text-align: center;
@@ -418,10 +436,10 @@
         transition: all 0.3s ease;
     }
 
-    .avatar-section:hover {
-        transform: scale(1.05);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
+        .avatar-section:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
 
     .login-header h2 {
         color: #333;
@@ -451,23 +469,23 @@
         list-style: none;
     }
 
-    .error-message-global li {
-        margin: 0;
-        padding: 0;
-    }
+        .error-message-global li {
+            margin: 0;
+            padding: 0;
+        }
 
     /* ROLE SELECTOR */
     .role-selector {
         margin-bottom: 30px;
     }
 
-    .role-selector label {
-        display: block;
-        color: #333;
-        font-weight: 500;
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
+        .role-selector label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
 
     .role-options {
         display: flex;
@@ -486,33 +504,33 @@
         position: relative;
     }
 
-    .role-option:hover {
-        border-color: #2196F3;
-        background: #f0f8ff;
-        transform: translateY(-2px);
-    }
+        .role-option:hover {
+            border-color: #2196F3;
+            background: #f0f8ff;
+            transform: translateY(-2px);
+        }
 
-    .role-option.active {
-        border-color: #4CAF50;
-        background: #f1f8e9;
-        color: #2e7d32;
-        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
-    }
+        .role-option.active {
+            border-color: #4CAF50;
+            background: #f1f8e9;
+            color: #2e7d32;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
 
-    .role-option input {
-        display: none;
-    }
+        .role-option input {
+            display: none;
+        }
 
-    .role-option i {
-        font-size: 24px;
-        margin-bottom: 8px;
-        display: block;
-    }
+        .role-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
 
-    .role-option span {
-        font-size: 14px;
-        font-weight: 600;
-    }
+        .role-option span {
+            font-size: 14px;
+            font-weight: 600;
+        }
 
     /* FORM STYLES */
     .form-group {
@@ -520,13 +538,13 @@
         position: relative;
     }
 
-    .form-group label {
-        display: block;
-        color: #333;
-        font-weight: 500;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
 
     .input-wrapper {
         position: relative;
@@ -553,16 +571,16 @@
         box-sizing: border-box;
     }
 
-    .form-group input:focus {
-        border-color: #2196F3;
-        background: white;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-    }
+        .form-group input:focus {
+            border-color: #2196F3;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
 
-    .form-group input:focus + .input-icon {
-        color: #2196F3;
-    }
+            .form-group input:focus + .input-icon {
+                color: #2196F3;
+            }
 
     .password-toggle {
         position: absolute;
@@ -578,9 +596,9 @@
         z-index: 2;
     }
 
-    .password-toggle:hover {
-        color: #2196F3;
-    }
+        .password-toggle:hover {
+            color: #2196F3;
+        }
 
     /* FORM OPTIONS */
     .form-options {
@@ -598,18 +616,18 @@
         gap: 8px;
     }
 
-    .remember-me input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: #4CAF50;
-    }
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4CAF50;
+        }
 
-    .remember-me label {
-        font-size: 13px;
-        color: #666;
-        cursor: pointer;
-        margin-bottom: 0;
-    }
+        .remember-me label {
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
 
     .forgot-password {
         color: #2196F3;
@@ -619,10 +637,10 @@
         transition: color 0.3s ease;
     }
 
-    .forgot-password:hover {
-        color: #1976D2;
-        text-decoration: underline;
-    }
+        .forgot-password:hover {
+            color: #1976D2;
+            text-decoration: underline;
+        }
 
     /* BUTTONS */
     .login-button {
@@ -642,14 +660,14 @@
         gap: 8px;
     }
 
-    .login-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
-    }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
 
-    .login-button:active {
-        transform: translateY(0);
-    }
+        .login-button:active {
+            transform: translateY(0);
+        }
 
     .divider {
         display: flex;
@@ -657,20 +675,20 @@
         margin: 30px 0;
     }
 
-    .divider::before,
-    .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: #e1e5e9;
-    }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e1e5e9;
+        }
 
-    .divider span {
-        padding: 0 20px;
-        color: #999;
-        font-size: 13px;
-        font-weight: 500;
-    }
+        .divider span {
+            padding: 0 20px;
+            color: #999;
+            font-size: 13px;
+            font-weight: 500;
+        }
 
     .register-section {
         text-align: center;
@@ -678,11 +696,11 @@
         border-top: 1px solid #f0f0f0;
     }
 
-    .register-section p {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
+        .register-section p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
 
     .register-button {
         display: inline-flex;
@@ -699,13 +717,13 @@
         transition: all 0.3s ease;
     }
 
-    .register-button:hover {
-        background: #2196F3;
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
-        text-decoration: none;
-    }
+        .register-button:hover {
+            background: #2196F3;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+            text-decoration: none;
+        }
 
     .text-danger {
         color: #f44336;
@@ -719,21 +737,21 @@
         .sidebar {
             display: none;
         }
-        
+
         .main-content {
             padding: 20px;
         }
-        
+
         .login-container {
             padding: 30px 25px;
             margin: 20px 0;
         }
-        
+
         .role-options {
             flex-direction: column;
             gap: 15px;
         }
-        
+
         .form-options {
             flex-direction: column;
             align-items: flex-start;
@@ -745,12 +763,12 @@
         .login-container {
             padding: 25px 20px;
         }
-        
+
         .form-group input {
             padding: 12px 12px 12px 45px;
-            font-size: 16px; /* Previene zoom en iOS */
+            font-size: 16px;
         }
-        
+
         .login-button {
             padding: 14px;
             font-size: 15px;
@@ -761,15 +779,19 @@
 <script>
     // ROLE SELECTION
     function selectRole(element, role) {
+        console.log('🖱️ Rol seleccionado:', role);
+
         // Remove active class from all options
         document.querySelectorAll('.role-option').forEach(opt => opt.classList.remove('active'));
-        
+
         // Add active class to selected option
         element.classList.add('active');
-        
+
         // Check the radio button
-        element.querySelector('input').checked = true;
-        
+        const input = element.querySelector('input');
+        input.checked = true;
+        console.log('✅ Radio button marcado:', input.value);
+
         // Update avatar icon based on role
         const avatar = document.querySelector('.avatar-section i');
         if (role === 'Prestador') {
@@ -783,7 +805,7 @@
     function togglePassword() {
         const passwordField = document.querySelector('input[name="Contrasena"]');
         const eyeIcon = document.getElementById('eye-icon');
-        
+
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
             eyeIcon.className = 'fas fa-eye-slash';
@@ -795,12 +817,15 @@
 
     // FORM VALIDATION AND ENHANCEMENT
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('🚀 Página cargada - Inicializando...');
+
         // Initialize role selector on page load
         const activeRole = document.querySelector('.role-option.active');
         if (activeRole) {
             const roleValue = activeRole.querySelector('input').value;
             const avatar = document.querySelector('.avatar-section i');
             avatar.className = roleValue === 'Prestador' ? 'fas fa-user-tie' : 'fas fa-heart';
+            console.log('✅ Rol inicial:', roleValue);
         }
 
         // Add enter key support for form
@@ -811,8 +836,22 @@
             }
         });
 
-        // Add loading state to login button
-        document.getElementById('login-form').addEventListener('submit', function() {
+        // Add loading state and validation to login button
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            console.log('📤 Enviando formulario...');
+
+            // Validar que se haya seleccionado un rol
+            const rolSeleccionado = document.querySelector('input[name="Rol"]:checked');
+            if (!rolSeleccionado) {
+                e.preventDefault();
+                alert('Por favor selecciona un rol (Dueño o Prestador)');
+                console.log('❌ No se seleccionó rol');
+                return false;
+            }
+
+            console.log('✅ Rol seleccionado:', rolSeleccionado.value);
+            console.log('✅ Usuario:', document.querySelector('input[name="Usuario"]').value);
+
             const btn = document.getElementById('login-btn');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
             btn.disabled = true;

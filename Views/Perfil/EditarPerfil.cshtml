@@ -1,0 +1,1078 @@
+﻿@model proyecto_mejoradoMy_pet.Models.PerfilCompletoViewModel
+
+@{
+    ViewData["Title"] = "Editar Perfil";
+    Layout = null;
+    string userName = ViewBag.UserName ?? "Usuario";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* COMPACT SIDEBAR */
+        .compact-sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-content {
+            padding: 30px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .logo-mini {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .paw-icon {
+            color: white;
+            font-size: 30px;
+        }
+
+        .user-greeting h4 {
+            color: #333;
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+
+        .user-type {
+            color: #4CAF50;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            margin-bottom: 30px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+            .nav-link:hover {
+                background: #f0f8ff;
+                color: #667eea;
+                transform: translateX(3px);
+                text-decoration: none;
+            }
+
+            .nav-link.active {
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+            }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .nav-link.active .nav-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            color: #dc3545;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            border: 2px solid #f8d7da;
+            background: transparent;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .logout-btn:hover {
+                background: #f8d7da;
+                transform: translateY(-2px);
+            }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+        }
+
+        .perfil-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* SIDEBAR TOGGLE BUTTON */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+
+        .header-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
+
+        .user-details h2 {
+            color: #2d3748;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+            .back-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+                color: white;
+                text-decoration: none;
+            }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .card-title {
+            color: #2d3748;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                color: #2d3748;
+                font-weight: 500;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e2e8f0;
+                border-radius: 10px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+
+                .form-group input:focus {
+                    border-color: #667eea;
+                    outline: none;
+                    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+            }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #2d3748;
+            border: 2px solid #e2e8f0;
+        }
+
+            .btn-secondary:hover {
+                background: #e9ecef;
+            }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f44336, #e53935);
+            color: white;
+        }
+
+            .btn-danger:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(244, 67, 54, 0.4);
+            }
+
+        /* Direcciones */
+        .direcciones-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .direccion-card {
+            background: #f8f9fa;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+            .direccion-card.predeterminada {
+                border-color: #4CAF50;
+                background: #f1f8e9;
+            }
+
+        .direccion-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4CAF50;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .direccion-info {
+            margin-bottom: 15px;
+        }
+
+            .direccion-info h4 {
+                color: #2d3748;
+                font-size: 16px;
+                margin-bottom: 8px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .direccion-info p {
+                color: #718096;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+        .direccion-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: 2px dashed rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+            .btn-add:hover {
+                border-color: #667eea;
+                transform: translateY(-2px);
+            }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .modal.active {
+                display: flex;
+            }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @@keyframes slideIn {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-title {
+            color: #2d3748;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #718096;
+            transition: all 0.3s ease;
+        }
+
+            .close-modal:hover {
+                background: #e9ecef;
+                transform: rotate(90deg);
+            }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+            .checkbox-wrapper input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+                accent-color: #4CAF50;
+            }
+
+            .checkbox-wrapper label {
+                margin: 0;
+                cursor: pointer;
+            }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+            .alert.show {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        @@keyframes fadeIn {
+            from
+
+        {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .compact-sidebar
+
+        {
+            transform: translateX(-100%);
+        }
+
+        .compact-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .header-section {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .user-info {
+            flex-direction: column;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <div class="compact-sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <div class="logo-mini">
+                    <div class="paw-icon">🐾</div>
+                </div>
+                <div class="user-greeting">
+                    <h4>Hola, @userName</h4>
+                    <span class="user-type">Dueño de Mascota</span>
+                </div>
+            </div>
+
+            <div class="quick-nav">
+                <a href="@Url.Action("Index", "Prestadores")" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <span>Inicio</span>
+                </a>
+                <a href="@Url.Action("MisPedidos", "Pedidodueño")" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <span>Mis Pedidos</span>
+                </a>
+                <a href="@Url.Action("Index", "Mascotas")" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <span>Mis Mascotas</span>
+                </a>
+                <a href="@Url.Action("EditarPerfil", "Perfil")" class="nav-link active">
+                    <div class="nav-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <span>Editar Perfil</span>
+                </a>
+            </div>
+
+            <div class="sidebar-footer">
+                <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
+                    <button type="submit" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Cerrar Sesión</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para toggle sidebar en móviles -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="perfil-container">
+            <!-- Header -->
+            <div class="header-section">
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h2>@Model.NombreCompleto</h2>
+                        <p><i class="fas fa-at"></i> @Model.Usuario</p>
+                    </div>
+                </div>
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver
+                </a>
+            </div>
+
+            <!-- Alert Global -->
+            <div id="alertGlobal" class="alert">
+                <span id="alertMessage"></span>
+            </div>
+
+            <div class="content-grid">
+                <!-- Información Personal -->
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <h3 class="card-title">Información Personal</h3>
+                    </div>
+
+                    <form id="formInfoPersonal">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="PrimerNombre">Primer Nombre *</label>
+                                <input type="text" id="PrimerNombre" name="PrimerNombre"
+                                       value="@Model.InfoPersonal.PrimerNombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="SegundoNombre">Segundo Nombre</label>
+                                <input type="text" id="SegundoNombre" name="SegundoNombre"
+                                       value="@Model.InfoPersonal.SegundoNombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="PrimerApellido">Primer Apellido *</label>
+                                <input type="text" id="PrimerApellido" name="PrimerApellido"
+                                       value="@Model.InfoPersonal.PrimerApellido" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="SegundoApellido">Segundo Apellido</label>
+                                <input type="text" id="SegundoApellido" name="SegundoApellido"
+                                       value="@Model.InfoPersonal.SegundoApellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="Telefono">Teléfono *</label>
+                                <input type="tel" id="Telefono" name="Telefono"
+                                       value="@Model.InfoPersonal.Telefono" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Correo">
+                                    Correo Electrónico *
+                                    <small style="color: #718096;">(Para recuperación de contraseña)</small>
+                                </label>
+                                <input type="email" id="Correo" name="Correo"
+                                       value="@Model.InfoPersonal.Correo" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Guardar Cambios
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Direcciones -->
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="card-title">Mis Direcciones</h3>
+                    </div>
+
+                    <div class="direcciones-list" id="direccionesList">
+                        @foreach (var direccion in Model.Direcciones)
+                        {
+                            <div class="direccion-card @(direccion.EsPredeterminada == true ? "predeterminada" : "")"
+                                 data-id="@direccion.IdDireccion">
+                                @if (direccion.EsPredeterminada == true)
+                                {
+                                    <span class="direccion-badge">
+                                        <i class="fas fa-star"></i> Predeterminada
+                                    </span>
+                                }
+                                <div class="direccion-info">
+                                    <h4>
+                                        <i class="fas fa-home"></i>
+                                        @direccion.Direccion
+                                    </h4>
+                                    <p>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        @direccion.Ciudad, @direccion.Departamento, @direccion.Pais
+                                    </p>
+                                </div>
+                                <div class="direccion-actions">
+                                    @if (direccion.EsPredeterminada != true)
+                                    {
+                                        <button class="btn btn-secondary btn-sm"
+                                                onclick="marcarPredeterminada(@direccion.IdDireccion)">
+                                            <i class="fas fa-star"></i>
+                                            Marcar como predeterminada
+                                        </button>
+                                    }
+                                    <button class="btn btn-secondary btn-sm"
+                                            onclick="editarDireccion(@direccion.IdDireccion)">
+                                        <i class="fas fa-edit"></i>
+                                        Editar
+                                    </button>
+                                    <button class="btn btn-danger btn-sm"
+                                            onclick="eliminarDireccion(@direccion.IdDireccion)">
+                                        <i class="fas fa-trash"></i>
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <button class="btn btn-add" onclick="nuevaDireccion()">
+                        <i class="fas fa-plus"></i>
+                        Agregar Nueva Dirección
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Dirección -->
+    <div id="modalDireccion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Nueva Dirección</h3>
+                <button class="close-modal" onclick="cerrarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="formDireccion">
+                <input type="hidden" id="IdDireccion" name="IdDireccion">
+
+                <div class="form-group">
+                    <label for="Direccion">Dirección *</label>
+                    <input type="text" id="Direccion" name="Direccion"
+                           placeholder="Ej: Calle 123 #45-67" required>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="Ciudad">Ciudad *</label>
+                        <input type="text" id="Ciudad" name="Ciudad"
+                               placeholder="Ej: Bogotá" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Departamento">Departamento *</label>
+                        <input type="text" id="Departamento" name="Departamento"
+                               placeholder="Ej: Cundinamarca" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Pais">País *</label>
+                    <input type="text" id="Pais" name="Pais"
+                           value="Colombia" required>
+                </div>
+
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="EsPredeterminada" name="EsPredeterminada">
+                    <label for="EsPredeterminada">
+                        <i class="fas fa-star"></i>
+                        Marcar como dirección predeterminada
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-save"></i>
+                        Guardar Dirección
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar en móviles
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Cerrar sidebar al hacer clic fuera en móviles
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.sidebar-toggle');
+
+            if (window.innerWidth <= 768 && sidebar && toggleBtn) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+
+        // Guardar información personal
+        document.getElementById('formInfoPersonal').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                PrimerNombre: document.getElementById('PrimerNombre').value,
+                SegundoNombre: document.getElementById('SegundoNombre').value,
+                PrimerApellido: document.getElementById('PrimerApellido').value,
+                SegundoApellido: document.getElementById('SegundoApellido').value,
+                Telefono: document.getElementById('Telefono').value,
+                Correo: document.getElementById('Correo').value
+            };
+
+            try {
+                const response = await fetch('@Url.Action("ActualizarInfoPersonal", "Perfil")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                mostrarAlerta(result.success ? 'success' : 'error', result.message);
+
+                if (result.success) {
+                    setTimeout(() => location.reload(), 1500);
+                }
+            } catch (error) {
+                mostrarAlerta('error', 'Error al guardar los cambios');
+            }
+        });
+
+        // Nueva dirección
+        function nuevaDireccion() {
+            document.getElementById('modalTitle').textContent = 'Nueva Dirección';
+            document.getElementById('formDireccion').reset();
+            document.getElementById('IdDireccion').value = '';
+            document.getElementById('modalDireccion').classList.add('active');
+        }
+
+        // Editar dirección
+        async function editarDireccion(id) {
+            try {
+                const response = await fetch(`@Url.Action("ObtenerDireccion", "Perfil")?id=${id}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('modalTitle').textContent = 'Editar Dirección';
+                    document.getElementById('IdDireccion').value = result.data.idDireccion;
+                    document.getElementById('Direccion').value = result.data.direccion;
+                    document.getElementById('Ciudad').value = result.data.ciudad;
+                    document.getElementById('Departamento').value = result.data.departamento;
+                    document.getElementById('Pais').value = result.data.pais;
+                    document.getElementById('EsPredeterminada').checked = result.data.esPredeterminada;
+                    document.getElementById('modalDireccion').classList.add('active');
+                } else {
+                    mostrarAlerta('error', result.message);
+                }
+            } catch (error) {
+                mostrarAlerta('error', 'Error al cargar la dirección');
+            }
+        }
+
+        // Guardar dirección
+        document.getElementById('formDireccion').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                IdDireccion: document.getElementById('IdDireccion').value || null,
+                Direccion: document.getElementById('Direccion').value,
+                Ciudad: document.getElementById('Ciudad').value,
+                Departamento: document.getElementById('Departamento').value,
+                Pais: document.getElementById('Pais').value,
+                EsPredeterminada: document.getElementById('EsPredeterminada').checked
+            };
+
+            try {
+                const response = await fetch('@Url.Action("GuardarDireccion", "Perfil")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                mostrarAlerta(result.success ? 'success' : 'error', result.message);
+
+                if (result.success) {
+                    setTimeout(() => location.reload(), 1500);
+                }
+            } catch (error) {
+                mostrarAlerta('error', 'Error al guardar la dirección');
+            }
+        });
+
+        // Eliminar dirección
+        async function eliminarDireccion(id) {
+            if (!confirm('¿Estás seguro de eliminar esta dirección?')) return;
+
+            try {
+                const response = await fetch('@Url.Action("EliminarDireccion", "Perfil")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${id}`
+                });
+
+                const result = await response.json();
+                mostrarAlerta(result.success ? 'success' : 'error', result.message);
+
+                if (result.success) {
+                    setTimeout(() => location.reload(), 1500);
+                }
+            } catch (error) {
+                mostrarAlerta('error', 'Error al eliminar la dirección');
+            }
+        }
+
+        // Marcar como predeterminada
+        async function marcarPredeterminada(id) {
+            try {
+                const response = await fetch('@Url.Action("MarcarPredeterminada", "Perfil")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${id}`
+                });
+
+                const result = await response.json();
+                mostrarAlerta(result.success ? 'success' : 'error', result.message);
+
+                if (result.success) {
+                    setTimeout(() => location.reload(), 1500);
+                }
+            } catch (error) {
+                mostrarAlerta('error', 'Error al marcar como predeterminada');
+            }
+        }
+
+        // Cerrar modal
+        function cerrarModal() {
+            document.getElementById('modalDireccion').classList.remove('active');
+        }
+
+        // Mostrar alerta
+        function mostrarAlerta(tipo, mensaje) {
+            const alert = document.getElementById('alertGlobal');
+            alert.className = `alert alert-${tipo} show`;
+            document.getElementById('alertMessage').textContent = mensaje;
+
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('modalDireccion').addEventListener('click', function(e) {
+            if (e.target === this) {
+                cerrarModal();
+            }
+        });
+    </script>
+</body>
+</html>
