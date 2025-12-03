@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("proyecto_mejoradoMytet")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e03cce24afcac906a32c540c6caa53bf245da52f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82932547439d44f0f814fa535909cebef0cf3946")]
 [assembly: System.Reflection.AssemblyProductAttribute("proyecto_mejoradoMytet")]
 [assembly: System.Reflection.AssemblyTitleAttribute("proyecto_mejoradoMytet")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

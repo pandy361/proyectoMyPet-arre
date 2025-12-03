@@ -454,31 +454,28 @@
 
         /* RESPONSIVE */
         @@media (max-width: 768px) {
-            .sidebar
+            .sidebar {
+                transform: translateX(-100%);
+            }
 
-        {
-            transform: translateX(-100%);
-        }
+                .sidebar.active {
+                    transform: translateX(0);
+                }
 
-        .sidebar.active {
-            transform: translateX(0);
-        }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
 
-        .main-content {
-            margin-left: 0;
-            padding: 20px;
-        }
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        .sidebar-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .pedidos-grid {
-            grid-template-columns: 1fr;
-        }
-
+            .pedidos-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -511,7 +508,7 @@
                     </div>
                     <span>Mis Servicios</span>
                 </a>
-               
+
                 <a href="@Url.Action("EditarPerfil", "Perfil")" class="nav-item">
                     <div class="nav-icon">
                         <i class="fas fa-users"></i>
