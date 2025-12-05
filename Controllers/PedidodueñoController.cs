@@ -167,6 +167,106 @@ namespace proyecto_mejoradoMy_pet.Controllers
             }
         }
 
+        // ✅ AGREGAR ESTE MÉTODO AL PedidodueñoController existente
+
+        // POST: Pedidosdueño/CancelarPedido
+        [HttpPost]
+        public async Task<IActionResult> CancelarPedido([FromBody] CancelarPedidoRequest request)
+        {
+            Console.WriteLine("===== INICIO CANCELACIÓN =====");
+            Console.WriteLine($"ID Pedido recibido: {request?.IdPedido}");
+
+            var isAuthenticated = HttpContext.Session.GetString("IsAuthenticated");
+            if (string.IsNullOrEmpty(isAuthenticated))
+            {
+                Console.WriteLine("❌ No autenticado");
+                return Json(new { success = false, message = "Debes iniciar sesión" });
+            }
+
+            var userIdString = HttpContext.Session.GetString("UserId");
+            Console.WriteLine($"UserId en sesión: {userIdString}");
+
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+            {
+                Console.WriteLine("❌ Usuario no identificado");
+                return Json(new { success = false, message = "Usuario no identificado" });
+            }
+
+            if (request == null || request.IdPedido <= 0)
+            {
+                Console.WriteLine("❌ ID de pedido inválido");
+                return Json(new { success = false, message = "ID de pedido inválido" });
+            }
+
+            try
+            {
+                Console.WriteLine($"🔍 Buscando pedido #{request.IdPedido} para usuario #{userId}");
+
+                var pedido = await _context.TbPedidos
+                    .FirstOrDefaultAsync(p => p.IdPedido == request.IdPedido && p.IdUsuarioDueño == userId);
+
+                if (pedido == null)
+                {
+                    Console.WriteLine($"❌ Pedido no encontrado. IdPedido={request.IdPedido}, UserId={userId}");
+
+                    // Debug: verificar si existe el pedido sin filtro de usuario
+                    var pedidoExiste = await _context.TbPedidos.AnyAsync(p => p.IdPedido == request.IdPedido);
+                    Console.WriteLine($"   ¿Existe el pedido sin filtro?: {pedidoExiste}");
+
+                    return Json(new { success = false, message = "Pedido no encontrado o no autorizado" });
+                }
+
+                Console.WriteLine($"✅ Pedido encontrado. Estado actual: {pedido.Estado}");
+
+                if (pedido.Estado == "Completado")
+                {
+                    return Json(new { success = false, message = "No puedes cancelar un pedido completado" });
+                }
+
+                if (pedido.Estado == "Cancelado")
+                {
+                    return Json(new { success = false, message = "Este pedido ya está cancelado" });
+                }
+
+                // Validación de 24 horas
+                DateTime fechaHoraServicio = new DateTime(
+                    pedido.FechaServicio.Year,
+                    pedido.FechaServicio.Month,
+                    pedido.FechaServicio.Day,
+                    pedido.HoraServicioFrom.Hour,
+                    pedido.HoraServicioFrom.Minute,
+                    0
+                );
+                DateTime ahora = DateTime.Now;
+                TimeSpan diferencia = fechaHoraServicio - ahora;
+                double horasRestantes = diferencia.TotalHours;
+
+                Console.WriteLine($"🕐 Validación: Servicio {fechaHoraServicio:dd/MM/yyyy HH:mm}, Ahora {ahora:dd/MM/yyyy HH:mm}, Horas: {horasRestantes:F2}");
+
+                if (horasRestantes < 24)
+                {
+                    return Json(new { success = false, message = $"Solo puedes cancelar con al menos 24 horas de anticipación. Te quedan {horasRestantes:F1} horas." });
+                }
+
+                pedido.Estado = "Cancelado";
+                await _context.SaveChangesAsync();
+
+                Console.WriteLine($"✅ Pedido #{request.IdPedido} cancelado exitosamente");
+                Console.WriteLine("===== FIN CANCELACIÓN =====");
+
+                return Json(new { success = true, message = "Pedido cancelado exitosamente" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error: {ex.Message}");
+                Console.WriteLine($"StackTrace: {ex.StackTrace}");
+                return Json(new { success = false, message = "Error al cancelar el pedido. Intenta nuevamente." });
+            }
+        }
+
+        // ✅ AGREGAR ESTA CLASE AL FINAL DEL CONTROLADOR (fuera de los métodos)
+       
+
         // ✅ CORREGIDO: POST: Pedidosdueño/CrearReseña
         [HttpPost]
         public async Task<IActionResult> CrearReseña([FromBody] CrearReseñaRequest request)
@@ -526,6 +626,10 @@ namespace proyecto_mejoradoMy_pet.Controllers
             });
 
             return document.GeneratePdf();
+        }
+        public class CancelarPedidoRequest
+        {
+            public int IdPedido { get; set; }
         }
     }
 }
