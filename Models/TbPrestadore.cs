@@ -29,3 +29,4 @@ public partial class TbPrestadore
 
     public virtual ICollection<TbServicio> TbServicios { get; set; } = new List<TbServicio>();
 }
+    

@@ -298,6 +298,31 @@
                 box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
             }
 
+        /* ✅ NUEVO: Estilos para contador de resultados */
+        .search-results-info {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+            .search-results-info strong {
+                color: #4CAF50;
+            }
+
+            .search-results-info .clear-filters {
+                margin-left: 10px;
+                color: #f44336;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+
+                .search-results-info .clear-filters:hover {
+                    color: #d32f2f;
+                    text-decoration: underline;
+                }
+
         .filter-buttons {
             display: flex;
             justify-content: center;
@@ -633,49 +658,46 @@
             font-size: 20px;
         }
 
-       @@media (max-width: 768px) {
-            .sidebar
+        @@media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
 
-        {
-            transform: translateX(-100%);
-        }
+                .sidebar.active {
+                    transform: translateX(0);
+                }
 
-        .sidebar.active {
-            transform: translateX(0);
-        }
+            .main-content {
+                margin-left: 0;
+            }
 
-        .main-content {
-            margin-left: 0;
-        }
+            .sidebar-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-        .sidebar-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
 
-        .header-content {
-            flex-direction: column;
-            text-align: center;
-            gap: 30px;
-        }
+            .header-text h1 {
+                font-size: 36px;
+            }
 
-        .header-text h1 {
-            font-size: 36px;
-        }
+            .header-stats {
+                justify-content: center;
+            }
 
-        .header-stats {
-            justify-content: center;
-        }
+            .prestadores-grid {
+                grid-template-columns: 1fr;
+            }
 
-        .prestadores-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .prestadores-container, .page-header, .search-section {
-            padding: 20px;
-        }
-
+            .prestadores-container, .page-header, .search-section {
+                padding: 20px;
+            }
         }
     </style>
 </head>
@@ -688,11 +710,8 @@
                         <div class="paw-icon">🐾</div>
                     </div>
                     <div class="user-greeting">
-                        
-                            <h4>Hola, @userName</h4>
-                            <span class="user-type">@userType</span>
-                        
-                        
+                        <h4>Hola, @userName</h4>
+                        <span class="user-type">@userType</span>
                     </div>
                 </div>
 
@@ -705,29 +724,23 @@
                         <div class="nav-icon"><i class="fas fa-shopping-bag"></i></div>
                         <span>Mis Pedidos</span>
                     </a>
-                    
-                        <a href="/Mascotas/Index" class="nav-link">
-                            <div class="nav-icon"><i class="fas fa-paw"></i></div>
-                            <span>Mis Mascotas</span>
-                        </a>
-                    <a href="/Perfil/EditarPerfil" class="nav-link">
-                        <div class="nav-icon"><i class="fas fa-users"></i></div>
-                        <span>Mi Usuario</span>
+                    <a href="/Mascotas/Index" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-paw"></i></div>
+                        <span>Mis Mascotas</span>
                     </a>
-                    
+                    <a href="/Perfil/MiPerfil" class="nav-link">
+                        <div class="nav-icon"><i class="fas fa-user"></i></div>
+                        <span>Mi Perfil</span>
+                    </a>
                 </div>
 
                 <div class="sidebar-footer">
-                    
-                        <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
-                            <button type="submit" class="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Cerrar Sesión</span>
-                            </button>
-                        </form>
-                    
-                       
-                    
+                    <form method="post" action="/Autenticacion/Logout" style="margin: 0;">
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -758,23 +771,73 @@
                 </div>
             </div>
 
-                <div class="search-section">
-                    <div class="search-container">
-                        <form method="get" action="@Url.Action("Index")" class="search-form">
-                            <div class="search-input-wrapper">
-                                <input type="text" name="buscar" value="@ViewBag.BuscarTermino"
-                                       placeholder="Buscar por nombre, habilidades o servicios..." class="search-input">
-                                <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
-                            </div>
-                        </form>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="all"><i class="fas fa-th"></i>Todos</button>
-                            <button class="filter-btn" data-filter="top-rated"><i class="fas fa-crown"></i>Mejor Valorados</button>
-                            <button class="filter-btn" data-filter="veterinary"><i class="fas fa-stethoscope"></i>Veterinarios</button>
-                            <button class="filter-btn" data-filter="grooming"><i class="fas fa-cut"></i>Peluquería</button>
+            <!-- ✅ SECCIÓN DE BÚSQUEDA Y FILTROS ACTUALIZADA -->
+            <div class="search-section">
+                <div class="search-container">
+                    <form method="get" action="@Url.Action("Index")" class="search-form" id="searchForm">
+                        <input type="hidden" name="filtro" id="filtroInput" value="@ViewBag.FiltroActual">
+                        <div class="search-input-wrapper">
+                            <input type="text" 
+                                   name="buscar" 
+                                   value="@ViewBag.BuscarTermino"
+                                   placeholder="Buscar por nombre, habilidades o servicios..." 
+                                   class="search-input">
+                            <button type="submit" class="search-button">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
+                    </form>
+
+                    <!-- ✅ CONTADOR DE RESULTADOS -->
+                    @if (!string.IsNullOrEmpty(ViewBag.BuscarTermino) || (ViewBag.FiltroActual != null && ViewBag.FiltroActual != "all"))
+                    {
+                        <div class="search-results-info">
+                            <p>
+                                <strong>@ViewBag.TotalResultados</strong> resultados encontrados
+                                @if (!string.IsNullOrEmpty(ViewBag.BuscarTermino))
+                                {
+                                    <span> para "<strong>@ViewBag.BuscarTermino</strong>"</span>
+                                }
+                                @if (ViewBag.FiltroActual != null && ViewBag.FiltroActual != "all")
+                                {
+                                    <span> en <strong>@GetFiltroNombre(ViewBag.FiltroActual)</strong></span>
+                                }
+                                <a href="@Url.Action("Index")" class="clear-filters">
+                                    <i class="fas fa-times-circle"></i> Limpiar filtros
+                                </a>
+                            </p>
+                        </div>
+                    }
+
+                    <!-- ✅ BOTONES DE FILTRO ACTUALIZADOS -->
+                    <div class="filter-buttons">
+                        <button class="filter-btn @(ViewBag.FiltroActual == "all" || ViewBag.FiltroActual == null ? "active" : "")" 
+                                onclick="aplicarFiltro('all')">
+                            <i class="fas fa-th"></i>Todos
+                        </button>
+                        <button class="filter-btn @(ViewBag.FiltroActual == "top-rated" ? "active" : "")" 
+                                onclick="aplicarFiltro('top-rated')">
+                            <i class="fas fa-crown"></i>Mejor Valorados
+                        </button>
+                        <button class="filter-btn @(ViewBag.FiltroActual == "veterinary" ? "active" : "")" 
+                                onclick="aplicarFiltro('veterinary')">
+                            <i class="fas fa-stethoscope"></i>Veterinarios
+                        </button>
+                        <button class="filter-btn @(ViewBag.FiltroActual == "grooming" ? "active" : "")" 
+                                onclick="aplicarFiltro('grooming')">
+                            <i class="fas fa-cut"></i>Peluquería
+                        </button>
+                        <button class="filter-btn @(ViewBag.FiltroActual == "walking" ? "active" : "")" 
+                                onclick="aplicarFiltro('walking')">
+                            <i class="fas fa-walking"></i>Paseos
+                        </button>
+                        <button class="filter-btn @(ViewBag.FiltroActual == "training" ? "active" : "")" 
+                                onclick="aplicarFiltro('training')">
+                            <i class="fas fa-graduation-cap"></i>Entrenamiento
+                        </button>
                     </div>
                 </div>
+            </div>
 
             <div class="prestadores-container">
                 @if (Model != null && Model.Any())
@@ -887,20 +950,33 @@
                             <div class="pagination">
                                 @if (ViewBag.PaginaActual > 1)
                                 {
-                                    <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual - 1, buscar = ViewBag.BuscarTermino })" class="page-btn">
+                                    <a href="@Url.Action("Index", new { 
+                                        pagina = ViewBag.PaginaActual - 1, 
+                                        buscar = ViewBag.BuscarTermino,
+                                        filtro = ViewBag.FiltroActual 
+                                    })" class="page-btn">
                                         <i class="fas fa-chevron-left"></i>
                                     </a>
                                 }
 
                                 @for (int i = Math.Max(1, ViewBag.PaginaActual - 2); i <= Math.Min(ViewBag.TotalPaginas, ViewBag.PaginaActual + 2); i++)
                                 {
-                                    <a href="@Url.Action("Index", new { pagina = i, buscar = ViewBag.BuscarTermino })"
-                                       class="page-btn @(i == ViewBag.PaginaActual ? "active" : "")">@i</a>
+                                    <a href="@Url.Action("Index", new { 
+                                        pagina = i, 
+                                        buscar = ViewBag.BuscarTermino,
+                                        filtro = ViewBag.FiltroActual 
+                                    })" class="page-btn @(i == ViewBag.PaginaActual ? "active" : "")">
+                                        @i
+                                    </a>
                                 }
 
                                 @if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
                                 {
-                                    <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual + 1, buscar = ViewBag.BuscarTermino })" class="page-btn">
+                                    <a href="@Url.Action("Index", new { 
+                                        pagina = ViewBag.PaginaActual + 1, 
+                                        buscar = ViewBag.BuscarTermino,
+                                        filtro = ViewBag.FiltroActual 
+                                    })" class="page-btn">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 }
@@ -925,6 +1001,15 @@
     </button>
 
     <script>
+        function aplicarFiltro(filtro) {
+            const buscar = document.querySelector('input[name="buscar"]').value;
+            let url = '@Url.Action("Index")?filtro=' + filtro;
+            if (buscar) {
+                url += '&buscar=' + encodeURIComponent(buscar);
+            }
+            window.location.href = url;
+        }
+
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }
@@ -940,26 +1025,8 @@
             }
         });
 
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-
-                const filter = this.dataset.filter;
-                const cards = document.querySelectorAll('.prestador-card');
-
-                cards.forEach(card => {
-                    card.style.display = 'block';
-                    if (filter === 'top-rated') {
-                        const rating = parseFloat(card.dataset.rating);
-                        if (rating < 4.5) card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
         function contactPrestador(numero) {
-            let url = "https://wa.me/+57" + numero;
+            const url = "https://wa.me/+57" + numero;
             window.open(url, "_blank");
         }
 
@@ -978,3 +1045,18 @@
     </script>
 </body>
 </html>
+
+@functions {
+    string GetFiltroNombre(string filtro)
+    {
+        return filtro switch
+        {
+            "top-rated" => "Mejor Valorados",
+            "veterinary" => "Veterinarios",
+            "grooming" => "Peluquería",
+            "walking" => "Paseos",
+            "training" => "Entrenamiento",
+            _ => "Todos"
+        };
+    }
+}
