@@ -22,9 +22,22 @@ const stepConfig = {
 };
 
 // INICIALIZACIÓN
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     agregarDireccion();
     generateSidebarSteps();
+
+    // ✅ NUEVO: Event listeners para servicios ofrecidos
+    const checkboxesServicios = document.querySelectorAll('input[name="serviciosOfrecidos"]');
+    if (checkboxesServicios.length > 0) {
+        checkboxesServicios.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const errorElement = document.getElementById('error-serviciosOfrecidos');
+                if (errorElement && document.querySelectorAll('input[name="serviciosOfrecidos"]:checked').length > 0) {
+                    errorElement.style.display = 'none';
+                }
+            });
+        });
+    }
 });
 
 // GESTIÓN DE ROLES
@@ -185,6 +198,18 @@ function validateCurrentStep() {
         const direcciones = document.querySelectorAll('#direcciones-container .dynamic-item');
         if (direcciones.length === 0) {
             alert('Debe agregar al menos una dirección');
+            isValid = false;
+        }
+    }
+    if (currentStep === 3) {
+        // ✅ NUEVO: Validar servicios ofrecidos
+        const serviciosOfrecidos = document.querySelectorAll('input[name="serviciosOfrecidos"]:checked');
+        if (serviciosOfrecidos.length === 0) {
+            const errorElement = document.getElementById('error-serviciosOfrecidos');
+            if (errorElement) {
+                errorElement.textContent = 'Debe seleccionar al menos un servicio';
+                errorElement.style.display = 'block';
+            }
             isValid = false;
         }
     }
@@ -585,9 +610,14 @@ function collectFormData() {
     // Prestador
     // LA CONDICIÓN AHORA ES CON EL STRING "2"
     if (selectedRolesStrings.includes("2")) {
+        // ✅ NUEVO: Obtener servicios ofrecidos seleccionados
+        const checkboxesServicios = document.querySelectorAll('input[name="serviciosOfrecidos"]:checked');
+        const serviciosOfrecidosArray = Array.from(checkboxesServicios).map(cb => cb.value);
+
         data.InfoPrestador = {
             Resumen: document.getElementById('resumen').value,
             Habilidades: document.getElementById('habilidades').value,
+            ServiciosOfrecidos: serviciosOfrecidosArray, // ✅ NUEVO
             Experiencia: document.getElementById('experiencia').value || null,
             AnosExperiencia: parseInt(document.getElementById('anos-experiencia').value) || 0,
             Servicios: [],

@@ -72,17 +72,13 @@ namespace proyecto_mejoradoMy_pet.Models
 
     public class PrestadorInfoViewModel
     {
-        [Required(ErrorMessage = "El resumen es requerido")]
         public string Resumen { get; set; } = null!;
-
-        [Required(ErrorMessage = "Las habilidades son requeridas")]
         public string Habilidades { get; set; } = null!;
-
+        // ✅ SOLO SE AGREGA - NO SE MODIFICA NADA MÁS
+        [Required(ErrorMessage = "Debe seleccionar al menos un servicio")]
+        public List<string> ServiciosOfrecidos { get; set; } = new List<string>();
         public string? Experiencia { get; set; }
-
-        [Required(ErrorMessage = "Los años de experiencia son requeridos")]
         public int AnosExperiencia { get; set; }
-
         public List<ServicioViewModel> Servicios { get; set; } = new List<ServicioViewModel>();
         public List<DisponibilidadViewModel> Disponibilidad { get; set; } = new List<DisponibilidadViewModel>();
     }

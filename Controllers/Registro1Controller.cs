@@ -6,21 +6,21 @@ using System.Text;
 
 namespace proyecto_mejoradoMy_pet.Controllers
 {
-        public class Registro1Controller : Controller
+    public class Registro1Controller : Controller
+    {
+        private readonly BdMypetv3Context _context;
+
+        public Registro1Controller(BdMypetv3Context context)
         {
-            private readonly BdMypetv3Context _context;
+            _context = context;
+        }
 
-            public Registro1Controller(BdMypetv3Context context)
-            {
-                _context = context;
-            }
-
-            // GET: Registro
-            public IActionResult Index()
-            {
-                var model = new RegistroCompleteViewModel();
-                return View(model);
-            }
+        // GET: Registro
+        public IActionResult Index()
+        {
+            var model = new RegistroCompleteViewModel();
+            return View(model);
+        }
 
         // Agregar estas mejoras al controlador:
 
@@ -30,14 +30,14 @@ namespace proyecto_mejoradoMy_pet.Controllers
         {
             try
             {
-                // === [ INICIO DE VALIDACIONES PRELIMINARES ] ===
-                System.Diagnostics.Debug.WriteLine($"Recibiendo datos: Usuario={model?.Usuario}");
-                System.Diagnostics.Debug.WriteLine($"Roles seleccionados: {string.Join(",", model?.RolesSeleccionados ?? new List<string>())}");
+                System.Diagnostics.Debug.WriteLine("===== INICIO REGISTRO =====");
+                System.Diagnostics.Debug.WriteLine($"Usuario: {model?.Usuario}");
+                System.Diagnostics.Debug.WriteLine($"Roles: {string.Join(",", model?.RolesSeleccionados ?? new List<string>())}");
 
                 if (!ModelState.IsValid)
                 {
                     var errors = GetModelStateErrors();
-                    // ... (Lógica de Debug y retorno de errores de validación) ...
+                    System.Diagnostics.Debug.WriteLine("❌ ModelState inválido");
                     return Json(new { success = false, message = "Por favor corrige los errores en el formulario", errors = errors });
                 }
 
@@ -55,18 +55,17 @@ namespace proyecto_mejoradoMy_pet.Controllers
                     return Json(new { success = false, message = "El documento ya está registrado" });
                 }
 
-                // Conversión string a DateOnly
+                // Conversión fecha
                 if (!DateOnly.TryParse(model.FechaNacimiento, out DateOnly fechaNacimiento))
                 {
                     return Json(new { success = false, message = "Fecha de nacimiento inválida" });
                 }
-                // === [ FIN DE VALIDACIONES PRELIMINARES ] ===
 
                 using var transaction = await _context.Database.BeginTransactionAsync();
 
                 try
                 {
-                    // 1. Crear usuario
+                    // 1. ✅ Crear usuario
                     var usuario = new TbUsuario
                     {
                         Usuario = model.Usuario,
@@ -83,40 +82,36 @@ namespace proyecto_mejoradoMy_pet.Controllers
                     };
 
                     _context.TbUsuarios.Add(usuario);
-                    // GUARDA SÓLO EL USUARIO PARA OBTENER EL ID GENERADO
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); // ✅ GUARDAR PARA OBTENER ID
+                    System.Diagnostics.Debug.WriteLine($"✅ Usuario creado con ID: {usuario.IdUsuario}");
 
-                    System.Diagnostics.Debug.WriteLine($"Usuario creado con ID: {usuario.IdUsuario}");
-
-                    // 2. Asignar roles (TbUsuarioRole)
-                    foreach (var rolIdString in model.RolesSeleccionados) // rolIdString es STRING
+                    // 2. ✅ Asignar roles
+                    foreach (var rolIdString in model.RolesSeleccionados)
                     {
                         if (int.TryParse(rolIdString, out int rolIdInt))
                         {
                             var rol = await _context.TbRoles.FirstOrDefaultAsync(r => r.IdRol == rolIdInt);
-
                             if (rol != null)
                             {
                                 var usuarioRole = new TbUsuarioRole
                                 {
-                                    IdUsuario = usuario.IdUsuario, // Usa el ID generado
+                                    IdUsuario = usuario.IdUsuario,
                                     IdRol = rol.IdRol
                                 };
                                 _context.TbUsuarioRoles.Add(usuarioRole);
+                                System.Diagnostics.Debug.WriteLine($"✅ Rol {rol.Nombre} asignado");
                             }
                         }
                     }
 
-                    // NOTA: Se eliminó un SaveChanges innecesario aquí.
-
-                    // 3. Agregar direcciones (TbDireccione)
+                    // 3. ✅ Agregar direcciones
                     if (model.Direcciones != null && model.Direcciones.Any())
                     {
                         foreach (var direccionDto in model.Direcciones)
                         {
                             var direccion = new TbDireccione
                             {
-                                IdUsuario = usuario.IdUsuario, // Usa el ID generado
+                                IdUsuario = usuario.IdUsuario,
                                 Direccion = direccionDto.Direccion,
                                 Ciudad = direccionDto.Ciudad,
                                 Departamento = direccionDto.Departamento,
@@ -124,47 +119,57 @@ namespace proyecto_mejoradoMy_pet.Controllers
                                 EsPredeterminada = direccionDto.EsPredeterminada
                             };
                             _context.TbDirecciones.Add(direccion);
-                            System.Diagnostics.Debug.WriteLine($"Dirección agregada: {direccion.Direccion}");
+                            System.Diagnostics.Debug.WriteLine($"✅ Dirección agregada: {direccion.Direccion}");
                         }
                     }
 
-                    // 4. Si es prestador (ID = "2")
+                    // ✅ GUARDAR ROLES Y DIRECCIONES
+                    await _context.SaveChangesAsync();
+
+                    // 4. ✅ Si es prestador (ID = "2")
                     if (model.RolesSeleccionados?.Contains("2") == true && model.InfoPrestador != null)
                     {
+                        // ✅ CONVERTIR LISTA DE SERVICIOS A STRING
+                        string serviciosOfrecidosString = null;
+                        if (model.InfoPrestador.ServiciosOfrecidos != null && model.InfoPrestador.ServiciosOfrecidos.Any())
+                        {
+                            serviciosOfrecidosString = string.Join(", ", model.InfoPrestador.ServiciosOfrecidos);
+                            System.Diagnostics.Debug.WriteLine($"📋 Servicios: {serviciosOfrecidosString}");
+                        }
+
                         var prestador = new TbPrestadore
                         {
-                            IdUsuario = usuario.IdUsuario, // Usa el ID generado
+                            IdUsuario = usuario.IdUsuario,
                             Resumen = model.InfoPrestador.Resumen,
                             Habilidades = model.InfoPrestador.Habilidades,
+                            ServiciosOfrecidos = serviciosOfrecidosString, // ✅ NUEVO
                             Experiencia = model.InfoPrestador.Experiencia,
                             AñosExperiencia = model.InfoPrestador.AnosExperiencia,
                             CalificacionPromedio = 0
                         };
 
                         _context.TbPrestadores.Add(prestador);
-                        // GUARDA SÓLO EL PRESTADOR PARA OBTENER EL ID GENERADO
-                        await _context.SaveChangesAsync();
+                        await _context.SaveChangesAsync(); // ✅ GUARDAR PARA OBTENER ID
+                        System.Diagnostics.Debug.WriteLine($"✅ Prestador creado con ID: {prestador.IdPrestador}");
 
-                        System.Diagnostics.Debug.WriteLine($"Prestador creado con ID: {prestador.IdPrestador}");
-
-                        // Agregar servicios (TbServicio)
+                        // Agregar servicios
                         if (model.InfoPrestador.Servicios != null && model.InfoPrestador.Servicios.Any())
                         {
                             foreach (var servicioDto in model.InfoPrestador.Servicios)
                             {
                                 var servicio = new TbServicio
                                 {
-                                    IdPrestador = prestador.IdPrestador, // Usa el ID generado
+                                    IdPrestador = prestador.IdPrestador,
                                     Nombre = servicioDto.Nombre,
                                     Descripcion = servicioDto.Descripcion,
                                     Precio = servicioDto.Precio
                                 };
                                 _context.TbServicios.Add(servicio);
-                                System.Diagnostics.Debug.WriteLine($"Servicio agregado: {servicio.Nombre}");
+                                System.Diagnostics.Debug.WriteLine($"✅ Servicio: {servicio.Nombre}");
                             }
                         }
 
-                        // Agregar disponibilidad (TbDisponibilidad)
+                        // Agregar disponibilidad
                         if (model.InfoPrestador.Disponibilidad != null && model.InfoPrestador.Disponibilidad.Any())
                         {
                             foreach (var disponibilidadDto in model.InfoPrestador.Disponibilidad)
@@ -174,56 +179,82 @@ namespace proyecto_mejoradoMy_pet.Controllers
 
                                 var disponibilidad = new TbDisponibilidad
                                 {
-                                    IdPrestador = prestador.IdPrestador, // Usa el ID generado
+                                    IdPrestador = prestador.IdPrestador,
                                     DiaSemana = disponibilidadDto.DiaSemana,
                                     HoraInicio = horaInicio,
                                     HoraFin = horaFin
                                 };
                                 _context.TbDisponibilidads.Add(disponibilidad);
-                                System.Diagnostics.Debug.WriteLine($"Disponibilidad agregada: {disponibilidad.DiaSemana} {horaInicio} - {horaFin}");
+                                System.Diagnostics.Debug.WriteLine($"✅ Disponibilidad: {disponibilidad.DiaSemana}");
                             }
                         }
                     }
 
-                    // 5. Agregar mascotas (ID de Dueño = "1")
-                    // Condición de rol corregida para el Dueño
+                    // 5. ✅ Agregar mascotas (Dueño = "1")
                     if (model.RolesSeleccionados?.Contains("1") == true && model.Mascotas != null && model.Mascotas.Any())
                     {
                         foreach (var mascotaDto in model.Mascotas)
                         {
                             var mascota = new TbMascota
                             {
-                                IdUsuario = usuario.IdUsuario, // Usa el ID generado
+                                IdUsuario = usuario.IdUsuario,
                                 Nombre = mascotaDto.Nombre,
                                 Tipo = mascotaDto.Tipo,
                                 Raza = mascotaDto.Raza,
                                 Edad = mascotaDto.Edad
                             };
                             _context.TbMascotas.Add(mascota);
-                            System.Diagnostics.Debug.WriteLine($"Mascota agregada: {mascota.Nombre}");
+                            System.Diagnostics.Debug.WriteLine($"✅ Mascota: {mascota.Nombre}");
                         }
                     }
 
-                    // 6. GUARDAR LOS CAMBIOS RESTANTES Y CONFIRMAR TRANSACCIÓN
-                    // Esta llamada final guarda: Roles, Direcciones, Servicios, Disponibilidad y Mascotas.
+                    // 6. ✅ GUARDAR TODO LO RESTANTE Y COMMIT
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    System.Diagnostics.Debug.WriteLine("Registro completado exitosamente");
+                    System.Diagnostics.Debug.WriteLine("✅✅✅ REGISTRO COMPLETADO EXITOSAMENTE");
                     return Json(new { success = true, message = "Registro completado exitosamente" });
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    System.Diagnostics.Debug.WriteLine($"Error en transacción: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"❌ Error en transacción: {ex.Message}");
                     System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
-                    // Propagar el error para que sea capturado por el catch externo y retorne un JSON de error.
-                    throw;
+
+                    string detailedError = ex.Message;
+
+                    if (ex.InnerException != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"InnerException: {ex.InnerException.Message}");
+                        detailedError = ex.InnerException.Message;
+
+                        if (ex.InnerException.InnerException != null)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"InnerInnerException: {ex.InnerException.InnerException.Message}");
+                            detailedError = ex.InnerException.InnerException.Message;
+                        }
+                    }
+
+                    // Detectar errores comunes
+                    if (detailedError.Contains("UNIQUE") || detailedError.Contains("duplicate"))
+                    {
+                        return Json(new { success = false, message = "Ya existe un registro con estos datos" });
+                    }
+                    else if (detailedError.Contains("FOREIGN KEY"))
+                    {
+                        return Json(new { success = false, message = "Error de referencia en la base de datos" });
+                    }
+                    else if (detailedError.Contains("NULL"))
+                    {
+                        return Json(new { success = false, message = "Falta información requerida" });
+                    }
+
+                    return Json(new { success = false, message = $"Error al guardar: {detailedError}" });
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error general: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"❌ Error general: {ex.Message}");
                 System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
                 return Json(new { success = false, message = $"Error al procesar el registro: {ex.Message}" });
             }
@@ -231,102 +262,102 @@ namespace proyecto_mejoradoMy_pet.Controllers
 
         // 2. Método auxiliar para validar token (opcional)
         private async Task ValidateAntiForgeryTokenAsync()
+        {
+            try
             {
-                try
-                {
-                    var tokenSet = HttpContext.RequestServices.GetRequiredService<Microsoft.AspNetCore.Antiforgery.IAntiforgery>();
-                    await tokenSet.ValidateRequestAsync(HttpContext);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error validando token: {ex.Message}");
-                    // Puedes decidir si lanzar la excepción o continuar
-                }
+                var tokenSet = HttpContext.RequestServices.GetRequiredService<Microsoft.AspNetCore.Antiforgery.IAntiforgery>();
+                await tokenSet.ValidateRequestAsync(HttpContext);
             }
-
-            // Métodos auxiliares
-            private byte[] HashPassword(string password)
+            catch (Exception ex)
             {
-                using (var sha256 = SHA256.Create())
-                {
-                    return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                }
+                System.Diagnostics.Debug.WriteLine($"Error validando token: {ex.Message}");
+                // Puedes decidir si lanzar la excepción o continuar
             }
-
-            private Dictionary<string, List<string>> GetModelStateErrors()
-            {
-                var errors = new Dictionary<string, List<string>>();
-
-                foreach (var key in ModelState.Keys)
-                {
-                    var state = ModelState[key];
-                    if (state != null && state.Errors.Count > 0)
-                    {
-                        errors[key] = state.Errors.Select(e => e.ErrorMessage).ToList();
-                    }
-                }
-
-                return errors;
-            }
-
-            // Endpoints AJAX para validaciones
-            [HttpPost]
-            public async Task<IActionResult> ValidarUsuario(string usuario)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.Usuario == usuario);
-                return Json(new { existe });
-            }
-
-            [HttpPost]
-            public async Task<IActionResult> ValidarEmail(string email)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.Correo == email);
-                return Json(new { existe });
-            }
-
-            [HttpPost]
-            public async Task<IActionResult> ValidarDocumento(string documento)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.DocumentoIdentidad == documento);
-                return Json(new { existe });
-            }
-
-            #region Métodos de Utilidad
-
-            // GET: Verificar disponibilidad de usuario
-            [HttpGet]
-            public async Task<IActionResult> VerificarUsuario(string usuario)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.Usuario == usuario);
-                return Json(new { disponible = !existe });
-            }
-
-            // GET: Verificar disponibilidad de email
-            [HttpGet]
-            public async Task<IActionResult> VerificarEmail(string email)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.Correo == email);
-                return Json(new { disponible = !existe });
-            }
-
-            // GET: Verificar disponibilidad de documento
-            [HttpGet]
-            public async Task<IActionResult> VerificarDocumento(string documento)
-            {
-                var existe = await _context.TbUsuarios.AnyAsync(u => u.DocumentoIdentidad == documento);
-                return Json(new { disponible = !existe });
-            }
-
-            // GET: Obtener roles disponibles
-            [HttpGet]
-            public async Task<IActionResult> ObtenerRoles()
-            {
-                var roles = await _context.TbRoles.Select(r => new { r.IdRol, r.Nombre }).ToListAsync();
-                return Json(roles);
-            }
-
-            #endregion
         }
+
+        // Métodos auxiliares
+        private byte[] HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private Dictionary<string, List<string>> GetModelStateErrors()
+        {
+            var errors = new Dictionary<string, List<string>>();
+
+            foreach (var key in ModelState.Keys)
+            {
+                var state = ModelState[key];
+                if (state != null && state.Errors.Count > 0)
+                {
+                    errors[key] = state.Errors.Select(e => e.ErrorMessage).ToList();
+                }
+            }
+
+            return errors;
+        }
+
+        // Endpoints AJAX para validaciones
+        [HttpPost]
+        public async Task<IActionResult> ValidarUsuario(string usuario)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.Usuario == usuario);
+            return Json(new { existe });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ValidarEmail(string email)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.Correo == email);
+            return Json(new { existe });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ValidarDocumento(string documento)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.DocumentoIdentidad == documento);
+            return Json(new { existe });
+        }
+
+        #region Métodos de Utilidad
+
+        // GET: Verificar disponibilidad de usuario
+        [HttpGet]
+        public async Task<IActionResult> VerificarUsuario(string usuario)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.Usuario == usuario);
+            return Json(new { disponible = !existe });
+        }
+
+        // GET: Verificar disponibilidad de email
+        [HttpGet]
+        public async Task<IActionResult> VerificarEmail(string email)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.Correo == email);
+            return Json(new { disponible = !existe });
+        }
+
+        // GET: Verificar disponibilidad de documento
+        [HttpGet]
+        public async Task<IActionResult> VerificarDocumento(string documento)
+        {
+            var existe = await _context.TbUsuarios.AnyAsync(u => u.DocumentoIdentidad == documento);
+            return Json(new { disponible = !existe });
+        }
+
+        // GET: Obtener roles disponibles
+        [HttpGet]
+        public async Task<IActionResult> ObtenerRoles()
+        {
+            var roles = await _context.TbRoles.Select(r => new { r.IdRol, r.Nombre }).ToListAsync();
+            return Json(roles);
+        }
+
+        #endregion
+    }
 
     #region DTOs
 
