@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using proyecto_mejoradoMy_pet.Filters;
 using proyecto_mejoradoMy_pet.Models;
 using System;
 
 namespace proyecto_mejoradoMy_pet.Controllers
 {
+    [PreventPageReload]
     public class CitasController : Controller
     {
         private readonly BdMypetv3Context _context;

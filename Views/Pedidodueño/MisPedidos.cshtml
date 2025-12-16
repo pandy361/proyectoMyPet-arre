@@ -832,6 +832,27 @@
     <button class="sidebar-toggle" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
     </button>
+    @if (Context.Session.GetString("IsAuthenticated") == "true")
+    {
+        <script>
+            (function() {
+                const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+
+                if (navigationType === 'reload') {
+                    console.log('Recarga detectada - Cerrando sesión');
+
+                    fetch(window.location.href, {
+                        method: 'GET',
+                        headers: {
+                            'X-Is-Reload': 'true'
+                        }
+                    }).then(() => {
+                        window.location.href = '/Autenticacion/Login?mensaje=Sesión cerrada por recarga';
+                    });
+                }
+            })();
+        </script>
+    }
 
     <script>
         // ✅ FUNCIÓN PARA CANCELAR PEDIDO

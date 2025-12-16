@@ -4,8 +4,10 @@ using proyecto_mejoradoMy_pet.Models;
 using System.Security.Cryptography;
 using System.Text;
 
+
 namespace proyecto_mejoradoMy_pet.Controllers
 {
+    
     public class AutenticacionController : Controller
     {
         private readonly BdMypetv3Context _context;

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using proyecto_mejoradoMy_pet.Filters;
 using proyecto_mejoradoMy_pet.Models;
 
+[PreventPageReload]
 public class MascotasController : Controller
 {
     private readonly BdMypetv3Context _context;

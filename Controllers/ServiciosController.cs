@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using proyecto_mejoradoMy_pet.Filters;
 using proyecto_mejoradoMy_pet.Models;
 
 namespace proyecto_mejoradoMy_pet.Controllers
 {
+    [PreventPageReload]
     public class ServiciosController : Controller
     {
         private readonly BdMypetv3Context _context;

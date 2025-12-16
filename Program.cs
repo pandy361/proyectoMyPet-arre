@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using proyecto_mejoradoMy_pet.Filters;
 using proyecto_mejoradoMy_pet.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // Protección contra XSS
     options.Cookie.IsEssential = true; // Necesaria para el funcionamiento de la app
 });
+
 
 builder.Services.AddDbContext<BdMypetv3Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Conexion")));

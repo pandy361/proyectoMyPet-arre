@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using proyecto_mejoradoMy_pet.Filters;
 using proyecto_mejoradoMy_pet.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -7,6 +8,7 @@ using QuestPDF.Infrastructure;
 
 namespace proyecto_mejoradoMy_pet.Controllers
 {
+    [PreventPageReload]
     public class PedidosPrestadorController : Controller
     {
         private readonly BdMypetv3Context _context;

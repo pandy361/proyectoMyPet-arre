@@ -3,8 +3,88 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\citas\\agendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\citas\\agendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\mascotas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\mascotas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\detallepedido.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\detallepedido.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\verfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\verfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\mispedidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\mispedidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\servicios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\servicios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\prestadores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\prestadores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\prestadores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\prestadores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\preventreloadattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\preventreloadattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\servicioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\servicioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\registro1controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\registro1controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\prestadorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\prestadorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\pedidosprestadorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\pedidosprestadorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\pedidodue\u00F1ocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\pedidodue\u00F1ocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\passwordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\passwordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\mascotascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\mascotascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\citascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\citascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\autenticacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\autenticacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\registro1\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -27,36 +107,12 @@
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:wwwroot\\js\\registro.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\detallepedido.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\detallepedido.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\prestadores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\prestadores\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\prestadorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\prestadorescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidosprestador\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidosprestador\\detalles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\pedidosprestadorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\pedidosprestadorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\tbmascota.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:models\\tbmascota.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\pedidodue\u00F1ocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\pedidodue\u00F1ocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\mispedidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\mispedidos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\tbpedido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -67,28 +123,8 @@
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidosprestador\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\prestadores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\prestadores\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\servicios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\servicios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\perfil\\editarperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\perfil\\editarperfil.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\mascotas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\mascotas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\citas\\agendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\citas\\agendar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\perfilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\editarinfopersonalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -97,10 +133,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\tbdireccione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:models\\tbdireccione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\autenticacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\autenticacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\tbusuariorole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -123,36 +155,12 @@
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:models\\tbrese\u00F1a.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\citascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\citascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\registro\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\registro\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\mascotascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\mascotascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\wwwroot\\js\\indexa.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:wwwroot\\js\\indexa.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\servicioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\servicioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\views\\pedidodue\u00F1o\\verfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\pedidodue\u00F1o\\verfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\tbpago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -195,10 +203,6 @@
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:views\\password\\forgotpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\controllers\\passwordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:controllers\\passwordcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|c:\\users\\asus\\source\\repos\\proyecto_mejoradomytet\\models\\bdmypetv3context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A3B401E5-66CE-48FA-9746-02E8F87F385F}|proyecto_mejoradoMytet.csproj|solutionrelative:models\\bdmypetv3context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -226,35 +230,158 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TbPrestadore.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPrestadore.cs",
-              "RelativeDocumentMoniker": "Models\\TbPrestadore.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPrestadore.cs",
-              "RelativeToolTip": "Models\\TbPrestadore.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAkwB8AAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T21:05:08.004Z"
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Prestadores\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Index.cshtml",
+              "RelativeToolTip": "Views\\Prestadores\\Index.cshtml",
+              "ViewState": "AgIAAOIDAAAAAAAAAAAcwP4DAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-19T20:57:49.603Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Prestadores\\Details.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Details.cshtml",
+              "RelativeToolTip": "Views\\Prestadores\\Details.cshtml",
+              "ViewState": "AgIAAEcFAAAAAAAAAAAUwF8FAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-19T20:58:02.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Servicios\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Servicios\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Servicios\\Index.cshtml",
+              "RelativeToolTip": "Views\\Servicios\\Index.cshtml",
+              "ViewState": "AgIAAFoCAAAAAAAAAAAIwHgCAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T02:18:09.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MisPedidos.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
+              "RelativeDocumentMoniker": "Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
+              "RelativeToolTip": "Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
+              "ViewState": "AgIAADgDAAAAAAAAAAAUwFYDAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-19T21:20:42.09Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VerFactura.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
+              "RelativeDocumentMoniker": "Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
+              "RelativeToolTip": "Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
+              "ViewState": "AgIAACMCAAAAAAAAAAAIwEECAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T20:08:37.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "DetallePedido.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\DetallePedido.cshtml",
               "RelativeDocumentMoniker": "Views\\Pedidodue\u00F1o\\DetallePedido.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\DetallePedido.cshtml",
               "RelativeToolTip": "Views\\Pedidodue\u00F1o\\DetallePedido.cshtml",
-              "ViewState": "AgIAAPYBAAAAAAAAAAAAAMwBAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAPMCAAAAAAAAAAAUwBEDAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T21:51:34.161Z"
+              "WhenOpened": "2025-11-27T21:51:34.161Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Mascotas\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Mascotas\\Index.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Mascotas\\Index.cshtml",
+              "RelativeToolTip": "Views\\Mascotas\\Index.cshtml",
+              "ViewState": "AgIAAIIDAAAAAAAAAAAIwKADAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T01:21:29.505Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Agendar.cshtml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Citas\\Agendar.cshtml",
+              "RelativeDocumentMoniker": "Views\\Citas\\Agendar.cshtml",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Citas\\Agendar.cshtml",
+              "RelativeToolTip": "Views\\Citas\\Agendar.cshtml",
+              "ViewState": "AgIAAGcDAAAAAAAAAAAiwHoDAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-16T21:16:28.483Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PreventReloadAttribute.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PreventReloadAttribute.cs",
+              "RelativeDocumentMoniker": "Controllers\\PreventReloadAttribute.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PreventReloadAttribute.cs",
+              "RelativeToolTip": "Controllers\\PreventReloadAttribute.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T20:13:22.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PasswordController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PasswordController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PasswordController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PasswordController.cs",
+              "RelativeToolTip": "Controllers\\PasswordController.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAgwAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T20:26:44.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ServiciosController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\ServiciosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ServiciosController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\ServiciosController.cs",
+              "RelativeToolTip": "Controllers\\ServiciosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAQwAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T02:17:38.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "Registro1Controller.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\Registro1Controller.cs",
               "RelativeDocumentMoniker": "Controllers\\Registro1Controller.cs",
@@ -267,7 +394,124 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
+              "Title": "PrestadoresController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PrestadoresController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PrestadoresController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PrestadoresController.cs",
+              "RelativeToolTip": "Controllers\\PrestadoresController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T20:54:29.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PerfilController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PerfilController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PerfilController.cs",
+              "RelativeToolTip": "Controllers\\PerfilController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-01T19:42:24.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PedidosPrestadorController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PedidosPrestadorController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PedidosPrestadorController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PedidosPrestadorController.cs",
+              "RelativeToolTip": "Controllers\\PedidosPrestadorController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T20:41:30.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Pedidodue\u00F1oController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\Pedidodue\u00F1oController.cs",
+              "RelativeDocumentMoniker": "Controllers\\Pedidodue\u00F1oController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\Pedidodue\u00F1oController.cs",
+              "RelativeToolTip": "Controllers\\Pedidodue\u00F1oController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T21:18:14.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MascotasController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\MascotasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MascotasController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\MascotasController.cs",
+              "RelativeToolTip": "Controllers\\MascotasController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T20:46:03.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJ0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T19:19:03.347Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CitasController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\CitasController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CitasController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\CitasController.cs",
+              "RelativeToolTip": "Controllers\\CitasController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T21:15:53.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AutenticacionController.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\AutenticacionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AutenticacionController.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\AutenticacionController.cs",
+              "RelativeToolTip": "Controllers\\AutenticacionController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-15T20:32:00.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T21:06:38.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
               "Title": "registro.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\wwwroot\\js\\registro.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\registro.js",
@@ -279,19 +523,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PedidosPrestadorController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PedidosPrestadorController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PedidosPrestadorController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PedidosPrestadorController.cs",
-              "RelativeToolTip": "Controllers\\PedidosPrestadorController.cs",
-              "ViewState": "AgIAAHABAAAAAAAAAAAAAIsBAAABAAAAAAAAAA==",
+              "DocumentIndex": 23,
+              "Title": "TbPrestadore.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPrestadore.cs",
+              "RelativeDocumentMoniker": "Models\\TbPrestadore.cs",
+              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPrestadore.cs",
+              "RelativeToolTip": "Models\\TbPrestadore.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAkwB8AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T20:41:30.748Z"
+              "WhenOpened": "2025-11-19T21:05:08.004Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 22,
               "Title": "TbUsuario.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbUsuario.cs",
               "RelativeDocumentMoniker": "Models\\TbUsuario.cs",
@@ -303,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 21,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Registro1\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Registro1\\Index.cshtml",
@@ -315,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 24,
               "Title": "RegistroCompleteViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\RegistroCompleteViewModel.cs",
               "RelativeDocumentMoniker": "Models\\RegistroCompleteViewModel.cs",
@@ -327,31 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "PrestadoresController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PrestadoresController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PrestadoresController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PrestadoresController.cs",
-              "RelativeToolTip": "Controllers\\PrestadoresController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAMIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T20:54:29.13Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Prestadores\\Index.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Index.cshtml",
-              "RelativeToolTip": "Views\\Prestadores\\Index.cshtml",
-              "ViewState": "AgIAAIECAAAAAAAAAAAswJECAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-19T20:57:49.603Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 27,
               "Title": "TbMascota.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbMascota.cs",
               "RelativeDocumentMoniker": "Models\\TbMascota.cs",
@@ -363,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 26,
               "Title": "Detalles.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\PedidosPrestador\\Detalles.cshtml",
               "RelativeDocumentMoniker": "Views\\PedidosPrestador\\Detalles.cshtml",
@@ -375,31 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Pedidodue\u00F1oController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\Pedidodue\u00F1oController.cs",
-              "RelativeDocumentMoniker": "Controllers\\Pedidodue\u00F1oController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\Pedidodue\u00F1oController.cs",
-              "RelativeToolTip": "Controllers\\Pedidodue\u00F1oController.cs",
-              "ViewState": "AgIAAGMCAAAAAAAAAAAcwHoCAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T21:18:14.033Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MisPedidos.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
-              "RelativeDocumentMoniker": "Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
-              "RelativeToolTip": "Views\\Pedidodue\u00F1o\\MisPedidos.cshtml",
-              "ViewState": "AgIAADsDAAAAAAAAAAAmwG8DAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-19T21:20:42.09Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 28,
               "Title": "TbPedido.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPedido.cs",
               "RelativeDocumentMoniker": "Models\\TbPedido.cs",
@@ -411,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 32,
               "Title": "TbDireccione.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbDireccione.cs",
               "RelativeDocumentMoniker": "Models\\TbDireccione.cs",
@@ -423,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 29,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\PedidosPrestador\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\PedidosPrestador\\Index.cshtml",
@@ -435,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 36,
               "Title": "DetallePedidoViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\DetallePedidoViewModel.cs",
               "RelativeDocumentMoniker": "Models\\DetallePedidoViewModel.cs",
@@ -447,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 31,
               "Title": "EditarInfoPersonalViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\EditarInfoPersonalViewModel.cs",
               "RelativeDocumentMoniker": "Models\\EditarInfoPersonalViewModel.cs",
@@ -459,19 +655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "PerfilController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PerfilController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PerfilController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PerfilController.cs",
-              "RelativeToolTip": "Controllers\\PerfilController.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAYwBoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-01T19:42:24.32Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 30,
               "Title": "EditarPerfil.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Perfil\\EditarPerfil.cshtml",
               "RelativeDocumentMoniker": "Views\\Perfil\\EditarPerfil.cshtml",
@@ -483,7 +667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 37,
               "Title": "TbRese\u00F1a.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbRese\u00F1a.cs",
               "RelativeDocumentMoniker": "Models\\TbRese\u00F1a.cs",
@@ -495,19 +679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "MascotasController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\MascotasController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MascotasController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\MascotasController.cs",
-              "RelativeToolTip": "Controllers\\MascotasController.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T20:46:03.948Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Registro\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Registro\\Index.cshtml",
@@ -519,7 +691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 39,
               "Title": "indexa.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\wwwroot\\js\\indexa.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\indexa.js",
@@ -531,19 +703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "VerFactura.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
-              "RelativeDocumentMoniker": "Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
-              "RelativeToolTip": "Views\\Pedidodue\u00F1o\\VerFactura.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQCAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-27T20:08:37.178Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "TbDetallePedido.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbDetallePedido.cs",
               "RelativeDocumentMoniker": "Models\\TbDetallePedido.cs",
@@ -555,7 +715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 46,
               "Title": "ResetPasswordConfirmation.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Password\\ResetPasswordConfirmation.cshtml",
               "RelativeDocumentMoniker": "Views\\Password\\ResetPasswordConfirmation.cshtml",
@@ -567,7 +727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 47,
               "Title": "ResetPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Password\\ResetPassword.cshtml",
               "RelativeDocumentMoniker": "Views\\Password\\ResetPassword.cshtml",
@@ -579,7 +739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 48,
               "Title": "ForgotPasswordConfirmation.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Password\\ForgotPasswordConfirmation.cshtml",
               "RelativeDocumentMoniker": "Views\\Password\\ForgotPasswordConfirmation.cshtml",
@@ -591,7 +751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 49,
               "Title": "ForgotPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Password\\ForgotPassword.cshtml",
               "RelativeDocumentMoniker": "Views\\Password\\ForgotPassword.cshtml",
@@ -603,7 +763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -615,19 +775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
-              "Title": "PasswordController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PasswordController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PasswordController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\PasswordController.cs",
-              "RelativeToolTip": "Controllers\\PasswordController.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAgwAMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-21T20:26:44.351Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 51,
               "Title": "servicio de correo.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\servicio de correo.cs",
               "RelativeDocumentMoniker": "Models\\servicio de correo.cs",
@@ -639,7 +787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 43,
               "Title": "recuperarcontrase\u00F1a.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\recuperarcontrase\u00F1a.cs",
               "RelativeDocumentMoniker": "Models\\recuperarcontrase\u00F1a.cs",
@@ -651,7 +799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 52,
               "Title": "TbPasswordReset.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPasswordReset.cs",
               "RelativeDocumentMoniker": "Models\\TbPasswordReset.cs",
@@ -663,19 +811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA7wJ0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T19:19:03.347Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 54,
               "Title": "TbServicio.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbServicio.cs",
               "RelativeDocumentMoniker": "Models\\TbServicio.cs",
@@ -687,31 +823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Servicios\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Servicios\\Index.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Servicios\\Index.cshtml",
-              "RelativeToolTip": "Views\\Servicios\\Index.cshtml",
-              "ViewState": "AgIAAGACAAAAAAAAAAAtwKABAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T02:18:09.912Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "ServiciosController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\ServiciosController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ServiciosController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\ServiciosController.cs",
-              "RelativeToolTip": "Controllers\\ServiciosController.cs",
-              "ViewState": "AgIAANMAAAAAAAAAAAAiwOkAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T02:17:38.148Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 53,
               "Title": "Privacy.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Home\\Privacy.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
@@ -723,43 +835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Mascotas\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Mascotas\\Index.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Mascotas\\Index.cshtml",
-              "RelativeToolTip": "Views\\Mascotas\\Index.cshtml",
-              "ViewState": "AgIAAEMCAAAAAAAAAAAowFECAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T01:21:29.505Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAACcAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T21:06:38.463Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Prestadores\\Details.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Prestadores\\Details.cshtml",
-              "RelativeToolTip": "Views\\Prestadores\\Details.cshtml",
-              "ViewState": "AgIAAI0DAAAAAAAAAAAAAHsDAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-19T20:58:02.641Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "BdMypetv3Context.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\BdMypetv3Context.cs",
               "RelativeDocumentMoniker": "Models\\BdMypetv3Context.cs",
@@ -771,7 +847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "TbPago.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbPago.cs",
               "RelativeDocumentMoniker": "Models\\TbPago.cs",
@@ -783,7 +859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 35,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Autenticacion\\Login.cshtml",
               "RelativeDocumentMoniker": "Views\\Autenticacion\\Login.cshtml",
@@ -795,7 +871,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 34,
               "Title": "TbRole.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbRole.cs",
               "RelativeDocumentMoniker": "Models\\TbRole.cs",
@@ -807,7 +883,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 33,
               "Title": "TbUsuarioRole.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbUsuarioRole.cs",
               "RelativeDocumentMoniker": "Models\\TbUsuarioRole.cs",
@@ -819,7 +895,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 44,
               "Title": "AgendarPedidoViewModel.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\AgendarPedidoViewModel.cs",
               "RelativeDocumentMoniker": "Models\\AgendarPedidoViewModel.cs",
@@ -831,19 +907,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "CitasController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\CitasController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CitasController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\CitasController.cs",
-              "RelativeToolTip": "Controllers\\CitasController.cs",
-              "ViewState": "AgIAALcAAAAAAAAAAAAowMIAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T21:15:53.864Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 45,
               "Title": "TbDisponibilidad.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Models\\TbDisponibilidad.cs",
               "RelativeDocumentMoniker": "Models\\TbDisponibilidad.cs",
@@ -852,34 +916,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T21:16:23.727Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Agendar.cshtml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Citas\\Agendar.cshtml",
-              "RelativeDocumentMoniker": "Views\\Citas\\Agendar.cshtml",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Views\\Citas\\Agendar.cshtml",
-              "RelativeToolTip": "Views\\Citas\\Agendar.cshtml",
-              "ViewState": "AgIAAFoCAAAAAAAAAAAtwGICAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-16T21:16:28.483Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "AutenticacionController.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\AutenticacionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AutenticacionController.cs",
-              "ToolTip": "C:\\Users\\ASUS\\source\\repos\\proyecto_mejoradoMytet\\Controllers\\AutenticacionController.cs",
-              "RelativeToolTip": "Controllers\\AutenticacionController.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAkwL8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T20:32:00.593Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
